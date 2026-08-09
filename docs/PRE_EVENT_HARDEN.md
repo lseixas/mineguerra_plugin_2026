@@ -14,7 +14,7 @@ Tracking do endurecimento pré-Guerra. Atualizar este arquivo a cada bloco concl
 | 6. Nametag sync cross-player | done | `c4d086a` |
 | 7. Tweaks Storm/Hellfire | done | `2ea9a88` |
 | 8. Docs + checklist playtest | done | `3455adf` |
-| Push remote | pending | — |
+| Push remote | **bloqueado** — sem credencial git/gh neste ambiente; 6 commits locais ahead de `origin/main` | rode `git push` no seu PC |
 
 ## Regras deste trabalho
 
