@@ -9,20 +9,25 @@ commands:
     permission: mineguerra.spawnvillager
     aliases: [ sv, villager ]
   startGuerra:
-    description: Da inicio ao timer dos villagers e de tudo que vai acontecer na guerra
+    description: Reservado (nao implementado). Use trader tools para spawn.
     usage: /startGuerra
+    permission: mineguerra.admin
   grantSoulflayerBow:
     description: Te da o item arco do wither
     usage: /grantSoulflayerBow
+    permission: mineguerra.admin
   grantDragonSlayer:
     description: Te da o item dragon slayer
     usage: /grantDragonSlayer
+    permission: mineguerra.admin
   grantDoomHammer:
     description: Te da o item doom hammer
     usage: /grantDoomHammer
+    permission: mineguerra.admin
   grantStormRider:
     description: Te da o item storm rider
     usage: /grantStormRider
+    permission: mineguerra.admin
   grantTraderTool:
     description: Ferramenta para spawnar ou configurar villagers do evento
     usage: /grantTraderTool <tipo>
@@ -34,11 +39,24 @@ commands:
     permission: mineguerra.tradertool
     aliases: [ gttk ]
   team:
-    description: Gerencia times do evento (criar, join, leave)
-    usage: /team <create|delete|join|leave|list|info> ...
+    description: Gerencia times do evento (criar, join, leave, flag)
+    usage: /team <create|delete|join|leave|list|info|flag> ...
     permission: mineguerra.team
     aliases: [ t, time ]
   mg:
-    description: Admin MineGuerra (leaderboard, kills)
-    usage: /mg <leaderboard|kills> ...
+    description: Admin MineGuerra (leaderboard, kills, weapons, revive)
+    usage: /mg <leaderboard|kills|weapons|revive> ...
     permission: mineguerra.admin
+permissions:
+  mineguerra.admin:
+    description: Admin do evento (grants, mg, startGuerra)
+    default: op
+  mineguerra.team:
+    description: Gerenciar times e bandeiras
+    default: op
+  mineguerra.tradertool:
+    description: Ferramentas de spawn/config de villagers
+    default: op
+  mineguerra.spawnvillager:
+    description: Comando legado de spawn de villager
+    default: op
