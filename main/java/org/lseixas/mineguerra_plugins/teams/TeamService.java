@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import org.lseixas.mineguerra_plugins.teams.flag.FlagService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,6 +112,11 @@ public class TeamService {
             return false;
         }
 
+        FlagService flags = TeamRegistry.flags();
+        if (flags != null) {
+            flags.removeFlag(teamId);
+        }
+
         dataStore.getPlayerTeams().entrySet().removeIf(e -> teamId.equals(e.getValue()));
         dataStore.getTeams().remove(teamId);
         dataStore.getKills().remove(teamId);
@@ -168,6 +174,7 @@ public class TeamService {
         TeamDefinition definition = dataStore.getTeams().get(teamId);
         if (definition == null) {
             dataStore.getPlayerTeams().remove(player.getUniqueId());
+            removePlayerFromBoardTeam(player);
             return;
         }
 
@@ -185,37 +192,73 @@ public class TeamService {
             ensureScoreboardTeam(board, definition);
         }
 
+        // Joining / board rebuild: every online member must appear on this board
+        // so the local client can render their nametag/tab prefixes.
+        populateOnlineTeamEntries(board);
         return board;
     }
 
     private void applyTeamToPlayer(Player player, TeamDefinition definition) {
-        Scoreboard board = getOrCreatePlayerScoreboard(player);
+        getOrCreatePlayerScoreboard(player);
+        propagatePlayerTeamEntry(player, definition);
+    }
+
+    /**
+     * Adds every online teamed player's entry onto the given scoreboard.
+     */
+    private void populateOnlineTeamEntries(Scoreboard board) {
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            String teamId = getTeamId(online);
+            if (teamId == null) {
+                continue;
+            }
+            TeamDefinition definition = dataStore.getTeams().get(teamId);
+            if (definition == null) {
+                continue;
+            }
+            addEntryOnBoard(board, online.getName(), definition);
+        }
+    }
+
+    /**
+     * Ensures this player's team entry exists on every online player's scoreboard.
+     */
+    private void propagatePlayerTeamEntry(Player player, TeamDefinition definition) {
+        for (Player viewer : Bukkit.getOnlinePlayers()) {
+            Scoreboard board = getOrCreatePlayerScoreboard(viewer);
+            addEntryOnBoard(board, player.getName(), definition);
+        }
+    }
+
+    private void addEntryOnBoard(Scoreboard board, String entryName, TeamDefinition definition) {
+        removeEntryFromOtherTeams(board, entryName, definition.getId());
         Team boardTeam = ensureScoreboardTeam(board, definition);
-        removePlayerFromOtherTeams(player, definition.getId());
-        if (!boardTeam.hasEntry(player.getName())) {
-            boardTeam.addEntry(player.getName());
+        if (!boardTeam.hasEntry(entryName)) {
+            boardTeam.addEntry(entryName);
         }
     }
 
     private void removePlayerFromBoardTeam(Player player) {
-        Scoreboard board = player.getScoreboard();
-        for (TeamDefinition definition : dataStore.getTeams().values()) {
-            Team team = board.getTeam(scoreboardTeamName(definition.getId()));
-            if (team != null) {
-                team.removeEntry(player.getName());
+        String entryName = player.getName();
+        for (Player viewer : Bukkit.getOnlinePlayers()) {
+            Scoreboard board = viewer.getScoreboard();
+            for (TeamDefinition definition : dataStore.getTeams().values()) {
+                Team team = board.getTeam(scoreboardTeamName(definition.getId()));
+                if (team != null) {
+                    team.removeEntry(entryName);
+                }
             }
         }
     }
 
-    private void removePlayerFromOtherTeams(Player player, String keepTeamId) {
-        Scoreboard board = player.getScoreboard();
+    private void removeEntryFromOtherTeams(Scoreboard board, String entryName, String keepTeamId) {
         for (TeamDefinition definition : dataStore.getTeams().values()) {
             if (definition.getId().equals(keepTeamId)) {
                 continue;
             }
             Team team = board.getTeam(scoreboardTeamName(definition.getId()));
             if (team != null) {
-                team.removeEntry(player.getName());
+                team.removeEntry(entryName);
             }
         }
     }
@@ -235,12 +278,12 @@ public class TeamService {
         return team;
     }
 
+    /**
+     * Bukkit team names max 16 chars. Hash the full id so {@code team-a} and
+     * {@code team_a} (or truncated ids) never collapse to the same name.
+     */
     private static String scoreboardTeamName(String teamId) {
-        String sanitized = teamId.replaceAll("[^a-zA-Z0-9]", "");
-        if (sanitized.length() > 12) {
-            sanitized = sanitized.substring(0, 12);
-        }
-        return "mg_" + sanitized;
+        return "mg_" + String.format("%08x", teamId.hashCode() & 0xffffffffL);
     }
 
     public enum CreateResult {

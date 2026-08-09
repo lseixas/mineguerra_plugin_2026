@@ -1,5 +1,6 @@
 package org.lseixas.mineguerra_plugins.teams.flag;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -77,12 +78,7 @@ public class FlagService {
 
         removeExistingFlagBlock(teamId);
 
-        target.setType(banner);
-        BlockState state = target.getState();
-        if (state instanceof TileState tile) {
-            tile.getPersistentDataContainer().set(flagKey, PersistentDataType.STRING, teamId);
-            tile.update(true, false);
-        }
+        placeFlagBanner(teamId, target, banner);
 
         Location loc = target.getLocation().add(0.5, 0, 0.5);
         loc.setYaw(staff.getLocation().getYaw());
@@ -102,9 +98,36 @@ public class FlagService {
         return true;
     }
 
-    public void onFlagDestroyed(String teamId, Player breaker) {
+    public RepairResult repairFlag(String teamId) {
         TeamFlag flag = dataStore.getFlags().get(teamId);
         if (flag == null) {
+            return RepairResult.NO_FLAG;
+        }
+
+        Optional<TeamDefinition> teamOpt = teamService.getTeam(teamId);
+        if (teamOpt.isEmpty()) {
+            return RepairResult.TEAM_NOT_FOUND;
+        }
+
+        Location loc = flag.toLocation();
+        if (loc == null) {
+            return RepairResult.WORLD_UNLOADED;
+        }
+
+        Material banner = bannerMaterialFor(teamOpt.get().getColor());
+        if (banner == null) {
+            return RepairResult.UNSUPPORTED_COLOR;
+        }
+
+        placeFlagBanner(teamId, loc.getBlock(), banner);
+        flag.setAlive(true);
+        dataStore.save();
+        return RepairResult.SUCCESS;
+    }
+
+    public void onFlagDestroyed(String teamId, Player breaker) {
+        TeamFlag flag = dataStore.getFlags().get(teamId);
+        if (flag == null || !flag.isAlive()) {
             return;
         }
         flag.setAlive(false);
@@ -131,6 +154,31 @@ public class FlagService {
         return eliminatedPlayers.contains(player.getUniqueId());
     }
 
+    public boolean revivePlayer(UUID uuid) {
+        if (!eliminatedPlayers.remove(uuid)) {
+            return false;
+        }
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null) {
+            player.setGameMode(GameMode.SURVIVAL);
+            player.sendMessage("§a§l[MineGuerra] §7Voce foi revivido por um admin.");
+        }
+        return true;
+    }
+
+    public int reviveAll() {
+        Set<UUID> toRevive = new HashSet<>(eliminatedPlayers);
+        clearEliminated();
+        for (UUID uuid : toRevive) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.setGameMode(GameMode.SURVIVAL);
+                player.sendMessage("§a§l[MineGuerra] §7Voce foi revivido por um admin.");
+            }
+        }
+        return toRevive.size();
+    }
+
     public void clearEliminated() {
         eliminatedPlayers.clear();
     }
@@ -138,6 +186,15 @@ public class FlagService {
     public void applyEliminatedState(Player player) {
         if (eliminatedPlayers.contains(player.getUniqueId())) {
             player.setGameMode(GameMode.SPECTATOR);
+        }
+    }
+
+    private void placeFlagBanner(String teamId, Block block, Material banner) {
+        block.setType(banner);
+        BlockState state = block.getState();
+        if (state instanceof TileState tile) {
+            tile.getPersistentDataContainer().set(flagKey, PersistentDataType.STRING, teamId);
+            tile.update(true, false);
         }
     }
 
@@ -196,6 +253,14 @@ public class FlagService {
         SUCCESS,
         TEAM_NOT_FOUND,
         NO_TARGET_BLOCK,
+        UNSUPPORTED_COLOR
+    }
+
+    public enum RepairResult {
+        SUCCESS,
+        NO_FLAG,
+        TEAM_NOT_FOUND,
+        WORLD_UNLOADED,
         UNSUPPORTED_COLOR
     }
 }

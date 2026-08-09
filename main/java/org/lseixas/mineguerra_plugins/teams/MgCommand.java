@@ -1,15 +1,21 @@
 package org.lseixas.mineguerra_plugins.teams;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+import org.lseixas.mineguerra_plugins.teams.flag.FlagService;
 import org.lseixas.mineguerra_plugins.weapons.WeaponId;
 import org.lseixas.mineguerra_plugins.weapons.WeaponOwnershipService;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MgCommand implements CommandExecutor, TabCompleter {
@@ -40,6 +46,11 @@ public class MgCommand implements CommandExecutor, TabCompleter {
 
         if ("weapons".equals(sub)) {
             handleWeapons(sender, args);
+            return true;
+        }
+
+        if ("revive".equals(sub)) {
+            handleRevive(sender, args);
             return true;
         }
 
@@ -155,6 +166,53 @@ public class MgCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+    private void handleRevive(CommandSender sender, String[] args) {
+        if (args.length < 2) {
+            sender.sendMessage("§cUso: /mg revive <jogador|all>");
+            return;
+        }
+
+        FlagService flags = TeamRegistry.flags();
+        String targetArg = args[1];
+
+        if ("all".equalsIgnoreCase(targetArg)) {
+            int count = flags.reviveAll();
+            sender.sendMessage("§a§l[MineGuerra] §7" + count + " jogador(es) revivido(s).");
+            return;
+        }
+
+        Player online = Bukkit.getPlayer(targetArg);
+        UUID uuid;
+        String name;
+        if (online != null) {
+            uuid = online.getUniqueId();
+            name = online.getName();
+        } else {
+            OfflinePlayer offline = resolveOfflinePlayer(targetArg);
+            if (offline == null) {
+                sender.sendMessage("§cJogador nao encontrado.");
+                return;
+            }
+            uuid = offline.getUniqueId();
+            name = offline.getName() != null ? offline.getName() : targetArg;
+        }
+
+        if (flags.revivePlayer(uuid)) {
+            sender.sendMessage("§a§l[MineGuerra] §f" + name + " §7foi revivido.");
+        } else {
+            sender.sendMessage("§cEsse jogador nao esta eliminado.");
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private OfflinePlayer resolveOfflinePlayer(String name) {
+        OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
+        if (offline.hasPlayedBefore() || offline.isOnline()) {
+            return offline;
+        }
+        return null;
+    }
+
     private void sendUsage(CommandSender sender) {
         sender.sendMessage("§6§l[MineGuerra] §7Admin:");
         sender.sendMessage("§e/mg leaderboard <on|off>");
@@ -163,6 +221,7 @@ public class MgCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("§e/mg kills resetall");
         sender.sendMessage("§e/mg weapons status");
         sender.sendMessage("§e/mg weapons reset");
+        sender.sendMessage("§e/mg revive <jogador|all>");
     }
 
     @Override
@@ -172,7 +231,7 @@ public class MgCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 1) {
-            return filter(List.of("leaderboard", "kills", "weapons"), args[0]);
+            return filter(List.of("leaderboard", "kills", "weapons", "revive"), args[0]);
         }
 
         if (args.length == 2) {
@@ -184,6 +243,12 @@ public class MgCommand implements CommandExecutor, TabCompleter {
             }
             if ("weapons".equalsIgnoreCase(args[0])) {
                 return filter(List.of("status", "reset"), args[1]);
+            }
+            if ("revive".equalsIgnoreCase(args[0])) {
+                List<String> options = new ArrayList<>();
+                options.add("all");
+                options.addAll(onlineNames());
+                return filter(options, args[1]);
             }
         }
 
@@ -200,6 +265,12 @@ public class MgCommand implements CommandExecutor, TabCompleter {
     private List<String> teamIds() {
         return TeamRegistry.teams().getAllTeams().stream()
                 .map(TeamDefinition::getId)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> onlineNames() {
+        return Bukkit.getOnlinePlayers().stream()
+                .map(Player::getName)
                 .collect(Collectors.toList());
     }
 
