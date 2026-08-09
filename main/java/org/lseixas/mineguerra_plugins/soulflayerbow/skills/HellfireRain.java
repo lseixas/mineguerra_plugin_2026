@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.WitherSkull;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,7 +23,7 @@ public class HellfireRain {
         this.plugin = plugin;
     }
 
-    public void spawnHellfireRain(Location center) {
+    public void spawnHellfireRain(Location center, Player shooter) {
         center.getWorld().playSound(center, Sound.ENTITY_WITHER_AMBIENT, 1f, 0.5f);
 
         List<WitherSkull> skulls = new ArrayList<>();
@@ -53,14 +54,14 @@ public class HellfireRain {
                     return;
                 }
 
-                WitherSkull skull = spawnSingleSkull(center);
+                WitherSkull skull = spawnSingleSkull(center, shooter);
                 skulls.add(skull);
                 count++;
             }
         }.runTaskTimer(plugin, 0L, 4L);
     }
 
-    private WitherSkull spawnSingleSkull(Location center) {
+    private WitherSkull spawnSingleSkull(Location center, Player shooter) {
         // Spawna em posição aleatória no céu
         double offsetX = (random.nextDouble() * 20) - 10;
         double offsetZ = (random.nextDouble() * 20) - 10;
@@ -72,6 +73,7 @@ public class HellfireRain {
         // Configurações para não explodir nem causar fogo
         skull.setIsIncendiary(false); // Remove fogo ao atingir
         skull.setYield(0F); // Remove explosão
+        skull.setShooter(shooter);
 
         // Parado no ar inicialmente
         skull.setDirection(new Vector(0, 0, 0));

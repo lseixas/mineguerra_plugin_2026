@@ -19,6 +19,8 @@ import java.util.*;
 public class StormRiderListener implements Listener {
 
     private static final String TELEPORT_ABILITY = "Thunder Teleport";
+    /** ~2 minutes (was 12000 / 10 min). */
+    private static final int WEATHER_DURATION_TICKS = 2400;
 
     private final JavaPlugin plugin;
     private final ThunderTeleport thunderTeleport;
@@ -69,22 +71,30 @@ public class StormRiderListener implements Listener {
             return;
         }
 
-        if (!WeaponRegistry.items().isInMainHand(player, WeaponId.STORM_RIDER)) {
+        // Main-hand can already be empty after consume; also match thrown item meta.
+        if (!isStormRiderTrident(player, trident)) {
             return;
         }
 
         boolean wasClear = !player.getWorld().hasStorm();
 
         player.getWorld().setStorm(true);
-        player.getWorld().setWeatherDuration(12000);
+        player.getWorld().setWeatherDuration(WEATHER_DURATION_TICKS);
         player.getWorld().setThundering(true);
-        player.getWorld().setThunderDuration(12000);
+        player.getWorld().setThunderDuration(WEATHER_DURATION_TICKS);
 
         if (wasClear) {
             WeaponMessages.sendInfo(player, WeaponId.STORM_RIDER, "A tempestade foi invocada.");
         }
 
         tridentOwners.put(trident.getUniqueId(), player.getUniqueId());
+    }
+
+    private boolean isStormRiderTrident(Player player, Trident trident) {
+        if (WeaponRegistry.items().isInMainHand(player, WeaponId.STORM_RIDER)) {
+            return true;
+        }
+        return WeaponRegistry.items().matches(trident.getItem(), WeaponId.STORM_RIDER);
     }
 
     @EventHandler

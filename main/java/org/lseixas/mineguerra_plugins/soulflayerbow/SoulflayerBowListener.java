@@ -12,6 +12,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.lseixas.mineguerra_plugins.soulflayerbow.skills.DantesPunishment;
 import org.lseixas.mineguerra_plugins.soulflayerbow.skills.HellfireRain;
+import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 import org.lseixas.mineguerra_plugins.weapons.AbilityCooldown;
 import org.lseixas.mineguerra_plugins.weapons.PlayerFeedback;
 import org.lseixas.mineguerra_plugins.weapons.VanillaCooldownSync;
@@ -112,8 +113,27 @@ public class SoulflayerBowListener implements Listener {
             return;
         }
 
-        if (arrow.hasMetadata("is_ultimate_arrow")) {
-            hellfireRain.spawnHellfireRain(arrow.getLocation());
+        if (arrow.hasMetadata("is_ultimate_arrow") && arrow.getShooter() instanceof Player shooter) {
+            hellfireRain.spawnHellfireRain(arrow.getLocation(), shooter);
+        }
+    }
+
+    @EventHandler
+    public void onHellfireSkullDamage(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof WitherSkull skull)) {
+            return;
+        }
+        if (!(skull.getShooter() instanceof Player shooter)) {
+            return;
+        }
+        if (!(event.getEntity() instanceof Player victim)) {
+            return;
+        }
+
+        String shooterTeam = TeamRegistry.teams().getTeamId(shooter);
+        String victimTeam = TeamRegistry.teams().getTeamId(victim);
+        if (shooterTeam != null && shooterTeam.equals(victimTeam)) {
+            event.setCancelled(true);
         }
     }
 

@@ -26,8 +26,8 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 
 - `PlayerSwapHandItemsEvent` — toggle ultimate
 - `EntityShootBowEvent` — metadata `is_dante_arrow`, `is_ultimate_arrow`
-- `ProjectileHitEvent` — HellfireRain
-- `EntityDamageByEntityEvent` — Dante
+- `ProjectileHitEvent` — HellfireRain (WitherSkulls com `setShooter`)
+- `EntityDamageByEntityEvent` — Dante; Hellfire ignora aliados do mesmo time
 
 ### Arquivos
 
@@ -94,7 +94,7 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 | Skill | Tipo | Ativação | CD |
 |-------|------|----------|-----|
 | Thunder Teleport | Ativa | Sneak + F → arremesso → hit | 15s — verificado ao **armar**; gravado no **teleporte** |
-| Tempestade | Passiva | Qualquer arremesso com arma na mão | — |
+| Tempestade | Passiva | Qualquer arremesso com arma (mão ou item do tridente) | Duração clima **2400 ticks (~2 min)** storm + thunder |
 
 ### Eventos Bukkit
 
