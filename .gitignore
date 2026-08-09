@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+build/
+bin/
+out/
+
+# run-paper / local test server (large)
+run/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+
+# Optional local secrets
+*.env
+.env.*
