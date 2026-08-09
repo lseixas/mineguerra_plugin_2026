@@ -10,6 +10,8 @@ Pasta de contexto para desenvolvedores e agentes de IA. Leia na ordem sugerida a
 4. [STANDARDS_TARGET.md](STANDARDS_TARGET.md) — como o código **deve** ficar (alvo)
 5. [REFACTOR_ROADMAP.md](REFACTOR_ROADMAP.md) — fases, ordem de migração, critérios de pronto
 6. [TEAMS_AND_LEADERBOARD.md](TEAMS_AND_LEADERBOARD.md) — times, kills, placar lateral
+7. [FLAGS_AND_LEGENDARY_WEAPONS.md](FLAGS_AND_LEGENDARY_WEAPONS.md) — bandeiras e unicidade das armas
+8. [PRE_EVENT_HARDEN.md](PRE_EVENT_HARDEN.md) — checklist e status do endurecimento pré-evento
 
 ## Raiz do repositório
 

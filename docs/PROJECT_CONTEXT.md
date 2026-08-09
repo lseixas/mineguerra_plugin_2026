@@ -18,19 +18,17 @@
 | Comando | Função |
 |---------|--------|
 | `/spawnvillager` (`sv`, `villager`) | Spawna villagers customizados (perm: `mineguerra.spawnvillager`) |
-| `/startGuerra` | Inicia timer/fluxo da guerra |
-| `/grantSoulflayerBow` | Dá Soulflayer Bow |
-| `/grantDragonSlayer` | Dá Dragon Slayer |
-| `/grantStormRider` | Dá Storm Rider |
+| `/startGuerra` | **Desativado** (mensagem). Use trader tools — perm: `mineguerra.admin` |
+| `/grantSoulflayerBow` | Dá Soulflayer Bow — perm: `mineguerra.admin` |
+| `/grantDragonSlayer` | Dá Dragon Slayer — perm: `mineguerra.admin` |
+| `/grantDoomHammer` | Dá Doom Hammer — perm: `mineguerra.admin` |
+| `/grantStormRider` | Dá Storm Rider — perm: `mineguerra.admin` |
 | `/grantTraderTool <tipo>` | Bastão: clique no chão = spawn NPC; clique no villager = aplicar trades (perm: `mineguerra.tradertool`) |
 | `/grantTraderToolKit` | Dá as 4 ferramentas dos exploradores de armas (oceano, profundezas, nether, end) |
-| `/team` (`t`, `time`) | Gestão de times — perm: `mineguerra.team` |
-| `/mg` | Leaderboard e kills — perm: `mineguerra.admin` |
+| `/team` (`t`, `time`) | Gestão de times / flags — perm: `mineguerra.team` |
+| `/mg` | Leaderboard, kills, weapons, revive — perm: `mineguerra.admin` |
 
-Ver detalhes em [TEAMS_AND_LEADERBOARD.md](TEAMS_AND_LEADERBOARD.md).
-| `/grantDoomHammer` | Dá Doom Hammer |
-
-Os `grant*` não definem permission no YAML — hoje qualquer OP pode executar.
+Ver detalhes em [TEAMS_AND_LEADERBOARD.md](TEAMS_AND_LEADERBOARD.md) e [PRE_EVENT_HARDEN.md](PRE_EVENT_HARDEN.md).
 
 ## Distribuição de armas (villagers)
 

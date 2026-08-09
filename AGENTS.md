@@ -58,3 +58,12 @@ Cada arma: `*Factory` (item), `*Listener` (eventos + estado), `skills/` (efeitos
 ## Armas migradas
 
 As **4 armas** usam `WeaponItemService` (lore + PDC + CMD), `WeaponMessages` (chat) e `VanillaCooldownSync` (barra cinza na hotbar nas ativas com CD).
+
+## Pre-event harden (em andamento / pos-evento)
+
+Ver tracking e checklist: [`docs/PRE_EVENT_HARDEN.md`](docs/PRE_EVENT_HARDEN.md).
+
+- Grants e `/startGuerra` exigem `mineguerra.admin`; `/startGuerra` está desativado (mensagem)
+- Claim de arma lendária persiste com holder offline (trade não reabre no logout)
+- Bandeiras: captura via break **e** explosão; `/mg revive`; `/team flag repair`
+- Nametags sincronizadas entre scoreboards por jogador
