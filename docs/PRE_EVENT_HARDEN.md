@@ -6,15 +6,15 @@ Tracking do endurecimento pré-Guerra. Atualizar este arquivo a cada bloco concl
 
 | Bloco | Status | Commit |
 |-------|--------|--------|
-| 1. Perms `grant*` + `startGuerra` | done | (pending local) |
-| 2. Neutralizar `/startGuerra` | done | same as 1 |
-| 3. Ownership offline (trade não reabre) | done | (pending local) |
-| 4. Flag vs TNT/explosão | done | (pending local) |
-| 5. Ops: revive + flag repair + cascade delete | done | (pending local) |
-| 6. Nametag sync cross-player | done | (pending local) |
-| 7. Tweaks Storm/Hellfire | done | (pending local) |
-| 8. Docs + checklist playtest | in progress | — |
-| Push remote | pending (só no fim) | — |
+| 1. Perms `grant*` + `startGuerra` | done | `d7bc4a6` |
+| 2. Neutralizar `/startGuerra` | done | `d7bc4a6` |
+| 3. Ownership offline (trade não reabre) | done | `6842293` |
+| 4. Flag vs TNT/explosão | done | `c4d086a` |
+| 5. Ops: revive + flag repair + cascade delete | done | `c4d086a` |
+| 6. Nametag sync cross-player | done | `c4d086a` |
+| 7. Tweaks Storm/Hellfire | done | `2ea9a88` |
+| 8. Docs + checklist playtest | done | `3455adf` |
+| Push remote | pending | — |
 
 ## Regras deste trabalho
 
