@@ -1,0 +1,7 @@
+# Copy this file to gradle.local.properties (gitignored) on your machine.
+# When present, ./gradlew jar|build copies the plugin JAR into this folder.
+#
+# Example (absolute or relative to the project root):
+# deploy.pluginsDir=/home/you/servers_minecraft/instances/mine_guerra_bukkit_2026/plugins
+
+deploy.pluginsDir=../../servers_minecraft/instances/mine_guerra_bukkit_2026/plugins

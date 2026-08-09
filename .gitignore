@@ -28,3 +28,6 @@ Thumbs.db
 # Optional local secrets
 *.env
 .env.*
+
+# Machine-specific Gradle overrides (auto-deploy jar, etc.)
+gradle.local.properties

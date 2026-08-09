@@ -43,6 +43,31 @@ tasks {
 
 }
 
+// Local-only deploy: copy JAR after jar/build when gradle.local.properties exists.
+// Other machines without that file skip this entirely (no task wired).
+def localGradlePropsFile = file('gradle.local.properties')
+if (localGradlePropsFile.exists()) {
+    def localProps = new Properties()
+    localGradlePropsFile.withInputStream { localProps.load(it) }
+    def configuredDir = localProps.getProperty('deploy.pluginsDir')?.trim()
+    if (configuredDir) {
+        def localDeployDir = file(configuredDir)
+        tasks.register('copyJarToLocalServer', Copy) {
+            group = 'distribution'
+            description = 'Copies the plugin JAR to the local Minecraft plugins folder.'
+            onlyIf { localDeployDir.directory }
+            from(tasks.named('jar').flatMap { it.archiveFile })
+            into(localDeployDir)
+            doFirst {
+                logger.lifecycle("Copying plugin JAR to ${localDeployDir}")
+            }
+        }
+        tasks.named('jar').configure {
+            finalizedBy('copyJarToLocalServer')
+        }
+    }
+}
+
 def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
