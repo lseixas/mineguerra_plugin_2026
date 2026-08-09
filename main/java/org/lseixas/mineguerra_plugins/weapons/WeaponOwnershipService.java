@@ -28,6 +28,11 @@ public class WeaponOwnershipService {
     }
 
     public boolean isAvailable(WeaponId weaponId) {
+        // Claim keeps the trade closed even if the holder is offline
+        // (existsInWorld only sees online inventories + ground items).
+        if (getOwnerTeamId(weaponId).isPresent()) {
+            return false;
+        }
         return !existsInWorld(weaponId);
     }
 
@@ -56,15 +61,22 @@ public class WeaponOwnershipService {
         refreshLeaderboard();
     }
 
+    /**
+     * Clears the claim when the weapon is no longer online/on the ground.
+     * Call after death strip or flag eliminate — not on plain quit (offline holders
+     * would look "gone" and reopen the villager trade).
+     */
     public void releaseIfGone(WeaponId weaponId) {
-        if (!existsInWorld(weaponId)) {
-            WeaponClaim claim = dataStore.getWeaponClaims().get(weaponId);
-            if (claim != null) {
-                claim.setOwnerTeamId(null);
-            }
-            dataStore.save();
-            refreshLeaderboard();
+        if (existsInWorld(weaponId)) {
+            return;
         }
+        WeaponClaim claim = dataStore.getWeaponClaims().get(weaponId);
+        if (claim == null || !claim.hasOwner()) {
+            return;
+        }
+        claim.setOwnerTeamId(null);
+        dataStore.save();
+        refreshLeaderboard();
     }
 
     public void rescanAll() {
@@ -110,7 +122,7 @@ public class WeaponOwnershipService {
             return held.get().getDisplayName();
         }
         for (Map.Entry<WeaponId, WeaponClaim> entry : dataStore.getWeaponClaims().entrySet()) {
-            if (teamId.equals(entry.getValue().getOwnerTeamId()) && existsInWorld(entry.getKey())) {
+            if (teamId.equals(entry.getValue().getOwnerTeamId())) {
                 return entry.getKey().getDisplayName();
             }
         }

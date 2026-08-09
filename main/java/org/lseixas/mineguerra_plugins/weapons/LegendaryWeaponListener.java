@@ -9,7 +9,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantInventory;
 import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
@@ -95,11 +94,6 @@ public class LegendaryWeaponListener implements Listener {
         }
 
         itemService.stripFromPlayer(player);
-        TeamRegistry.weapons().rescanAll();
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onQuit(PlayerQuitEvent event) {
         TeamRegistry.weapons().rescanAll();
     }
 }
