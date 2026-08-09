@@ -10,6 +10,7 @@ import org.bukkit.inventory.MerchantRecipe;
 import org.lseixas.mineguerra_plugins.teams.TeamDefinition;
 import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 import org.lseixas.mineguerra_plugins.teams.TeamsDataStore;
+import org.lseixas.mineguerra_plugins.teams.LeaderboardService;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -167,8 +168,9 @@ public class WeaponOwnershipService {
     }
 
     private void refreshLeaderboard() {
-        if (TeamRegistry.leaderboard().isEnabled()) {
-            TeamRegistry.leaderboard().refreshAll();
+        LeaderboardService leaderboard = TeamRegistry.leaderboard();
+        if (leaderboard != null && leaderboard.isEnabled()) {
+            leaderboard.refreshAll();
         }
     }
 }

@@ -23,11 +23,19 @@ public class AbilityCooldown {
     }
 
     public boolean isOnCooldown(Player player) {
-        return getRemainingMillis(player) > 0;
+        return isOnCooldown(player.getUniqueId());
+    }
+
+    public boolean isOnCooldown(UUID playerId) {
+        return getRemainingMillis(playerId) > 0;
     }
 
     public long getRemainingMillis(Player player) {
-        Long start = startTimes.get(player.getUniqueId());
+        return getRemainingMillis(player.getUniqueId());
+    }
+
+    public long getRemainingMillis(UUID playerId) {
+        Long start = startTimes.get(playerId);
         if (start == null) {
             return 0;
         }
@@ -49,10 +57,23 @@ public class AbilityCooldown {
 
     /** Grava o início do cooldown (chamar conforme {@link CooldownStart}). */
     public void commit(Player player) {
-        startTimes.put(player.getUniqueId(), System.currentTimeMillis());
+        commit(player.getUniqueId());
+    }
+
+    public void commit(UUID playerId) {
+        startTimes.put(playerId, System.currentTimeMillis());
+    }
+
+    /** For tests: commit as if {@code elapsedMillis} already passed. */
+    public void commitAt(UUID playerId, long startEpochMillis) {
+        startTimes.put(playerId, startEpochMillis);
     }
 
     public void clear(Player player) {
-        startTimes.remove(player.getUniqueId());
+        clear(player.getUniqueId());
+    }
+
+    public void clear(UUID playerId) {
+        startTimes.remove(playerId);
     }
 }
