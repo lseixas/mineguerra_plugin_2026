@@ -67,3 +67,8 @@ Ver tracking e checklist: [`docs/PRE_EVENT_HARDEN.md`](docs/PRE_EVENT_HARDEN.md)
 - Claim de arma lendária persiste com holder offline (trade não reabre no logout)
 - Bandeiras: captura via break **e** explosão; `/mg revive`; `/team flag repair`
 - Nametags sincronizadas entre scoreboards por jogador
+
+## Balanceamento (fim de semana)
+
+Fonte de verdade de preços/CDs: [`docs/BALANCE.md`](docs/BALANCE.md).  
+Testes: `./gradlew test` (JUnit 5 + MockBukkit).
