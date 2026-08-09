@@ -18,7 +18,7 @@ import java.util.List;
 public class ThunderTeleport {
 
     private static final String ABILITY_NAME = "Thunder Teleport";
-    private static final long COOLDOWN_MS = 15_000;
+    private static final long COOLDOWN_MS = 25_000;
 
     private final JavaPlugin plugin;
     private final AbilityCooldown cooldown = new AbilityCooldown(COOLDOWN_MS);

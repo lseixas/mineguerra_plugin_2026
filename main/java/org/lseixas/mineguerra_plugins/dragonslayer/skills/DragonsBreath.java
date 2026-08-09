@@ -24,7 +24,7 @@ import java.util.UUID;
 public class DragonsBreath {
 
     private static final String ABILITY_NAME = "Dragon's Breath";
-    private static final long COOLDOWN_MS = 30_000;
+    private static final long COOLDOWN_MS = 35_000;
 
     private final JavaPlugin plugin;
     private final AbilityCooldown cooldown = new AbilityCooldown(COOLDOWN_MS);

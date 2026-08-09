@@ -12,7 +12,7 @@ import org.lseixas.mineguerra_plugins.weapons.WeaponMessages;
 public class PowerJump {
 
     private static final String ABILITY_NAME = "Power Jump";
-    private static final long COOLDOWN_MS = 90_000;
+    private static final long COOLDOWN_MS = 80_000;
 
     private final AbilityCooldown cooldown = new AbilityCooldown(COOLDOWN_MS);
 

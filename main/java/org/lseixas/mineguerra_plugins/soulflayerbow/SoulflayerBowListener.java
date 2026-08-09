@@ -29,13 +29,13 @@ public class SoulflayerBowListener implements Listener {
 
     private static final String HELLFIRE_ABILITY = "Hellfire Rain";
     private static final String DANTE_ABILITY = "Dante's Punishment";
-    private static final long HELLFIRE_COOLDOWN_MS = 90_000;
+    private static final long HELLFIRE_COOLDOWN_MS = 75_000;
 
     private final JavaPlugin plugin;
     private final AbilityCooldown hellfireCooldown = new AbilityCooldown(HELLFIRE_COOLDOWN_MS);
     private final Set<UUID> ultimateReady = new HashSet<>();
     private final Random random = new Random();
-    private final double DANTE_CHANCE = 0.2;
+    private final double DANTE_CHANCE = 0.12;
 
     private final HellfireRain hellfireRain;
     private final DantesPunishment dantesPunishment;

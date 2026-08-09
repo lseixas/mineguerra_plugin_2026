@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Identidade canônica de cada arma customizada do evento.
+ * Lore de CD/chance deve bater com docs/BALANCE.md e skills.
  */
 public enum WeaponId {
 
@@ -21,8 +22,8 @@ public enum WeaponId {
                     "§7Cada flecha pode ruir como um sopro infernal.",
                     "",
                     "§eHellfire Rain §7— Agachar + F, próximo tiro",
-                    "§7Cooldown: §c90s",
-                    "§5Dante's Punishment §7— 20% ao acertar flecha"
+                    "§7Cooldown: §c75s",
+                    "§5Dante's Punishment §7— 12% ao acertar flecha"
             ),
             TraderType.NETHER
     ),
@@ -38,9 +39,9 @@ public enum WeaponId {
                     "§5e desperta o §dRage of the Dragon§5.",
                     "",
                     "§dDragon's Breath §7— Clique direito",
-                    "§7Cooldown: §c30s",
+                    "§7Cooldown: §c35s",
                     "§dRage of the Dragon §7— ≤10% vida (passiva)",
-                    "§7Cooldown: §c90s"
+                    "§7Cooldown: §c100s §8(8s de efeitos)"
             ),
             TraderType.END
     ),
@@ -55,8 +56,9 @@ public enum WeaponId {
                     "§7Canaliza raios e o furor do mar.",
                     "",
                     "§eThunder Teleport §7— Agachar + F, arremesso",
-                    "§7Cooldown: §c15s",
-                    "§7Passiva: invoca tempestade ao arremessar"
+                    "§7Cooldown: §c25s",
+                    "§7Passiva: tempestade ~60s ao arremessar",
+                    "§8(raios do TP são efeito visual)"
             ),
             TraderType.OCEANO
     ),
@@ -71,7 +73,7 @@ public enum WeaponId {
                     "§7O impacto ecoa como trovão nas cavernas.",
                     "",
                     "§ePower Jump §7— Clique direito",
-                    "§7Cooldown: §c90s",
+                    "§7Cooldown: §c80s",
                     "§7Passiva: imunidade a dano de queda"
             ),
             TraderType.PROFUNDEZAS

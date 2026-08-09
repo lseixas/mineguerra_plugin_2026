@@ -19,8 +19,8 @@ import java.util.*;
 public class StormRiderListener implements Listener {
 
     private static final String TELEPORT_ABILITY = "Thunder Teleport";
-    /** ~2 minutes (was 12000 / 10 min). */
-    private static final int WEATHER_DURATION_TICKS = 2400;
+    /** ~1 minute storm+thunder after a Storm Rider throw. */
+    private static final int WEATHER_DURATION_TICKS = 1200;
 
     private final JavaPlugin plugin;
     private final ThunderTeleport thunderTeleport;
