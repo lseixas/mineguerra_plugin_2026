@@ -21,7 +21,25 @@ import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Spawn/config de villagers do evento. Preços e maxUses: ver {@code docs/BALANCE.md}.
+ */
 public class VillagerSpawner {
+
+    /** Trades comuns (faucets, gear, livros). */
+    private static final int USES_DEFAULT = 128;
+    /** Cerco / redstone bulk. */
+    private static final int USES_SIEGE = 64;
+    /** Recipe final de arma lendária. */
+    private static final int USES_LEGENDARY = 32;
+
+    private static MerchantRecipe recipe(ItemStack result, int maxUses, ItemStack... ingredients) {
+        MerchantRecipe trade = new MerchantRecipe(result, maxUses);
+        for (ItemStack ingredient : ingredients) {
+            trade.addIngredient(ingredient);
+        }
+        return trade;
+    }
 
     private static void numbifyVillager(Villager villager, Villager.Profession prof) {
         villager.setAI(false);
@@ -34,7 +52,6 @@ public class VillagerSpawner {
         villager.setRecipes(emptyRecipes);
     }
 
-    // Para Wandering Traders
     private static void numbifyTrader(WanderingTrader trader) {
         trader.setAI(false);
         trader.setInvulnerable(true);
@@ -78,32 +95,19 @@ public class VillagerSpawner {
 
     private static List<MerchantRecipe> buildOceanExplorerTrades() {
         List<MerchantRecipe> trades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(new ItemStack(Material.TRIDENT, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.EMERALD, 32));
-        trades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(makeEnchantedBook(1, Enchantment.LOYALTY, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.EMERALD, 16));
-        trades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(makeEnchantedBook(1, Enchantment.CHANNELING, 1), 9999);
-        t3.addIngredient(new ItemStack(Material.EMERALD, 32));
-        trades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(makeEnchantedBook(1, Enchantment.RIPTIDE, 1), 9999);
-        t4.addIngredient(new ItemStack(Material.EMERALD, 32));
-        trades.add(t4);
-
-        MerchantRecipe t5 = new MerchantRecipe(new ItemStack(Material.HEART_OF_THE_SEA, 1), 9999);
-        t5.addIngredient(new ItemStack(Material.EMERALD_BLOCK, 8));
-        trades.add(t5);
-
-        MerchantRecipe t6 = new MerchantRecipe(StormRiderFactory.createStormRider(), 9999);
-        t6.addIngredient(new ItemStack(Material.TRIDENT, 1));
-        t6.addIngredient(new ItemStack(Material.HEART_OF_THE_SEA, 1));
-        trades.add(t6);
-
+        trades.add(recipe(new ItemStack(Material.TRIDENT, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 48)));
+        trades.add(recipe(makeEnchantedBook(1, Enchantment.LOYALTY, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 24)));
+        trades.add(recipe(makeEnchantedBook(1, Enchantment.CHANNELING, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 40)));
+        trades.add(recipe(makeEnchantedBook(1, Enchantment.RIPTIDE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 40)));
+        trades.add(recipe(new ItemStack(Material.HEART_OF_THE_SEA, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD_BLOCK, 12)));
+        trades.add(recipe(StormRiderFactory.createStormRider(), USES_LEGENDARY,
+                new ItemStack(Material.TRIDENT, 1),
+                new ItemStack(Material.HEART_OF_THE_SEA, 1)));
         return filterWeaponTrades(trades);
     }
 
@@ -129,20 +133,13 @@ public class VillagerSpawner {
 
     private static List<MerchantRecipe> buildDeepExplorerTrades() {
         List<MerchantRecipe> trades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(new ItemStack(Material.REINFORCED_DEEPSLATE, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.EMERALD, 16));
-        trades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(new ItemStack(Material.MACE, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.EMERALD, 32));
-        trades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(DoomHammerFactory.createDoomHammer(), 9999);
-        t3.addIngredient(new ItemStack(Material.MACE, 1));
-        t3.addIngredient(new ItemStack(Material.REINFORCED_DEEPSLATE, 64));
-        trades.add(t3);
-
+        trades.add(recipe(new ItemStack(Material.REINFORCED_DEEPSLATE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 4)));
+        trades.add(recipe(new ItemStack(Material.MACE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 48)));
+        trades.add(recipe(DoomHammerFactory.createDoomHammer(), USES_LEGENDARY,
+                new ItemStack(Material.MACE, 1),
+                new ItemStack(Material.REINFORCED_DEEPSLATE, 64)));
         return filterWeaponTrades(trades);
     }
 
@@ -159,24 +156,15 @@ public class VillagerSpawner {
 
     private static List<MerchantRecipe> buildNetherExplorerTrades() {
         List<MerchantRecipe> trades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(new ItemStack(Material.WITHER_SKELETON_SKULL, 3), 9999);
-        t1.addIngredient(new ItemStack(Material.EMERALD_BLOCK, 64));
-        trades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.EMERALD_BLOCK, 64));
-        trades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(SoulflayerBowFactory.createSoulflayerBow(), 9999);
-        t3.addIngredient(new ItemStack(Material.BOW, 1));
-        t3.addIngredient(new ItemStack(Material.NETHER_STAR, 1));
-        trades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(new ItemStack(Material.HAPPY_GHAST_SPAWN_EGG, 1), 9999);
-        t4.addIngredient(new ItemStack(Material.EMERALD, 16));
-        trades.add(t4);
-
+        trades.add(recipe(new ItemStack(Material.WITHER_SKELETON_SKULL, 3), USES_DEFAULT,
+                new ItemStack(Material.EMERALD_BLOCK, 48)));
+        trades.add(recipe(new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD_BLOCK, 48)));
+        trades.add(recipe(SoulflayerBowFactory.createSoulflayerBow(), USES_LEGENDARY,
+                new ItemStack(Material.BOW, 1),
+                new ItemStack(Material.NETHER_STAR, 1)));
+        trades.add(recipe(new ItemStack(Material.HAPPY_GHAST_SPAWN_EGG, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 48)));
         return filterWeaponTrades(trades);
     }
 
@@ -193,32 +181,19 @@ public class VillagerSpawner {
 
     private static List<MerchantRecipe> buildEndExplorerTrades() {
         List<MerchantRecipe> trades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(new ItemStack(Material.ELYTRA, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.EMERALD_BLOCK, 64));
-        trades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(new ItemStack(Material.DRAGON_BREATH, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.EMERALD, 1));
-        trades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(new ItemStack(Material.END_CRYSTAL, 1), 9999);
-        t3.addIngredient(new ItemStack(Material.EMERALD, 32));
-        trades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(new ItemStack(Material.OBSIDIAN, 1), 9999);
-        t4.addIngredient(new ItemStack(Material.EMERALD, 8));
-        trades.add(t4);
-
-        MerchantRecipe t5 = new MerchantRecipe(new ItemStack(Material.ENDER_PEARL, 1), 9999);
-        t5.addIngredient(new ItemStack(Material.EMERALD, 16));
-        trades.add(t5);
-
-        MerchantRecipe t6 = new MerchantRecipe(DragonSlayerFactory.createDragonSlayer(), 9999);
-        t6.addIngredient(new ItemStack(Material.NETHERITE_SWORD, 1));
-        t6.addIngredient(new ItemStack(Material.DRAGON_EGG, 1));
-        trades.add(t6);
-
+        trades.add(recipe(new ItemStack(Material.ELYTRA, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD_BLOCK, 64)));
+        trades.add(recipe(new ItemStack(Material.DRAGON_BREATH, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 8)));
+        trades.add(recipe(new ItemStack(Material.END_CRYSTAL, 1), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 48)));
+        trades.add(recipe(new ItemStack(Material.OBSIDIAN, 4), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 12)));
+        trades.add(recipe(new ItemStack(Material.ENDER_PEARL, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 10)));
+        trades.add(recipe(DragonSlayerFactory.createDragonSlayer(), USES_LEGENDARY,
+                new ItemStack(Material.NETHERITE_SWORD, 1),
+                new ItemStack(Material.DRAGON_EGG, 1)));
         return filterWeaponTrades(trades);
     }
 
@@ -238,155 +213,82 @@ public class VillagerSpawner {
         setMerchantName(villager, ChatColor.YELLOW + "Caçador de Monstros");
 
         List<MerchantRecipe> trades = new ArrayList<>();
-        MerchantRecipe t1 = new MerchantRecipe(new ItemStack(Material.EMERALD, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.ROTTEN_FLESH, 2));
-        trades.add(t1);
-        MerchantRecipe t2 = new MerchantRecipe(new ItemStack(Material.EMERALD, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.BONE, 2));
-        trades.add(t2);
-        MerchantRecipe t3 = new MerchantRecipe(new ItemStack(Material.EMERALD, 3), 9999);
-        t3.addIngredient(new ItemStack(Material.SPIDER_EYE, 1));
-        trades.add(t3);
-        MerchantRecipe t4 = new MerchantRecipe(new ItemStack(Material.EMERALD, 1), 9999);
-        t4.addIngredient(new ItemStack(Material.GUNPOWDER, 1));
-        trades.add(t4);
+        trades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.ROTTEN_FLESH, 12)));
+        trades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.BONE, 12)));
+        trades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.SPIDER_EYE, 1)));
+        trades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.GUNPOWDER, 4)));
         villager.setRecipes(trades);
     }
 
     public static void spawnEngenheiro(Location loc) {
-
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         numbifyVillager(villager, Villager.Profession.FLETCHER);
-
         villager.setCustomName(ChatColor.BLACK + "Engenheiro");
         villager.setCustomNameVisible(true);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
         List<MerchantRecipe> engineerTrades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(
-                new ItemStack(Material.TNT, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(
-                new ItemStack(Material.PISTON, 8), 9999);
-        t2.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(
-                new ItemStack(Material.STICKY_PISTON, 8), 9999);
-        t3.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(
-                new ItemStack(Material.REPEATER, 16), 9999);
-        t4.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t4);
-
-        MerchantRecipe t5 = new MerchantRecipe(
-                new ItemStack(Material.COMPARATOR, 16), 9999);
-        t5.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t5);
-
-        MerchantRecipe t6 = new MerchantRecipe(
-                new ItemStack(Material.DISPENSER, 16), 9999);
-        t6.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t6);
-
-        MerchantRecipe t7 = new MerchantRecipe(
-                new ItemStack(Material.SLIME_BLOCK, 32), 9999);
-        t7.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t7);
-
-        MerchantRecipe t8 = new MerchantRecipe(
-                new ItemStack(Material.HONEY_BLOCK, 32), 9999);
-        t8.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t8);
-
-        MerchantRecipe t9 = new MerchantRecipe(
-                new ItemStack(Material.SCULK_SENSOR, 16), 9999);
-        t9.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t9);
-
-        MerchantRecipe t10 = new MerchantRecipe(
-                new ItemStack(Material.OBSERVER, 8), 9999);
-        t10.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t10);
-
-        MerchantRecipe t11 = new MerchantRecipe(
-                new ItemStack(Material.CALIBRATED_SCULK_SENSOR, 8), 9999);
-        t11.addIngredient(new ItemStack(Material.EMERALD, 1));
-        engineerTrades.add(t11);
-
+        engineerTrades.add(recipe(new ItemStack(Material.TNT, 1), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 12)));
+        engineerTrades.add(recipe(new ItemStack(Material.PISTON, 8), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 4)));
+        engineerTrades.add(recipe(new ItemStack(Material.STICKY_PISTON, 8), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 4)));
+        engineerTrades.add(recipe(new ItemStack(Material.REPEATER, 8), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 3)));
+        engineerTrades.add(recipe(new ItemStack(Material.COMPARATOR, 8), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 3)));
+        engineerTrades.add(recipe(new ItemStack(Material.DISPENSER, 8), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 3)));
+        engineerTrades.add(recipe(new ItemStack(Material.SLIME_BLOCK, 16), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 6)));
+        engineerTrades.add(recipe(new ItemStack(Material.HONEY_BLOCK, 16), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 6)));
+        engineerTrades.add(recipe(new ItemStack(Material.SCULK_SENSOR, 4), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 6)));
+        engineerTrades.add(recipe(new ItemStack(Material.OBSERVER, 8), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 4)));
+        engineerTrades.add(recipe(new ItemStack(Material.CALIBRATED_SCULK_SENSOR, 4), USES_SIEGE,
+                new ItemStack(Material.EMERALD, 8)));
         villager.setRecipes(engineerTrades);
-
     }
 
     public static void spawnFerreiro(Location loc) {
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         numbifyVillager(villager, Villager.Profession.TOOLSMITH);
-
         villager.setCustomName(ChatColor.DARK_GRAY + "Ferreiro");
         villager.setCustomNameVisible(true);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
         List<MerchantRecipe> smithTrades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_HELMET, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.EMERALD, 20));
-        smithTrades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_CHESTPLATE, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.EMERALD, 35));
-        smithTrades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_LEGGINGS, 1), 9999);
-        t3.addIngredient(new ItemStack(Material.EMERALD, 30));
-        smithTrades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_BOOTS, 1), 9999);
-        t4.addIngredient(new ItemStack(Material.EMERALD, 15));
-        smithTrades.add(t4);
-
-        MerchantRecipe t5 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_SWORD, 1), 9999);
-        t5.addIngredient(new ItemStack(Material.EMERALD, 7));
-        smithTrades.add(t5);
-
-        MerchantRecipe t6 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_PICKAXE, 1), 9999);
-        t6.addIngredient(new ItemStack(Material.EMERALD, 12));
-        smithTrades.add(t6);
-
-        MerchantRecipe t7 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_AXE, 1), 9999);
-        t7.addIngredient(new ItemStack(Material.EMERALD, 12));
-        smithTrades.add(t7);
-
-        MerchantRecipe t8 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_SHOVEL, 1), 9999);
-        t8.addIngredient(new ItemStack(Material.EMERALD, 7));
-        smithTrades.add(t8);
-
-        MerchantRecipe t9 = new MerchantRecipe(
-                new ItemStack(Material.DIAMOND_HOE, 1), 9999);
-        t9.addIngredient(new ItemStack(Material.EMERALD, 7));
-        smithTrades.add(t9);
-
-        MerchantRecipe t10 = new MerchantRecipe(
-                new ItemStack(Material.NETHERITE_INGOT, 1), 9999);
-        t10.addIngredient(new ItemStack(Material.EMERALD_BLOCK, 32));
-        smithTrades.add(t10);
-
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_HELMET, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 20)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_CHESTPLATE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 35)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_LEGGINGS, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 30)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_BOOTS, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 15)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_SWORD, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 14)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_PICKAXE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 16)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_AXE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 16)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_SHOVEL, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 11)));
+        smithTrades.add(recipe(new ItemStack(Material.DIAMOND_HOE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 11)));
+        smithTrades.add(recipe(new ItemStack(Material.NETHERITE_INGOT, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD_BLOCK, 32)));
         villager.setRecipes(smithTrades);
     }
 
@@ -394,44 +296,24 @@ public class VillagerSpawner {
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         numbifyVillager(villager, Villager.Profession.LIBRARIAN);
-
         villager.setCustomName(ChatColor.LIGHT_PURPLE + "Bibliotecário");
         villager.setCustomNameVisible(true);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
         List<MerchantRecipe> libraryTrades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(
-                makeEnchantedBook(1, Enchantment.EFFICIENCY, 3), 9999);
-        t1.addIngredient(new ItemStack(Material.EMERALD, 32));
-        libraryTrades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(
-                makeEnchantedBook(1, Enchantment.UNBREAKING, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.EMERALD, 16));
-        libraryTrades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(
-                makeEnchantedBook(1, Enchantment.PROTECTION, 2), 9999);
-        t3.addIngredient(new ItemStack(Material.EMERALD, 32));
-        libraryTrades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(
-                makeEnchantedBook(1, Enchantment.SHARPNESS, 2), 9999);
-        t4.addIngredient(new ItemStack(Material.EMERALD, 32));
-        libraryTrades.add(t4);
-
-        MerchantRecipe t5 = new MerchantRecipe(
-                makeEnchantedBook(1, Enchantment.MENDING, 1), 9999);
-        t5.addIngredient(new ItemStack(Material.EMERALD, 32));
-        libraryTrades.add(t5);
-
-        MerchantRecipe t6 = new MerchantRecipe(
-                makeEnchantedBook(1, Enchantment.FORTUNE, 1), 9999);
-        t6.addIngredient(new ItemStack(Material.EMERALD, 32));
-        libraryTrades.add(t6);
-
+        libraryTrades.add(recipe(makeEnchantedBook(1, Enchantment.EFFICIENCY, 3), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 32)));
+        libraryTrades.add(recipe(makeEnchantedBook(1, Enchantment.UNBREAKING, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 16)));
+        libraryTrades.add(recipe(makeEnchantedBook(1, Enchantment.PROTECTION, 2), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 32)));
+        libraryTrades.add(recipe(makeEnchantedBook(1, Enchantment.SHARPNESS, 2), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 32)));
+        libraryTrades.add(recipe(makeEnchantedBook(1, Enchantment.MENDING, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 32)));
+        libraryTrades.add(recipe(makeEnchantedBook(1, Enchantment.FORTUNE, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 32)));
         villager.setRecipes(libraryTrades);
     }
 
@@ -439,34 +321,20 @@ public class VillagerSpawner {
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         numbifyVillager(villager, Villager.Profession.FISHERMAN);
-
         villager.setCustomName(ChatColor.AQUA + "Pescador");
         villager.setCustomNameVisible(true);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
         List<MerchantRecipe> fisherTrades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 3), 9999);
-        t1.addIngredient(new ItemStack(Material.COD, 1));
-        fisherTrades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 3), 9999);
-        t2.addIngredient(new ItemStack(Material.SALMON, 1));
-        fisherTrades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 7), 9999);
-        t3.addIngredient(new ItemStack(Material.TROPICAL_FISH, 1));
-        fisherTrades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 10), 9999);
-        t4.addIngredient(new ItemStack(Material.PUFFERFISH, 1));
-        fisherTrades.add(t4);
-
+        fisherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.COD, 8)));
+        fisherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.SALMON, 8)));
+        fisherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.TROPICAL_FISH, 4)));
+        fisherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.PUFFERFISH, 3)));
         villager.setRecipes(fisherTrades);
     }
 
@@ -474,70 +342,41 @@ public class VillagerSpawner {
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         numbifyVillager(villager, Villager.Profession.WEAPONSMITH);
-
         villager.setCustomName(ChatColor.GRAY + "Mineiro");
         villager.setCustomNameVisible(true);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
         List<MerchantRecipe> minerTrades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.COPPER_INGOT, 2));
-        minerTrades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 2), 9999);
-        t2.addIngredient(new ItemStack(Material.IRON_INGOT, 2));
-        minerTrades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 3), 9999);
-        t3.addIngredient(new ItemStack(Material.GOLD_INGOT, 2));
-        minerTrades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 5), 9999);
-        t4.addIngredient(new ItemStack(Material.DIAMOND, 1));
-        minerTrades.add(t4);
-
+        minerTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.COPPER_INGOT, 4)));
+        minerTrades.add(recipe(new ItemStack(Material.EMERALD, 2), USES_DEFAULT,
+                new ItemStack(Material.IRON_INGOT, 2)));
+        minerTrades.add(recipe(new ItemStack(Material.EMERALD, 3), USES_DEFAULT,
+                new ItemStack(Material.GOLD_INGOT, 2)));
+        minerTrades.add(recipe(new ItemStack(Material.EMERALD, 4), USES_DEFAULT,
+                new ItemStack(Material.DIAMOND, 1)));
         villager.setRecipes(minerTrades);
     }
 
     public static void spawnFazendeiro(Location loc) {
-
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         numbifyVillager(villager, Villager.Profession.FARMER);
-
         villager.setCustomName(ChatColor.GREEN + "Fazendeiro");
         villager.setCustomNameVisible(true);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
         List<MerchantRecipe> farmerTrades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.WHEAT, 5));
-        farmerTrades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.POTATO, 12));
-        farmerTrades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t3.addIngredient(new ItemStack(Material.CARROT, 12));
-        farmerTrades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t4.addIngredient(new ItemStack(Material.SUGAR_CANE, 12));
-        farmerTrades.add(t4);
-
+        farmerTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.WHEAT, 15)));
+        farmerTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.POTATO, 24)));
+        farmerTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.CARROT, 24)));
+        farmerTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.SUGAR_CANE, 24)));
         villager.setRecipes(farmerTrades);
     }
 
@@ -545,39 +384,22 @@ public class VillagerSpawner {
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         numbifyVillager(villager, Villager.Profession.BUTCHER);
-
         villager.setCustomName(ChatColor.WHITE + "Açougueiro");
         villager.setCustomNameVisible(true);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
         List<MerchantRecipe> butcherTrades = new ArrayList<>();
-
-        MerchantRecipe t1 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t1.addIngredient(new ItemStack(Material.CHICKEN, 3));
-        butcherTrades.add(t1);
-
-        MerchantRecipe t2 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t2.addIngredient(new ItemStack(Material.PORKCHOP, 2));
-        butcherTrades.add(t2);
-
-        MerchantRecipe t3 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t3.addIngredient(new ItemStack(Material.BEEF, 2));
-        butcherTrades.add(t3);
-
-        MerchantRecipe t4 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t4.addIngredient(new ItemStack(Material.MUTTON, 2));
-        butcherTrades.add(t4);
-
-        MerchantRecipe t5 = new MerchantRecipe(
-                new ItemStack(Material.EMERALD, 1), 9999);
-        t5.addIngredient(new ItemStack(Material.RABBIT, 1));
-        butcherTrades.add(t5);
-
+        butcherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.CHICKEN, 8)));
+        butcherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.PORKCHOP, 8)));
+        butcherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.BEEF, 8)));
+        butcherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.MUTTON, 8)));
+        butcherTrades.add(recipe(new ItemStack(Material.EMERALD, 1), USES_DEFAULT,
+                new ItemStack(Material.RABBIT, 8)));
         villager.setRecipes(butcherTrades);
     }
 
@@ -670,4 +492,3 @@ public class VillagerSpawner {
         }
     }
 }
-
