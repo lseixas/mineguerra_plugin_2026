@@ -72,7 +72,7 @@ public class VillagerSpawner {
     private static void setMerchantName(Merchant merchant, String name) {
         if (merchant instanceof LivingEntity living) {
             living.setCustomName(name);
-            living.setCustomNameVisible(true);
+            living.setCustomNameVisible(false);
         }
     }
 
@@ -229,7 +229,7 @@ public class VillagerSpawner {
 
         numbifyVillager(villager, Villager.Profession.FLETCHER);
         villager.setCustomName(ChatColor.BLACK + "Engenheiro");
-        villager.setCustomNameVisible(true);
+        villager.setCustomNameVisible(false);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
@@ -264,7 +264,7 @@ public class VillagerSpawner {
 
         numbifyVillager(villager, Villager.Profession.TOOLSMITH);
         villager.setCustomName(ChatColor.DARK_GRAY + "Ferreiro");
-        villager.setCustomNameVisible(true);
+        villager.setCustomNameVisible(false);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
@@ -297,7 +297,7 @@ public class VillagerSpawner {
 
         numbifyVillager(villager, Villager.Profession.LIBRARIAN);
         villager.setCustomName(ChatColor.LIGHT_PURPLE + "Bibliotecário");
-        villager.setCustomNameVisible(true);
+        villager.setCustomNameVisible(false);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
@@ -322,7 +322,7 @@ public class VillagerSpawner {
 
         numbifyVillager(villager, Villager.Profession.FISHERMAN);
         villager.setCustomName(ChatColor.AQUA + "Pescador");
-        villager.setCustomNameVisible(true);
+        villager.setCustomNameVisible(false);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
@@ -343,7 +343,7 @@ public class VillagerSpawner {
 
         numbifyVillager(villager, Villager.Profession.WEAPONSMITH);
         villager.setCustomName(ChatColor.GRAY + "Mineiro");
-        villager.setCustomNameVisible(true);
+        villager.setCustomNameVisible(false);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
@@ -364,7 +364,7 @@ public class VillagerSpawner {
 
         numbifyVillager(villager, Villager.Profession.FARMER);
         villager.setCustomName(ChatColor.GREEN + "Fazendeiro");
-        villager.setCustomNameVisible(true);
+        villager.setCustomNameVisible(false);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
@@ -385,7 +385,7 @@ public class VillagerSpawner {
 
         numbifyVillager(villager, Villager.Profession.BUTCHER);
         villager.setCustomName(ChatColor.WHITE + "Açougueiro");
-        villager.setCustomNameVisible(true);
+        villager.setCustomNameVisible(false);
         villager.setAdult();
         villager.setVillagerLevel(5);
 
