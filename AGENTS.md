@@ -23,6 +23,7 @@ Plugin Spigot/Paper para o evento **Minecraft Guerra**. Foco atual: armas custom
 | Comandos de guerra | `fluxCommands/` |
 | Documentação | [`docs/`](docs/) |
 | Resource pack (CMD 10001–10004) | [`resourcepack/MineGuerra_Weapons/`](resourcepack/MineGuerra_Weapons/) — [`docs/RESOURCE_PACK.md`](docs/RESOURCE_PACK.md) |
+| Client audit (Fabric allowlist) | `clientaudit/` — [`docs/CLIENT_AUDIT.md`](docs/CLIENT_AUDIT.md) (`enabled: false` até o mod existir) |
 
 Cada arma: `*Factory` (item), `*Listener` (eventos + estado), `skills/` (efeitos).
 

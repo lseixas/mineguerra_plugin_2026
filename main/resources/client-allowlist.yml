@@ -1,0 +1,55 @@
+# Allowlist estrita do cliente Fabric 1.21.8 (Guerra).
+# Copiado para plugins/mineguerra_plugins/client-allowlist.yml na primeira subida.
+# Ligar enabled só quando o mod mineguerra-client-audit existir.
+
+enabled: false
+timeoutTicks: 100
+bypassPermission: mineguerra.admin
+mode: exact
+expectedMcVersion: "1.21.8"
+
+requiredMods:
+  - mineguerra-client-audit
+
+# IDs do fabric.mod.json (não o slug do Modrinth).
+allowedMods:
+  - mineguerra-client-audit
+  - modmenu
+  - yet_another_config_lib_v3
+  - sodium
+  - lithium
+  - ferritecore
+  - entityculling
+  - immediatelyfast
+  - moreculling
+  - dynamic_fps
+  - krypton
+  - reeses-sodium-options
+  - iris
+  - nochatreports
+  - debugify
+  - ok_zoomer
+
+ignoredModIds:
+  - minecraft
+  - java
+  - fabricloader
+  - mixinextras
+
+ignoredModIdPrefixes:
+  - fabric-
+
+# SHA-1 hex dos zips permitidos (além de vanilla/server). Vazio = só vanilla.
+allowedPackSha1: []
+
+# Vazio = qualquer shader Iris, exceto bannedShaderSubstrings.
+allowedShaders: []
+
+bannedShaderSubstrings:
+  - xray
+  - cave finder
+  - cave-finder
+  - cave_finder
+  - fullbright
+  - wallhack
+  - esp

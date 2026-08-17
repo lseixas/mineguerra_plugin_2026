@@ -53,6 +53,8 @@ Copiar `plugin_mineguerra.jar` para `plugins/` do servidor de teste.
 
 Resource pack das lendárias: [`RESOURCE_PACK.md`](RESOURCE_PACK.md) (`resourcepack/MineGuerra_Weapons/`).
 
+Allowlist Fabric (handshake futuro): [`CLIENT_AUDIT.md`](CLIENT_AUDIT.md).
+
 ## Escopo fora das armas (referência)
 
 - `fluxCommands/StartGuerraCommand` — orquestração do evento
