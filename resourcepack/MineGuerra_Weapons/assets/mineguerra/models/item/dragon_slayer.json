@@ -1,0 +1,3344 @@
+{
+  "__comment": "Designed by ThirtyFangs with Cubik Studio - https://cubik.studio",
+  "textures": {
+    "demon_lord_sword": "mineguerra:item/dragon_slayer",
+    "particle": "mineguerra:item/dragon_slayer"
+  },
+  "elements": [
+    {
+      "__comment": "Box1",
+      "from": [
+        -1,
+        -0.5,
+        -1
+      ],
+      "to": [
+        1,
+        1,
+        1
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            15,
+            2,
+            16
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1,
+            15,
+            2,
+            16
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            3,
+            13,
+            4,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            3,
+            13,
+            4,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            13,
+            4,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            3,
+            13,
+            4,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box2",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        3,
+        0.5,
+        3
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            7,
+            15,
+            8,
+            16
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            7,
+            15,
+            8,
+            16
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            7,
+            15,
+            8,
+            15.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            6,
+            12.5,
+            7,
+            13
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            6,
+            12.5,
+            7,
+            13
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            6,
+            12.5,
+            7,
+            13
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box3",
+      "from": [
+        2,
+        -0.5,
+        2
+      ],
+      "to": [
+        4,
+        1,
+        4
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box4",
+      "from": [
+        0,
+        -0.5,
+        0
+      ],
+      "to": [
+        2,
+        1,
+        2
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            2,
+            11.5,
+            3,
+            12
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2,
+            11.5,
+            3,
+            12
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            2,
+            11.5,
+            3,
+            12
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            3,
+            10.5,
+            4,
+            11
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box5",
+      "from": [
+        -1,
+        0,
+        3
+      ],
+      "to": [
+        1.5,
+        0.5,
+        4
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        4.5,
+        0.5,
+        4.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        3.5,
+        0,
+        3.5
+      ],
+      "to": [
+        5,
+        0.5,
+        5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        5.5,
+        0.5,
+        5.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        4.5,
+        0,
+        4.5
+      ],
+      "to": [
+        6,
+        0.5,
+        6
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        6.5,
+        0.5,
+        6.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        5.5,
+        0,
+        5.5
+      ],
+      "to": [
+        7,
+        0.5,
+        7
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        7.5,
+        0.5,
+        7.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        6.5,
+        0,
+        6.5
+      ],
+      "to": [
+        8,
+        0.5,
+        8
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        7,
+        0,
+        7
+      ],
+      "to": [
+        8.5,
+        0.5,
+        8.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        7.5,
+        0,
+        7.5
+      ],
+      "to": [
+        9,
+        0.5,
+        9
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        8,
+        0,
+        8
+      ],
+      "to": [
+        9.5,
+        0.5,
+        9.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        8.5,
+        0,
+        8.5
+      ],
+      "to": [
+        10,
+        0.5,
+        10
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        9,
+        0,
+        9
+      ],
+      "to": [
+        10.5,
+        0.5,
+        10.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        9.5,
+        0,
+        9.5
+      ],
+      "to": [
+        11,
+        0.5,
+        11
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        10,
+        0,
+        10
+      ],
+      "to": [
+        11.5,
+        0.5,
+        11.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        10.5,
+        0,
+        10.5
+      ],
+      "to": [
+        12,
+        0.5,
+        12
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        11,
+        0,
+        11
+      ],
+      "to": [
+        12.5,
+        0.5,
+        12.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        11.5,
+        0,
+        11.5
+      ],
+      "to": [
+        13,
+        0.5,
+        13
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box1",
+      "from": [
+        -2,
+        0,
+        -2
+      ],
+      "to": [
+        0,
+        0.5,
+        0
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            14,
+            2,
+            15
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1,
+            14,
+            2,
+            15
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            3,
+            10.5,
+            4,
+            11
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            3,
+            10.5,
+            4,
+            11
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            10.5,
+            4,
+            11
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            1,
+            14,
+            2,
+            14.5
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box1",
+      "from": [
+        -4,
+        -0.5,
+        -4
+      ],
+      "to": [
+        -2,
+        1,
+        -2
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            0,
+            13,
+            1,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            0,
+            13,
+            1,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            0,
+            13,
+            1,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            0,
+            13,
+            1,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        12,
+        0,
+        12
+      ],
+      "to": [
+        13.5,
+        0.5,
+        13.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        12.5,
+        0,
+        12.5
+      ],
+      "to": [
+        14,
+        0.5,
+        14
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        13,
+        0,
+        13
+      ],
+      "to": [
+        14.5,
+        0.5,
+        14.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        13.5,
+        0,
+        13.5
+      ],
+      "to": [
+        15,
+        0.5,
+        15
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        15.5,
+        0,
+        15.5
+      ],
+      "to": [
+        17,
+        0.5,
+        17
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        18.5,
+        0,
+        19
+      ],
+      "to": [
+        20.5,
+        0.5,
+        20
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box5",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        3.5,
+        0.5,
+        3.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            5,
+            11.5,
+            6,
+            12
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            5,
+            11.5,
+            6,
+            12
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            6,
+            11.5,
+            7,
+            12
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            5,
+            11.5,
+            6,
+            12
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        14,
+        0,
+        14
+      ],
+      "to": [
+        15.5,
+        0.5,
+        15.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        14.5,
+        0,
+        14.5
+      ],
+      "to": [
+        16,
+        0.5,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        15,
+        0,
+        15
+      ],
+      "to": [
+        16.5,
+        0.5,
+        16.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        16,
+        0,
+        16
+      ],
+      "to": [
+        17.5,
+        0.5,
+        17.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        18.5,
+        0,
+        18.5
+      ],
+      "to": [
+        20,
+        0.5,
+        19.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        18,
+        0,
+        18
+      ],
+      "to": [
+        19.5,
+        0.5,
+        19.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        16.5,
+        0,
+        16.5
+      ],
+      "to": [
+        18,
+        0.5,
+        18
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        17,
+        0,
+        17
+      ],
+      "to": [
+        18.5,
+        0.5,
+        18.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        17.5,
+        0,
+        17.5
+      ],
+      "to": [
+        19,
+        0.5,
+        19
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            1.5,
+            7.5,
+            2,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            7.5,
+            3,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            7.5,
+            3.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box5",
+      "from": [
+        -2.5,
+        0,
+        -1
+      ],
+      "to": [
+        -1.5,
+        0.5,
+        2.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box1",
+      "from": [
+        -3,
+        0,
+        -3
+      ],
+      "to": [
+        -1,
+        0.5,
+        -1
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            14,
+            2,
+            15
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1,
+            14,
+            2,
+            15
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            3,
+            10.5,
+            4,
+            11
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            3,
+            10.5,
+            4,
+            11
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            3,
+            10.5,
+            4,
+            11
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            1,
+            14,
+            2,
+            14.5
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box5",
+      "from": [
+        -2,
+        0,
+        2.5
+      ],
+      "to": [
+        -1,
+        0.5,
+        3.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            6,
+            13,
+            7,
+            13.5
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        2,
+        0,
+        3
+      ],
+      "to": [
+        3.5,
+        0.5,
+        4.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box9",
+      "from": [
+        3,
+        0,
+        4.5
+      ],
+      "to": [
+        3.5,
+        0.5,
+        5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            7.5,
+            4,
+            10
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            4,
+            7.5,
+            4.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            5,
+            7.5,
+            5.5,
+            8
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    },
+    {
+      "__comment": "Box61",
+      "from": [
+        1.5,
+        -0.75,
+        1
+      ],
+      "to": [
+        2.5,
+        1.25,
+        2
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "up": {
+          "uv": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "north": {
+          "uv": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "south": {
+          "uv": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "west": {
+          "uv": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "texture": "#demon_lord_sword"
+        },
+        "east": {
+          "uv": [
+            0,
+            13,
+            1,
+            13.75
+          ],
+          "texture": "#demon_lord_sword"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        41,
+        180,
+        88
+      ],
+      "translation": [
+        7.6497,
+        9.041,
+        0.9
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        41,
+        180,
+        -98
+      ],
+      "translation": [
+        -8.35,
+        8.3453,
+        0.2043
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        72,
+        180,
+        97
+      ],
+      "translation": [
+        18.781,
+        1.3911,
+        -8.347
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        160,
+        -180,
+        99
+      ],
+      "translation": [
+        13.91,
+        4.1738,
+        -4.173
+      ]
+    },
+    "gui": {
+      "rotation": [
+        92,
+        94,
+        14
+      ],
+      "translation": [
+        2.0869,
+        1.3913,
+        4.8695
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    },
+    "ground": {
+      "rotation": [
+        50,
+        0,
+        -90
+      ],
+      "translation": [
+        7.6517,
+        9.7391,
+        0.6956
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        -33,
+        78,
+        114
+      ],
+      "translation": [
+        0,
+        3.4782,
+        6.9565
+      ]
+    }
+  },
+  "credit": "Model from ThirtyFangs' 3D Swords (Demon Lord Sword), adapted for MineGuerra Dragon Slayer"
+}

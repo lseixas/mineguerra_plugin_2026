@@ -1,0 +1,77 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 10003,
+        "model": {
+          "type": "minecraft:select",
+          "property": "minecraft:display_context",
+          "cases": [
+            {
+              "when": [
+                "gui",
+                "ground",
+                "fixed",
+                "on_shelf"
+              ],
+              "model": {
+                "type": "minecraft:model",
+                "model": "mineguerra:item/storm_rider_gui"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:condition",
+            "property": "minecraft:using_item",
+            "on_false": {
+              "type": "minecraft:model",
+              "model": "mineguerra:item/storm_rider"
+            },
+            "on_true": {
+              "type": "minecraft:model",
+              "model": "mineguerra:item/storm_rider_throwing"
+            }
+          }
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:select",
+      "cases": [
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "minecraft:item/trident"
+          },
+          "when": [
+            "gui",
+            "ground",
+            "fixed"
+          ]
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:condition",
+        "on_false": {
+          "type": "minecraft:special",
+          "base": "minecraft:item/trident_in_hand",
+          "model": {
+            "type": "minecraft:trident"
+          }
+        },
+        "on_true": {
+          "type": "minecraft:special",
+          "base": "minecraft:item/trident_throwing",
+          "model": {
+            "type": "minecraft:trident"
+          }
+        },
+        "property": "minecraft:using_item"
+      },
+      "property": "minecraft:display_context"
+    }
+  }
+}

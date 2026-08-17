@@ -109,9 +109,11 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 
 ## Tabela CMD
 
-| ID enum | CMD |
-|---------|-----|
-| `SOULFLAYER_BOW` | 10001 |
-| `DRAGON_SLAYER` | 10002 |
-| `STORM_RIDER` | 10003 |
-| `DOOM_HAMMER` | 10004 |
+| ID enum | CMD | Resource pack |
+|---------|-----|---------------|
+| `SOULFLAYER_BOW` | 10001 | Elite Power Bow |
+| `DRAGON_SLAYER` | 10002 | ThirtyFangs Demon Lord Sword |
+| `STORM_RIDER` | 10003 | rainbow's 3D Trident |
+| `DOOM_HAMMER` | 10004 | Mace Fusion |
+
+Pack: [`resourcepack/MineGuerra_Weapons/`](../resourcepack/MineGuerra_Weapons/) — ver [`RESOURCE_PACK.md`](RESOURCE_PACK.md).

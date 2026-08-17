@@ -50,6 +50,8 @@ Arquivo: `main/java/org/lseixas/mineguerra_plugins/traders/VillagerSpawner.java`
 
 Copiar `plugin_mineguerra.jar` para `plugins/` do servidor de teste.
 
+Resource pack das lendárias: [`RESOURCE_PACK.md`](RESOURCE_PACK.md) (`resourcepack/MineGuerra_Weapons/`).
+
 ## Escopo fora das armas (referência)
 
 - `fluxCommands/StartGuerraCommand` — orquestração do evento

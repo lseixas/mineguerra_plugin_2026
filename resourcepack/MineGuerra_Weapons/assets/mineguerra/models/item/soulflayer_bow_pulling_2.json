@@ -1,0 +1,6 @@
+{
+  "parent": "mineguerra:item/soulflayer_bow",
+  "textures": {
+    "layer0": "mineguerra:item/soulflayer_bow_pulling_2"
+  }
+}

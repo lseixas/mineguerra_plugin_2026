@@ -21,6 +21,7 @@ Plugin Spigot/Paper para o evento **Minecraft Guerra**. Foco atual: armas custom
 | Bandeiras + armas lendárias | `teams/flag/`, `weapons/WeaponOwnershipService` — [`docs/FLAGS_AND_LEGENDARY_WEAPONS.md`](docs/FLAGS_AND_LEGENDARY_WEAPONS.md) |
 | Comandos de guerra | `fluxCommands/` |
 | Documentação | [`docs/`](docs/) |
+| Resource pack (CMD 10001–10004) | [`resourcepack/MineGuerra_Weapons/`](resourcepack/MineGuerra_Weapons/) — [`docs/RESOURCE_PACK.md`](docs/RESOURCE_PACK.md) |
 
 Cada arma: `*Factory` (item), `*Listener` (eventos + estado), `skills/` (efeitos).
 
