@@ -87,6 +87,7 @@ Com a ferramenta (bastão): **clique no chão** = spawn do NPC; **clique no vill
 | `mineguerra.team` | Criar/gerir times e bandeiras |
 | `mineguerra.admin` | Leaderboard, kills, status/reset de armas |
 | `mineguerra.tradertool` | Ferramentas de villager |
+| `mineguerra.nospawn` | Delimitador de áreas sem spawn |
 | `mineguerra.spawnvillager` | Comando legado `/spawnvillager` |
 
 Com LuckPerms:
@@ -95,6 +96,7 @@ Com LuckPerms:
 /lp user <nick> permission set mineguerra.team true
 /lp user <nick> permission set mineguerra.admin true
 /lp user <nick> permission set mineguerra.tradertool true
+/lp user <nick> permission set mineguerra.nospawn true
 ```
 
 Os comandos `/grant*` de armas (testes) tipicamente são usados por **OP**.
@@ -137,6 +139,7 @@ ID do time: apenas `a-z`, `0-9`, `_`, `-` (até 32 caracteres).
 |---------|-----------|
 | `/grantTraderTool <tipo>` | Bastão do villager (`oceano`, `profundezas`, `nether`, `end`, …) |
 | `/grantTraderToolKit` | Kit dos 4 exploradores de armas |
+| `/grantNoSpawnTool [tool\|list\|clear]` | Lightning rod: área sem spawn de mobs |
 | `/spawnvillager <tipo>` | Spawn direto (legado) |
 | `/grantSoulflayerBow` | Dá o arco (teste; **não** registra posse lendária) |
 | `/grantDragonSlayer` | Dá a espada |

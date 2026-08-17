@@ -22,6 +22,8 @@ import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagBreakListener;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagRespawnListener;
 import org.lseixas.mineguerra_plugins.traders.WeaponTraderRefreshListener;
+import org.lseixas.mineguerra_plugins.nospawn.GrantNoSpawnToolCommand;
+import org.lseixas.mineguerra_plugins.nospawn.NoSpawnRegistry;
 import org.lseixas.mineguerra_plugins.weapons.LegendaryWeaponListener;
 import org.lseixas.mineguerra_plugins.weapons.WeaponRegistry;
 
@@ -32,6 +34,7 @@ public final class Mineguerra_plugins extends JavaPlugin {
 
         WeaponRegistry.init(this);
         TeamRegistry.init(this);
+        NoSpawnRegistry.init(this);
 
         getServer().getPluginManager().registerEvents(new SoulflayerBowListener(this), this);
         getServer().getPluginManager().registerEvents(new DragonSlayerListener(this), this);
@@ -69,10 +72,16 @@ public final class Mineguerra_plugins extends JavaPlugin {
         getCommand("mg").setExecutor(mgCommand);
         getCommand("mg").setTabCompleter(mgCommand);
 
+        GrantNoSpawnToolCommand noSpawnCommand =
+                new GrantNoSpawnToolCommand(NoSpawnRegistry.tools(), NoSpawnRegistry.zones());
+        getCommand("grantNoSpawnTool").setExecutor(noSpawnCommand);
+        getCommand("grantNoSpawnTool").setTabCompleter(noSpawnCommand);
+
     }
 
     @Override
     public void onDisable() {
+        NoSpawnRegistry.shutdown();
         TeamRegistry.shutdown();
         getLogger().info("Plugin desativado!");
 

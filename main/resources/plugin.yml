@@ -47,6 +47,11 @@ commands:
     description: Admin MineGuerra (leaderboard, kills, weapons, revive)
     usage: /mg <leaderboard|kills|weapons|revive> ...
     permission: mineguerra.admin
+  grantNoSpawnTool:
+    description: Ferramenta para delimitar areas sem spawn de mobs
+    usage: /grantNoSpawnTool [tool|list|clear]
+    permission: mineguerra.nospawn
+    aliases: [ gnst, nospawntool ]
 permissions:
   mineguerra.admin:
     description: Admin do evento (grants, mg, startGuerra)
@@ -56,6 +61,9 @@ permissions:
     default: op
   mineguerra.tradertool:
     description: Ferramentas de spawn/config de villagers
+    default: op
+  mineguerra.nospawn:
+    description: Delimitar areas sem spawn de mobs
     default: op
   mineguerra.spawnvillager:
     description: Comando legado de spawn de villager

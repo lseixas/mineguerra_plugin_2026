@@ -14,6 +14,7 @@ Pasta de contexto para desenvolvedores e agentes de IA. Leia na ordem sugerida a
 8. [PRE_EVENT_HARDEN.md](PRE_EVENT_HARDEN.md) — checklist e status do endurecimento pré-evento
 9. [BALANCE.md](BALANCE.md) — balanceamento weekend (esmeraldas, CDs, paths lendários)
 10. [RESOURCE_PACK.md](RESOURCE_PACK.md) — modelos 3D/2D das armas lendárias (CMD 10001–10004)
+11. [NO_SPAWN_ZONES.md](NO_SPAWN_ZONES.md) — delimitador de áreas sem spawn de mobs
 
 ## Raiz do repositório
 

@@ -25,6 +25,7 @@
 | `/grantStormRider` | Dá Storm Rider — perm: `mineguerra.admin` |
 | `/grantTraderTool <tipo>` | Bastão: clique no chão = spawn NPC; clique no villager = aplicar trades (perm: `mineguerra.tradertool`) |
 | `/grantTraderToolKit` | Dá as 4 ferramentas dos exploradores de armas (oceano, profundezas, nether, end) |
+| `/grantNoSpawnTool [tool\|list\|clear]` | Lightning rod: delimita área sem spawn de mobs (perm: `mineguerra.nospawn`) |
 | `/team` (`t`, `time`) | Gestão de times / flags — perm: `mineguerra.team` |
 | `/mg` | Leaderboard, kills, weapons, revive — perm: `mineguerra.admin` |
 
