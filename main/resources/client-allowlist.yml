@@ -1,8 +1,8 @@
 # Allowlist estrita do cliente Fabric 1.21.8 (Guerra).
 # Copiado para plugins/mineguerra_plugins/client-allowlist.yml na primeira subida.
-# Ligar enabled só quando o mod mineguerra-client-audit existir.
+# Mod mineguerra-client-audit publicado — audit pode ficar ligado.
 
-enabled: false
+enabled: true
 timeoutTicks: 100
 bypassPermission: mineguerra.admin
 mode: exact
