@@ -15,7 +15,8 @@ Pasta de contexto para desenvolvedores e agentes de IA. Leia na ordem sugerida a
 9. [BALANCE.md](BALANCE.md) — balanceamento weekend (esmeraldas, CDs, paths lendários)
 10. [RESOURCE_PACK.md](RESOURCE_PACK.md) — modelos 3D/2D das armas lendárias (CMD 10001–10004)
 11. [NO_SPAWN_ZONES.md](NO_SPAWN_ZONES.md) — delimitador de áreas sem spawn de mobs
-12. [CLIENT_AUDIT.md](CLIENT_AUDIT.md) — allowlist Fabric e handshake `mineguerra:client_audit`
+12. [NO_BREAK_ZONES.md](NO_BREAK_ZONES.md) — delimitador de áreas sem quebra de bloco
+13. [CLIENT_AUDIT.md](CLIENT_AUDIT.md) — allowlist Fabric e handshake `mineguerra:client_audit`
 
 ## Raiz do repositório
 

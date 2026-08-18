@@ -18,6 +18,7 @@ Plugin Spigot/Paper para o evento **Minecraft Guerra**. Foco atual: armas custom
 | Núcleo compartilhado (padrão novo) | `main/java/.../weapons/` |
 | Villagers / trades | `traders/VillagerSpawner.java`, `TraderToolListener` (bastão blaze rod) |
 | No-spawn (áreas) | `nospawn/` — lightning rod delimita cuboide sem spawn de mobs |
+| No-break (áreas) | `nobreak/` — pincel delimita cuboide onde blocos não quebram |
 | Times + leaderboard | `teams/` — ver [`docs/TEAMS_AND_LEADERBOARD.md`](docs/TEAMS_AND_LEADERBOARD.md) |
 | Bandeiras + armas lendárias | `teams/flag/`, `weapons/WeaponOwnershipService` — [`docs/FLAGS_AND_LEGENDARY_WEAPONS.md`](docs/FLAGS_AND_LEGENDARY_WEAPONS.md) |
 | Comandos de guerra | `fluxCommands/` |
@@ -57,6 +58,7 @@ Cada arma: `*Factory` (item), `*Listener` (eventos + estado), `skills/` (efeitos
 - `/grantTraderTool <tipo>` — bastão: **clique no chão** = spawn; **clique no NPC** = aplicar trades (`oceano`, `profundezas`, `nether`, `end`, `trim`, …)
 - `/grantTraderToolKit` — kit dos 4 exploradores de armas (`oceano`, `profundezas`, `nether`, `end`)
 - `/grantNoSpawnTool` — lightning rod: delimita cuboide sem spawn (`mineguerra.nospawn`); `list` / `clear`
+- `/grantNoBreakTool` — pincel: delimita cuboide sem quebra de bloco (`mineguerra.nobreak`); `list` / `clear`
 - Perm: `mineguerra.tradertool` | Comando legado: `/spawnvillager <tipo>`
 
 ## Armas migradas

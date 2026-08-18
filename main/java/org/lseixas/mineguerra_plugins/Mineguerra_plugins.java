@@ -23,6 +23,8 @@ import org.lseixas.mineguerra_plugins.teams.flag.FlagBreakListener;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagRespawnListener;
 import org.lseixas.mineguerra_plugins.traders.WeaponTraderRefreshListener;
 import org.lseixas.mineguerra_plugins.clientaudit.ClientAuditRegistry;
+import org.lseixas.mineguerra_plugins.nobreak.GrantNoBreakToolCommand;
+import org.lseixas.mineguerra_plugins.nobreak.NoBreakRegistry;
 import org.lseixas.mineguerra_plugins.nospawn.GrantNoSpawnToolCommand;
 import org.lseixas.mineguerra_plugins.nospawn.NoSpawnRegistry;
 import org.lseixas.mineguerra_plugins.weapons.LegendaryWeaponListener;
@@ -36,6 +38,7 @@ public final class Mineguerra_plugins extends JavaPlugin {
         WeaponRegistry.init(this);
         TeamRegistry.init(this);
         NoSpawnRegistry.init(this);
+        NoBreakRegistry.init(this);
         ClientAuditRegistry.init(this);
 
         getServer().getPluginManager().registerEvents(new SoulflayerBowListener(this), this);
@@ -79,11 +82,17 @@ public final class Mineguerra_plugins extends JavaPlugin {
         getCommand("grantNoSpawnTool").setExecutor(noSpawnCommand);
         getCommand("grantNoSpawnTool").setTabCompleter(noSpawnCommand);
 
+        GrantNoBreakToolCommand noBreakCommand =
+                new GrantNoBreakToolCommand(NoBreakRegistry.tools(), NoBreakRegistry.zones());
+        getCommand("grantNoBreakTool").setExecutor(noBreakCommand);
+        getCommand("grantNoBreakTool").setTabCompleter(noBreakCommand);
+
     }
 
     @Override
     public void onDisable() {
         ClientAuditRegistry.shutdown();
+        NoBreakRegistry.shutdown();
         NoSpawnRegistry.shutdown();
         TeamRegistry.shutdown();
         getLogger().info("Plugin desativado!");

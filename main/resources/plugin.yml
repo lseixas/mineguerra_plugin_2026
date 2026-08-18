@@ -52,6 +52,11 @@ commands:
     usage: /grantNoSpawnTool [tool|list|clear]
     permission: mineguerra.nospawn
     aliases: [ gnst, nospawntool ]
+  grantNoBreakTool:
+    description: Ferramenta para delimitar areas onde blocos nao podem ser quebrados
+    usage: /grantNoBreakTool [tool|list|clear]
+    permission: mineguerra.nobreak
+    aliases: [ gnbt, nobreaktool ]
 permissions:
   mineguerra.admin:
     description: Admin do evento (grants, mg, startGuerra)
@@ -64,6 +69,9 @@ permissions:
     default: op
   mineguerra.nospawn:
     description: Delimitar areas sem spawn de mobs
+    default: op
+  mineguerra.nobreak:
+    description: Delimitar areas onde blocos nao podem ser quebrados
     default: op
   mineguerra.spawnvillager:
     description: Comando legado de spawn de villager
