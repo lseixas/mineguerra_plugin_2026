@@ -37,9 +37,20 @@ ignoredModIds:
   - java
   - fabricloader
   - mixinextras
+  # Jar-in-jar (nao sao mods da pasta mods/; vem dentro de Cloth/Iris/Sodium/etc.)
+  - cloth-basic-math
+  - conditional-mixin
+  - mixinsquared
+  - transition
+  - trender
 
 ignoredModIdPrefixes:
   - fabric-
+  # Coordenadas Maven do Loader para libs aninhadas (com_twelvemonkeys_..., org_antlr_...)
+  - com_
+  - org_
+  - io_
+  - net_
 
 # SHA-1 do zip resourcepack/MineGuerra_Weapons.zip (pack.mcmeta na raiz).
 # Recalcular apos alterar texturas: sha1sum MineGuerra_Weapons.zip
