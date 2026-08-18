@@ -31,7 +31,7 @@ Allowlist: `cloth-config`, `debugify`, `dynamic_fps`, `entityculling`, `ferritec
 
 Launcher: Prism/Modrinth App, Fabric Loader, MC 1.21.8, sem OptiFine.
 
-Shaders permitidos: Miniature Shader by ukrech, Complementary Unbound, Complementary Reimagined (ou desligado).
+Shaders: **nenhum permitido** (Iris desligado). Qualquer shader ligado → kick.
 
 Resource packs: vanilla/server + zip MineGuerra Weapons (`allowedPackSha1`).
 
