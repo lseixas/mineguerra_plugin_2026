@@ -10,9 +10,9 @@ Config: `plugins/mineguerra_plugins/client-allowlist.yml` (cópia de [`main/reso
 
 ## Perfil estrito
 
-Performance + Iris + QoL sem HUD extra. Fora: Jade, Light Overlay, minimapa, Distant Horizons, AppleSkin, MiniHUD, Sodium Extra, cheats.
+Assinatura **exact** dos ids (nem extra, nem faltando). Versões não são pinadas. Fora da lista: Jade, minimapa, Distant Horizons, etc.
 
-Canal: `mineguerra:client_audit`. Timeout: 100 ticks. Mode: `exact` (depois de ignorar `minecraft` / `java` / `fabricloader` / `fabric-*`).
+Canal: `mineguerra:client_audit`. Timeout: 100 ticks. Mode: `exact` (depois de ignorar `minecraft` / `java` / `fabricloader` / `mixinextras` / `fabric-*`).
 
 ## Payload v1
 
@@ -27,9 +27,13 @@ Canal: `mineguerra:client_audit`. Timeout: 100 ticks. Mode: `exact` (depois de i
 
 Obrigatório: `mineguerra-client-audit`
 
-Allowlist: `modmenu`, `yet_another_config_lib_v3`, `sodium`, `lithium`, `ferritecore`, `entityculling`, `immediatelyfast`, `moreculling`, `dynamic_fps`, `krypton`, `reeses-sodium-options`, `iris`, `nochatreports`, `debugify`, `ok_zoomer`
+Allowlist: `cloth-config`, `debugify`, `dynamic_fps`, `entityculling`, `ferritecore`, `immediatelyfast`, `iris`, `krypton`, `lithium`, `modmenu`, `moreculling`, `reeses-sodium-options`, `placeholder-api`, `yet_another_config_lib_v3`, `sodium`
 
-Launcher: Prism/Modrinth App, Fabric Loader, MC 1.21.8, sem OptiFine. Shaders sugeridos: Complementary Unbound ou BSL (pasta `shaderpacks/`). Packs de recurso: vanilla; o zip MineGuerra entra em `allowedPackSha1` quando for servido.
+Launcher: Prism/Modrinth App, Fabric Loader, MC 1.21.8, sem OptiFine.
+
+Shaders permitidos: Miniature Shader by ukrech, Complementary Unbound, Complementary Reimagined (ou desligado).
+
+Resource packs: vanilla/server + zip MineGuerra Weapons (`allowedPackSha1`).
 
 ## Pacote Java
 
