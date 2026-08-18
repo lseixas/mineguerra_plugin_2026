@@ -106,7 +106,7 @@ public class ThunderTeleport {
                 Location loc = lightningLocations.get(counter);
                 Location particleLoc = loc.clone().add(0, 10, 0);
                 center.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, particleLoc, 20, 0.5, 5, 0.5, 0.1);
-                center.getWorld().strikeLightningEffect(loc);
+                center.getWorld().strikeLightning(loc);
 
                 counter++;
             }

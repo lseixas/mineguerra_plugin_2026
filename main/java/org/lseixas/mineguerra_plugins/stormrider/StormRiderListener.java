@@ -76,6 +76,11 @@ public class StormRiderListener implements Listener {
             return;
         }
 
+        UUID playerId = player.getUniqueId();
+        if (!activeModeEnabled.contains(playerId)) {
+            return;
+        }
+
         boolean wasClear = !player.getWorld().hasStorm();
 
         player.getWorld().setStorm(true);
@@ -87,7 +92,7 @@ public class StormRiderListener implements Listener {
             WeaponMessages.sendInfo(player, WeaponId.STORM_RIDER, "A tempestade foi invocada.");
         }
 
-        tridentOwners.put(trident.getUniqueId(), player.getUniqueId());
+        tridentOwners.put(trident.getUniqueId(), playerId);
     }
 
     private boolean isStormRiderTrident(Player player, Trident trident) {
