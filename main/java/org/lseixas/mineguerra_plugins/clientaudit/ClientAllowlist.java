@@ -125,7 +125,7 @@ public final class ClientAllowlist {
         }
 
         for (ClientAuditPayload.PackEntry pack : payload.packs()) {
-            if (isVanillaPack(pack.id()) || isServerOrBuiltinHash(pack)) {
+            if (isIgnoredBuiltinPack(pack.id())) {
                 continue;
             }
             String hex = HexFormat.of().formatHex(pack.sha1() == null ? new byte[20] : pack.sha1())
@@ -186,31 +186,18 @@ public final class ClientAllowlist {
     }
 
     static boolean isVanillaPack(String packId) {
+        return isIgnoredBuiltinPack(packId);
+    }
+
+    /**
+     * Vanilla, Fabric Mods ({@code fabric}), packs escondidos dos mods e pack do servidor.
+     * So {@code file/...} (pasta resourcepacks) entra na checagem de SHA-1.
+     */
+    static boolean isIgnoredBuiltinPack(String packId) {
         if (packId == null || packId.isBlank()) {
             return true;
         }
-        String id = packId.toLowerCase(Locale.ROOT);
-        return id.equals("vanilla")
-                || id.equals("server")
-                || id.equals("minecraft")
-                || id.startsWith("vanilla/")
-                || id.startsWith("minecraft/")
-                || id.startsWith("server/")
-                || id.contains("server");
-    }
-
-    static boolean isServerOrBuiltinHash(ClientAuditPayload.PackEntry pack) {
-        byte[] sha1 = pack.sha1();
-        if (sha1 == null || sha1.length != 20) {
-            return false;
-        }
-        for (byte b : sha1) {
-            if (b != 0) {
-                return false;
-            }
-        }
-        String id = pack.id() == null ? "" : pack.id().toLowerCase(Locale.ROOT);
-        return !id.startsWith("file/");
+        return !packId.toLowerCase(Locale.ROOT).startsWith("file/");
     }
 
     private static Set<String> lowercaseSet(List<String> values) {
