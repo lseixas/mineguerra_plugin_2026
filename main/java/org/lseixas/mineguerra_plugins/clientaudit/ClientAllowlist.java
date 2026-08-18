@@ -125,7 +125,7 @@ public final class ClientAllowlist {
         }
 
         for (ClientAuditPayload.PackEntry pack : payload.packs()) {
-            if (isVanillaPack(pack.id())) {
+            if (isVanillaPack(pack.id()) || isServerOrBuiltinHash(pack)) {
                 continue;
             }
             String hex = HexFormat.of().formatHex(pack.sha1() == null ? new byte[20] : pack.sha1())
@@ -143,7 +143,7 @@ public final class ClientAllowlist {
                     return Optional.of("Shader nao permitido.");
                 }
             }
-            if (!allowedShaders.isEmpty() && !allowedShaders.contains(lower)) {
+            if (!allowedShaders.isEmpty() && !shaderMatchesAllowlist(lower, allowedShaders)) {
                 return Optional.of("Shader nao permitido.");
             }
         }
@@ -163,6 +163,28 @@ public final class ClientAllowlist {
         return false;
     }
 
+    static boolean shaderMatchesAllowlist(String reportedLower, Set<String> allowedShaders) {
+        String reportedNorm = normalizeShader(reportedLower);
+        for (String allowed : allowedShaders) {
+            String allowedNorm = normalizeShader(allowed);
+            if (allowedNorm.isEmpty()) {
+                continue;
+            }
+            if (reportedLower.equals(allowed) || reportedNorm.contains(allowedNorm) || allowedNorm.contains(reportedNorm)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static String normalizeShader(String value) {
+        return value.toLowerCase(Locale.ROOT)
+                .replace(".zip", "")
+                .replace(" ", "")
+                .replace("_", "")
+                .replace("-", "");
+    }
+
     static boolean isVanillaPack(String packId) {
         if (packId == null || packId.isBlank()) {
             return true;
@@ -172,7 +194,23 @@ public final class ClientAllowlist {
                 || id.equals("server")
                 || id.equals("minecraft")
                 || id.startsWith("vanilla/")
-                || id.startsWith("minecraft/");
+                || id.startsWith("minecraft/")
+                || id.startsWith("server/")
+                || id.contains("server");
+    }
+
+    static boolean isServerOrBuiltinHash(ClientAuditPayload.PackEntry pack) {
+        byte[] sha1 = pack.sha1();
+        if (sha1 == null || sha1.length != 20) {
+            return false;
+        }
+        for (byte b : sha1) {
+            if (b != 0) {
+                return false;
+            }
+        }
+        String id = pack.id() == null ? "" : pack.id().toLowerCase(Locale.ROOT);
+        return !id.startsWith("file/");
     }
 
     private static Set<String> lowercaseSet(List<String> values) {

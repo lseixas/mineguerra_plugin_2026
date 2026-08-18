@@ -120,6 +120,43 @@ class ClientAuditAllowlistTest {
     }
 
     @Test
+    void allowedShaderMatchesIrisZipName() {
+        ClientAllowlist allowlist = ClientAllowlist.fromYaml(YAML.replace(
+                "allowedShaders: []",
+                "allowedShaders:\n              - complementary unbound\n              - complementary reimagined\n              - miniature shader by ukrech"
+        ));
+        var reason = allowlist.rejectReason(payload(
+                List.of(
+                        mod("mineguerra-client-audit", "0.1"),
+                        mod("sodium", "0.6"),
+                        mod("iris", "1.8")
+                ),
+                List.of(),
+                "ComplementaryUnbound_r5.5.1.zip"
+        ));
+        assertTrue(reason.isEmpty(), reason.orElse(""));
+    }
+
+    @Test
+    void unknownShaderIsRejectedWhenAllowlistIsSet() {
+        ClientAllowlist allowlist = ClientAllowlist.fromYaml(YAML.replace(
+                "allowedShaders: []",
+                "allowedShaders:\n              - complementary unbound"
+        ));
+        var reason = allowlist.rejectReason(payload(
+                List.of(
+                        mod("mineguerra-client-audit", "0.1"),
+                        mod("sodium", "0.6"),
+                        mod("iris", "1.8")
+                ),
+                List.of(),
+                "BSL_v8.4.zip"
+        ));
+        assertTrue(reason.isPresent());
+        assertTrue(reason.get().toLowerCase().contains("shader"));
+    }
+
+    @Test
     void unknownPackHashIsRejected() {
         ClientAllowlist allowlist = ClientAllowlist.fromYaml(YAML);
         byte[] sha1 = HexFormat.of().parseHex("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
