@@ -2,7 +2,7 @@
 # Copiado para plugins/mineguerra_plugins/client-allowlist.yml na primeira subida.
 # Assinatura exact: todos os ids abaixo, nem extra nem faltando. Versoes nao sao pinadas.
 
-enabled: true
+enabled: false
 timeoutTicks: 100
 bypassPermission: mineguerra.admin
 mode: exact

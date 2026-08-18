@@ -6,7 +6,7 @@ Isto **não** é anti-cheat à prova de mentira: o cliente declara mods/packs. B
 
 Config: `plugins/mineguerra_plugins/client-allowlist.yml` (cópia de [`main/resources/client-allowlist.yml`](../main/resources/client-allowlist.yml)).
 
-**`enabled: true` por padrão** — mod `mineguerra-client-audit` publicado. Staff com `mineguerra.admin` ignora o handshake.
+**`enabled: false`** — handshake desligado; qualquer cliente entra. Staff com `mineguerra.admin` ignora o handshake se religar.
 
 ## Perfil estrito
 
