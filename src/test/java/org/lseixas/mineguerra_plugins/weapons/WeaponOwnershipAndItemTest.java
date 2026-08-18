@@ -64,7 +64,7 @@ class WeaponOwnershipAndItemTest {
 
         MerchantRecipe stormTrade = new MerchantRecipe(items.create(WeaponId.STORM_RIDER), 32);
         stormTrade.addIngredient(new ItemStack(Material.TRIDENT));
-        stormTrade.addIngredient(new ItemStack(Material.HEART_OF_THE_SEA));
+        stormTrade.addIngredient(new ItemStack(Material.CONDUIT));
 
         MerchantRecipe filler = new MerchantRecipe(new ItemStack(Material.EMERALD), 32);
         filler.addIngredient(new ItemStack(Material.COD, 8));

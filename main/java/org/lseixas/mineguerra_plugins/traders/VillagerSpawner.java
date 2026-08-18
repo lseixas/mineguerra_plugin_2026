@@ -105,9 +105,12 @@ public class VillagerSpawner {
                 new ItemStack(Material.EMERALD, 40)));
         trades.add(recipe(new ItemStack(Material.HEART_OF_THE_SEA, 1), USES_DEFAULT,
                 new ItemStack(Material.EMERALD_BLOCK, 12)));
+        trades.add(recipe(new ItemStack(Material.CONDUIT, 1), USES_DEFAULT,
+                new ItemStack(Material.HEART_OF_THE_SEA, 1),
+                new ItemStack(Material.NAUTILUS_SHELL, 8)));
         trades.add(recipe(StormRiderFactory.createStormRider(), USES_LEGENDARY,
                 new ItemStack(Material.TRIDENT, 1),
-                new ItemStack(Material.HEART_OF_THE_SEA, 1)));
+                new ItemStack(Material.CONDUIT, 1)));
         return filterWeaponTrades(trades);
     }
 
@@ -201,6 +204,46 @@ public class VillagerSpawner {
         prepareMerchantEntity(merchant);
         setMerchantName(merchant, ChatColor.DARK_PURPLE + "Explorador do End");
         merchant.setRecipes(buildEndExplorerTrades());
+    }
+
+    /**
+     * 1 disco específico → 4 templates daquele trim (1.21.8: 18 trims).
+     */
+    private static final Material[][] ARMOR_TRIM_DISC_TRADES = {
+            {Material.MUSIC_DISC_CAT, Material.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_BLOCKS, Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_FAR, Material.COAST_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_CHIRP, Material.WILD_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_WARD, Material.WARD_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_RELIC, Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_TEARS, Material.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_PIGSTEP, Material.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_MELLOHI, Material.RIB_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_OTHERSIDE, Material.EYE_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_STAL, Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_MALL, Material.VEX_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_WAIT, Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_11, Material.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_5, Material.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_CREATOR, Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_CREATOR_MUSIC_BOX, Material.FLOW_ARMOR_TRIM_SMITHING_TEMPLATE},
+            {Material.MUSIC_DISC_PRECIPICE, Material.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE},
+    };
+
+    public static void spawnEstilista(Location loc) {
+        Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
+        applyArmorTrimSmith(villager);
+    }
+
+    private static void applyArmorTrimSmith(Villager villager) {
+        prepareVillager(villager, Villager.Profession.CARTOGRAPHER);
+        setMerchantName(villager, ChatColor.GOLD + "Estilista");
+
+        List<MerchantRecipe> trades = new ArrayList<>();
+        for (Material[] pair : ARMOR_TRIM_DISC_TRADES) {
+            trades.add(recipe(new ItemStack(pair[1], 4), USES_DEFAULT, new ItemStack(pair[0], 1)));
+        }
+        villager.setRecipes(trades);
     }
 
     public static void spawnCacadorMonstros(Location loc) {
@@ -410,6 +453,7 @@ public class VillagerSpawner {
             case NETHER -> spawnExplNether(location);
             case END -> spawnExplEnd(location);
             case BIBLIOTECARIO -> spwanBibliotecario(location);
+            case TRIM -> spawnEstilista(location);
             case MONSTROS -> spawnCacadorMonstros(location);
             case ACOUGUEIRO -> spawnAcougueiro(location);
             case FERREIRO -> spawnFerreiro(location);
@@ -430,6 +474,12 @@ public class VillagerSpawner {
             case PROFUNDEZAS -> applyDeepExplorer(merchant);
             case NETHER -> applyNetherExplorer(merchant);
             case END -> applyEndExplorer(merchant);
+            case TRIM -> {
+                if (!(merchant instanceof Villager villager)) {
+                    return false;
+                }
+                applyArmorTrimSmith(villager);
+            }
             case MONSTROS -> {
                 if (!(merchant instanceof Villager villager)) {
                     return false;
@@ -452,6 +502,10 @@ public class VillagerSpawner {
             case BIBLIOTECARIO -> {
                 villager.remove();
                 spwanBibliotecario(loc);
+            }
+            case TRIM -> {
+                villager.remove();
+                spawnEstilista(loc);
             }
             case ACOUGUEIRO -> {
                 villager.remove();

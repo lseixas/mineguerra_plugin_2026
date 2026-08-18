@@ -112,6 +112,9 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 | Nether | Wither skulls ×3 | 64 EB | **48 EB** |
 | Nether | Netherite template | 64 EB | **48 EB** |
 | End | Elytra | 64 EB | **manter 64 EB** |
+| Oceano | Storm Rider | tridente + heart | **tridente + conduit** |
+| Oceano | Conduit | — | **1 heart + 8 nautilus** |
+| Estilista | Armor trim ×4 | — | **1 disco específico** |
 
 ---
 
@@ -119,7 +122,7 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 
 | Arma | Componentes novos | Emerald-eq path | Gate |
 |------|-------------------|-----------------|------|
-| **Storm Rider** | Tridente **48e**; Heart **12 EB (108e)**; Loyalty **24e**; Channel/Riptide **40e**; craft final tridente+heart | ~**156e+** (sem enchants) | Unicidade claim |
+| **Storm Rider** | Tridente **48e**; Heart **12 EB**; conduit (heart + 8 nautilus); craft final **tridente + conduit** | Path via conduit | Unicidade claim |
 | **Doom Hammer** | Mace **48e**; Reinforced Deepslate **4e cad** ×64 = 256e; craft mace+64 | ~**304e** | Unicidade |
 | **Soulflayer** | Bow + Nether Star; skulls **48 EB**; egg ghast **48e** | Progressão wither | Star + claim |
 | **Dragon** | Netherite sword + Dragon Egg; elytra 64 EB | Progressão dragon | Egg + claim |
@@ -148,7 +151,7 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 | Rage of the Dragon | 90s / 10s / amp 3 | **100s / 8s / amp 3** | Mesma identidade, uptime menor |
 | Power Jump | 90s | **80s** | Compensa Doom mais acessível |
 
-**Docs:** círculo pré-TP usa `strikeLightningEffect` (VFX, **sem** dano real).
+**Docs:** círculo pré-TP usa `strikeLightning` (dano vanilla).
 
 ---
 

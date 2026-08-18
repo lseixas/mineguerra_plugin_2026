@@ -37,10 +37,11 @@ Arquivo: `main/java/org/lseixas/mineguerra_plugins/traders/VillagerSpawner.java`
 
 | Villager / explorador | Arma (trade) |
 |----------------------|--------------|
-| Explorador do Oceano | Storm Rider |
+| Explorador do Oceano | Storm Rider (1 tridente + 1 conduit) |
 | Explorador das Profundezas | Doom Hammer |
 | Explorador do Nether | Soulflayer Bow |
 | Explorador do End | Dragon Slayer |
+| Estilista (`trim`) | 1 disco de música → 4 armor trims (disco específico por trim) |
 
 ## Build e teste local
 
