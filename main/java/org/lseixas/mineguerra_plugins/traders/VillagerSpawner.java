@@ -32,6 +32,10 @@ public class VillagerSpawner {
     private static final int USES_SIEGE = 64;
     /** Recipe final de arma lendária. */
     private static final int USES_LEGENDARY = 32;
+    /** Itens meme/combate do Trapaceiro (1 uso real no item). */
+    private static final int USES_CHEAT = 16;
+    /** Spawner: sink pesado, poucas compras. */
+    private static final int USES_SPAWNER = 8;
 
     private static MerchantRecipe recipe(ItemStack result, int maxUses, ItemStack... ingredients) {
         MerchantRecipe trade = new MerchantRecipe(result, maxUses);
@@ -194,6 +198,8 @@ public class VillagerSpawner {
                 new ItemStack(Material.EMERALD, 12)));
         trades.add(recipe(new ItemStack(Material.ENDER_PEARL, 1), USES_DEFAULT,
                 new ItemStack(Material.EMERALD, 10)));
+        trades.add(recipe(new ItemStack(Material.SHULKER_BOX, 1), USES_DEFAULT,
+                new ItemStack(Material.EMERALD, 32)));
         trades.add(recipe(DragonSlayerFactory.createDragonSlayer(), USES_LEGENDARY,
                 new ItemStack(Material.NETHERITE_SWORD, 1),
                 new ItemStack(Material.DRAGON_EGG, 1)));
@@ -204,6 +210,44 @@ public class VillagerSpawner {
         prepareMerchantEntity(merchant);
         setMerchantName(merchant, ChatColor.DARK_PURPLE + "Explorador do End");
         merchant.setRecipes(buildEndExplorerTrades());
+    }
+
+    public static void spawnTrapaceiro(Location loc) {
+        WanderingTrader trader = (WanderingTrader) loc.getWorld().spawnEntity(loc, EntityType.WANDERING_TRADER);
+        applyTrapaceiro(trader);
+    }
+
+    private static List<MerchantRecipe> buildTrapaceiroTrades() {
+        List<MerchantRecipe> trades = new ArrayList<>();
+        trades.add(recipe(new ItemStack(Material.SPAWNER, 1), USES_SPAWNER,
+                new ItemStack(Material.EMERALD_BLOCK, 48)));
+        trades.add(recipe(new ItemStack(Material.ZOMBIE_SPAWN_EGG, 1), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 8)));
+        trades.add(recipe(new ItemStack(Material.SKELETON_SPAWN_EGG, 1), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 8)));
+        trades.add(recipe(new ItemStack(Material.SPIDER_SPAWN_EGG, 1), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 8)));
+        trades.add(recipe(new ItemStack(Material.CREEPER_SPAWN_EGG, 1), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 8)));
+        trades.add(recipe(new ItemStack(Material.COW_SPAWN_EGG, 1), USES_LEGENDARY,
+                new ItemStack(Material.EMERALD, 32)));
+        trades.add(recipe(new ItemStack(Material.PIG_SPAWN_EGG, 1), USES_LEGENDARY,
+                new ItemStack(Material.EMERALD, 32)));
+        trades.add(recipe(new ItemStack(Material.CHICKEN_SPAWN_EGG, 1), USES_LEGENDARY,
+                new ItemStack(Material.EMERALD, 32)));
+        trades.add(recipe(TrapaceiroItems.goldenBow(), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 16)));
+        trades.add(recipe(TrapaceiroItems.knockbackStick(), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 8)));
+        trades.add(recipe(TrapaceiroItems.capirotoApple(), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 12)));
+        return trades;
+    }
+
+    private static void applyTrapaceiro(Merchant merchant) {
+        prepareMerchantEntity(merchant);
+        setMerchantName(merchant, ChatColor.GOLD + "Trapaceiro");
+        merchant.setRecipes(buildTrapaceiroTrades());
     }
 
     /**
@@ -452,6 +496,7 @@ public class VillagerSpawner {
             case PROFUNDEZAS -> spawnExplProfundo(location);
             case NETHER -> spawnExplNether(location);
             case END -> spawnExplEnd(location);
+            case TRAPACEIRO -> spawnTrapaceiro(location);
             case BIBLIOTECARIO -> spwanBibliotecario(location);
             case TRIM -> spawnEstilista(location);
             case MONSTROS -> spawnCacadorMonstros(location);
@@ -474,6 +519,7 @@ public class VillagerSpawner {
             case PROFUNDEZAS -> applyDeepExplorer(merchant);
             case NETHER -> applyNetherExplorer(merchant);
             case END -> applyEndExplorer(merchant);
+            case TRAPACEIRO -> applyTrapaceiro(merchant);
             case TRIM -> {
                 if (!(merchant instanceof Villager villager)) {
                     return false;

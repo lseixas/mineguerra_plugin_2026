@@ -109,12 +109,19 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 | End | End Crystal | 32e | **48e** |
 | End | Obsidian ×4 | 8e→1 | **12e → 4** |
 | End | Ender Pearl | 16e | **10e** |
+| End | Shulker box | — | **32e** |
 | Nether | Wither skulls ×3 | 64 EB | **48 EB** |
 | Nether | Netherite template | 64 EB | **48 EB** |
 | End | Elytra | 64 EB | **manter 64 EB** |
 | Oceano | Storm Rider | tridente + heart | **tridente + conduit** |
 | Oceano | Conduit | — | **1 heart + 8 nautilus** |
 | Estilista | Armor trim ×4 | — | **1 disco específico** |
+| Trapaceiro | Spawner | — | **48 EB** |
+| Trapaceiro | Ovo hostil (zumbi/esqueleto/aranha/creeper) | — | **8 EB** |
+| Trapaceiro | Ovo passivo (vaca/porco/galinha) | — | **32e** |
+| Trapaceiro | Golden Bow (Power 9999, 1 dura) | — | **16 EB** |
+| Trapaceiro | Graveto da Repulsão (Knockback 32, 1 dura) | — | **8 EB** |
+| Trapaceiro | Maçã do Capiroto | — | **12 EB** |
 
 ---
 
@@ -133,6 +140,8 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 |-----------|---------|
 | Cerco engenheiro (TNT/redstone) | **64** |
 | Recipe final lendária | **32** |
+| Trapaceiro combate / ovos hostis | **16** |
+| Trapaceiro spawner | **8** |
 | Demais trades | **128** |
 
 (Antes: 9999 em tudo.)

@@ -41,8 +41,9 @@ Arquivo: `main/java/org/lseixas/mineguerra_plugins/traders/VillagerSpawner.java`
 | Explorador do Oceano | Storm Rider (1 tridente + 1 conduit) |
 | Explorador das Profundezas | Doom Hammer |
 | Explorador do Nether | Soulflayer Bow |
-| Explorador do End | Dragon Slayer |
+| Explorador do End | Dragon Slayer; shulker box (32e) |
 | Estilista (`trim`) | 1 disco de música → 4 armor trims (disco específico por trim) |
+| Trapaceiro (`trapaceiro` / `cheat`) | Spawner, ovos, Golden Bow, graveto knockback, maçã do capiroto |
 
 ## Build e teste local
 

@@ -139,7 +139,7 @@ ID do time: apenas `a-z`, `0-9`, `_`, `-` (até 32 caracteres).
 
 | Comando | Descrição |
 |---------|-----------|
-| `/grantTraderTool <tipo>` | Bastão do villager (`oceano`, `profundezas`, `nether`, `end`, …) |
+| `/grantTraderTool <tipo>` | Bastão do villager (`oceano`, `profundezas`, `nether`, `end`, `trapaceiro`, …) |
 | `/grantTraderToolKit` | Kit dos 4 exploradores de armas |
 | `/grantNoSpawnTool [tool\|list\|clear]` | Lightning rod: área sem spawn de mobs |
 | `/grantNoBreakTool [tool\|list\|clear]` | Pincel: área onde blocos não quebram |

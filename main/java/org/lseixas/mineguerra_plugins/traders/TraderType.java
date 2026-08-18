@@ -18,6 +18,7 @@ public enum TraderType {
     END("end", "Explorador do End", true),
 
     BIBLIOTECARIO("bibliotecatio", "Bibliotecário", false),
+    TRAPACEIRO("trapaceiro", "Trapaceiro", false),
     TRIM("trim", "Estilista", false),
     MONSTROS("monstros", "Caçador de Monstros", false),
     ACOUGUEIRO("açougueiro", "Açougueiro", false),
@@ -64,6 +65,9 @@ public enum TraderType {
         String normalized = rawId.toLowerCase(Locale.ROOT);
         if (normalized.equals("estilista") || normalized.equals("trims")) {
             return Optional.of(TRIM);
+        }
+        if (normalized.equals("cheat") || normalized.equals("trapaça") || normalized.equals("trapaca")) {
+            return Optional.of(TRAPACEIRO);
         }
         return Arrays.stream(values())
                 .filter(type -> type.id.equals(normalized))

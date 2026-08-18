@@ -55,7 +55,7 @@ Cada arma: `*Factory` (item), `*Listener` (eventos + estado), `skills/` (efeitos
 
 ## Ferramentas de villager (staff)
 
-- `/grantTraderTool <tipo>` — bastão: **clique no chão** = spawn; **clique no NPC** = aplicar trades (`oceano`, `profundezas`, `nether`, `end`, `trim`, …)
+- `/grantTraderTool <tipo>` — bastão: **clique no chão** = spawn; **clique no NPC** = aplicar trades (`oceano`, `profundezas`, `nether`, `end`, `trim`, `trapaceiro`, …)
 - `/grantTraderToolKit` — kit dos 4 exploradores de armas (`oceano`, `profundezas`, `nether`, `end`)
 - `/grantNoSpawnTool` — lightning rod: delimita cuboide sem spawn (`mineguerra.nospawn`); `list` / `clear`
 - `/grantNoBreakTool` — pincel: delimita cuboide sem quebra de bloco (`mineguerra.nobreak`); `list` / `clear`
