@@ -74,11 +74,11 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 | Skill | Tipo | Ativação | CD |
 |-------|------|----------|-----|
 | Thunder Teleport | Ativa | Sneak + F → arremesso → hit | **25s** |
-| Tempestade | Passiva | arremesso Storm Rider | Clima **1200 ticks (~60s)** |
+| Tempestade | Ativa (modo skill) | arremesso **com** Thunder Teleport armado | Clima **1200 ticks (~60s)** |
 
 ### Risco vanilla
 
-- Círculo pré-teleporte: `strikeLightningEffect` — **só visual**, sem dano.
+- Círculo pré-teleporte: `strikeLightning` — **dano vanilla** nos atingidos.
 
 ### Arquivos
 
@@ -112,8 +112,8 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 | ID enum | CMD | Resource pack |
 |---------|-----|---------------|
 | `SOULFLAYER_BOW` | 10001 | Elite Power Bow |
-| `DRAGON_SLAYER` | 10002 | ThirtyFangs Demon Lord Sword |
-| `STORM_RIDER` | 10003 | rainbow's 3D Trident |
-| `DOOM_HAMMER` | 10004 | Mace Fusion |
+| `DRAGON_SLAYER` | 10002 | Fantasy 3D Ravenous Blade |
+| `STORM_RIDER` | 10003 | Fantasy 3D Heavenly Partisan |
+| `DOOM_HAMMER` | 10004 | Fantasy 3D Treacherous Bludgeon |
 
 Pack: [`resourcepack/MineGuerra_Weapons/`](../resourcepack/MineGuerra_Weapons/) — ver [`RESOURCE_PACK.md`](RESOURCE_PACK.md).

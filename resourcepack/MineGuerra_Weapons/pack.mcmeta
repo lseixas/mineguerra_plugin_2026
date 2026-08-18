@@ -1,8 +1,8 @@
 {
   "pack": {
-    "pack_format": 46,
+    "pack_format": 64,
     "supported_formats": {
-      "min_inclusive": 34,
+      "min_inclusive": 46,
       "max_inclusive": 99
     },
     "description": "MineGuerra — modelos das armas lendárias (CMD 10001–10004)"

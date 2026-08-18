@@ -6,8 +6,8 @@ Itens vanilla (arco, espada, tridente, mace sem CMD) permanecem inalterados.
 | Arma | CMD | Origem | Licença |
 |------|-----|--------|---------|
 | Soulflayer Bow | 10001 | [Elite Power Bow](https://modrinth.com/resourcepack/elite-power-bow) 1.2.0 (NETHERITE) | MIT |
-| Dragon Slayer | 10002 | [ThirtyFangs' 3D Swords](https://modrinth.com/resourcepack/thirtyfangs-3d-swords) 1.2.1 — modelo Demon Lord Sword | ARR (atribuição; só este modelo) |
-| Storm Rider | 10003 | [rainbow's 3D Trident](https://modrinth.com/resourcepack/rainbows-3d-trident) (rainbowboi) | CC BY-NC-ND 4.0 |
-| Doom Hammer | 10004 | [Mace Fusion](https://modrinth.com/resourcepack/mace-fusion) (OrkaMC), versão 1.21.4–1.21.8 | CC BY-NC-SA 4.0 |
+| Dragon Slayer | 10002 | [Fantasy 3D Weapons CIT](https://modrinth.com/resourcepack/fantasy-3d-weapons-cit) (nongko) — Ravenous Blade | ARR (atribuição; só este modelo) |
+| Storm Rider | 10003 | [Fantasy 3D Weapons CIT](https://modrinth.com/resourcepack/fantasy-3d-weapons-cit) (nongko) — Heavenly Partisan | ARR (atribuição; só este modelo) |
+| Doom Hammer | 10004 | [Fantasy 3D Weapons CIT](https://modrinth.com/resourcepack/fantasy-3d-weapons-cit) (nongko) — Treacherous Bludgeon | ARR (atribuição; só este modelo) |
 
 Uso no evento MineGuerra: não comercial. Não redistribuir os packs originais inteiros.

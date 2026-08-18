@@ -8,7 +8,7 @@
         "threshold": 10002,
         "model": {
           "type": "minecraft:model",
-          "model": "mineguerra:item/dragon_slayer"
+          "model": "minecraft:item/dragon_slayer"
         }
       }
     ],
