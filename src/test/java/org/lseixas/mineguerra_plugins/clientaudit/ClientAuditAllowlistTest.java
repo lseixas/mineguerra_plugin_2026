@@ -27,8 +27,14 @@ class ClientAuditAllowlistTest {
               - minecraft
               - java
               - fabricloader
+              - cloth-basic-math
+              - mixinsquared
             ignoredModIdPrefixes:
               - fabric-
+              - com_
+              - org_
+              - io_
+              - net_
             allowedPackSha1: []
             allowedShaders: []
             bannedShaderSubstrings:
@@ -67,6 +73,26 @@ class ClientAuditAllowlistTest {
                         mod("mineguerra-client-audit", "0.1"),
                         mod("sodium", "0.6"),
                         mod("iris", "1.8")
+                ),
+                List.of(),
+                ""
+        ));
+        assertTrue(reason.isEmpty(), reason.orElse(""));
+    }
+
+    @Test
+    void nestedJarLibrariesAreIgnored() {
+        ClientAllowlist allowlist = ClientAllowlist.fromYaml(YAML);
+        var reason = allowlist.rejectReason(payload(
+                List.of(
+                        mod("minecraft", "1.21.8"),
+                        mod("mineguerra-client-audit", "0.1"),
+                        mod("sodium", "0.6"),
+                        mod("iris", "1.8"),
+                        mod("cloth-basic-math", "0.6"),
+                        mod("com_twelvemonkeys_imageio_imageio-webp", "3.12"),
+                        mod("org_antlr_antlr4-runtime", "4.13"),
+                        mod("mixinsquared", "0.2")
                 ),
                 List.of(),
                 ""
@@ -171,6 +197,25 @@ class ClientAuditAllowlistTest {
         ));
         assertTrue(reason.isPresent());
         assertTrue(reason.get().toLowerCase().contains("pack"));
+    }
+
+    @Test
+    void fabricModsPackIsIgnored() {
+        ClientAllowlist allowlist = ClientAllowlist.fromYaml(YAML);
+        byte[] sha1 = HexFormat.of().parseHex("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        var reason = allowlist.rejectReason(payload(
+                List.of(
+                        mod("mineguerra-client-audit", "0.1"),
+                        mod("sodium", "0.6"),
+                        mod("iris", "1.8")
+                ),
+                List.of(
+                        new ClientAuditPayload.PackEntry("vanilla", new byte[20]),
+                        new ClientAuditPayload.PackEntry("fabric", sha1)
+                ),
+                ""
+        ));
+        assertTrue(reason.isEmpty(), reason.orElse(""));
     }
 
     private static ClientAuditPayload payload(
