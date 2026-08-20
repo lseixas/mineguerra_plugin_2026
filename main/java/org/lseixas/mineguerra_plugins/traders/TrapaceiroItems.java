@@ -8,11 +8,17 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Objects;
 
 /**
  * Itens meme do Trapaceiro (1 uso / nomes custom).
  */
 final class TrapaceiroItems {
+
+    static final NamespacedKey PACT_KEY =
+            Objects.requireNonNull(NamespacedKey.fromString("mineguerra:pact_chestplate"));
 
     private TrapaceiroItems() {
     }
@@ -31,6 +37,40 @@ final class TrapaceiroItems {
                 minecraftEnchantment("knockback"),
                 32,
                 ChatColor.RED + "" + ChatColor.BOLD + "Graveto da Repulsão");
+    }
+
+    /**
+     * Peitoral do Pacto: quem veste morre com qualquer hit e leva o agressor junto.
+     * Os enchants são cosméticos/temáticos — o efeito real vem do
+     * {@link SuicidePactListener}, porque o vanilla ignora Protection negativa.
+     */
+    static ItemStack pactChestplate() {
+        ItemStack chestplate = new ItemStack(Material.NETHERITE_CHESTPLATE, 1);
+        ItemMeta meta = chestplate.getItemMeta();
+        if (meta == null) {
+            return chestplate;
+        }
+        meta.setDisplayName(ChatColor.DARK_RED + "" + ChatColor.BOLD + "Peitoral do Pacto");
+        meta.setLore(java.util.List.of(
+                ChatColor.GRAY + "Um acordo firmado com o Trapaceiro.",
+                "",
+                ChatColor.RED + "Qualquer dano te mata na hora.",
+                ChatColor.RED + "Quem te matou morre junto."
+        ));
+        meta.addEnchant(minecraftEnchantment("thorns"), 9999, true);
+        meta.addEnchant(minecraftEnchantment("protection"), -9999, true);
+        meta.getPersistentDataContainer().set(PACT_KEY, PersistentDataType.BYTE, (byte) 1);
+        chestplate.setItemMeta(meta);
+        return chestplate;
+    }
+
+    static boolean isPactChestplate(ItemStack item) {
+        if (item == null || item.getType() != Material.NETHERITE_CHESTPLATE || !item.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta meta = item.getItemMeta();
+        return meta != null
+                && meta.getPersistentDataContainer().has(PACT_KEY, PersistentDataType.BYTE);
     }
 
     static ItemStack capirotoApple() {

@@ -1,5 +1,6 @@
 package org.lseixas.mineguerra_plugins.traders;
 
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockbukkit.mockbukkit.MockBukkit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TrapaceiroItemTest {
@@ -42,5 +44,28 @@ class TrapaceiroItemTest {
         assertEquals(1, ((Damageable) meta).getMaxDamage());
         Enchantment knockback = TrapaceiroItems.minecraftEnchantment("knockback");
         assertEquals(32, stick.getEnchantmentLevel(knockback));
+    }
+
+    @Test
+    void pactChestplateCarriesThornsAndNegativeProtection() {
+        ItemStack chestplate = TrapaceiroItems.pactChestplate();
+
+        assertEquals(Material.NETHERITE_CHESTPLATE, chestplate.getType());
+        assertEquals(9999, chestplate.getEnchantmentLevel(
+                TrapaceiroItems.minecraftEnchantment("thorns")));
+        assertEquals(-9999, chestplate.getEnchantmentLevel(
+                TrapaceiroItems.minecraftEnchantment("protection")));
+    }
+
+    @Test
+    void pactChestplateIsIdentifiedByPersistentData() {
+        assertTrue(TrapaceiroItems.isPactChestplate(TrapaceiroItems.pactChestplate()));
+    }
+
+    @Test
+    void plainArmourIsNotMistakenForThePact() {
+        assertFalse(TrapaceiroItems.isPactChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE)));
+        assertFalse(TrapaceiroItems.isPactChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE)));
+        assertFalse(TrapaceiroItems.isPactChestplate(null));
     }
 }

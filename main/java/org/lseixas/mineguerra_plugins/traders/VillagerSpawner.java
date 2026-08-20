@@ -241,6 +241,8 @@ public class VillagerSpawner {
                 new ItemStack(Material.EMERALD_BLOCK, 8)));
         trades.add(recipe(TrapaceiroItems.capirotoApple(), USES_CHEAT,
                 new ItemStack(Material.EMERALD_BLOCK, 12)));
+        trades.add(recipe(TrapaceiroItems.pactChestplate(), USES_CHEAT,
+                new ItemStack(Material.EMERALD_BLOCK, 16)));
         return trades;
     }
 
