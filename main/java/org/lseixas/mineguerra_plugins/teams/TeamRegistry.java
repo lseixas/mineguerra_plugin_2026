@@ -1,6 +1,7 @@
 package org.lseixas.mineguerra_plugins.teams;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.lseixas.mineguerra_plugins.teams.flag.FlagAreaService;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagService;
 import org.lseixas.mineguerra_plugins.weapons.WeaponItemService;
 import org.lseixas.mineguerra_plugins.weapons.WeaponOwnershipService;
@@ -17,6 +18,7 @@ public final class TeamRegistry {
     private static KillStatsService killStatsService;
     private static LeaderboardService leaderboardService;
     private static FlagService flagService;
+    private static FlagAreaService flagAreaService;
     private static WeaponOwnershipService weaponOwnershipService;
 
     private TeamRegistry() {
@@ -31,7 +33,8 @@ public final class TeamRegistry {
         teamService = new TeamService(plugin, dataStore);
         killStatsService = new KillStatsService(dataStore);
         weaponOwnershipService = new WeaponOwnershipService(dataStore, WeaponRegistry.items());
-        flagService = new FlagService(plugin, dataStore, teamService);
+        flagAreaService = new FlagAreaService(dataStore);
+        flagService = new FlagService(plugin, dataStore, teamService, flagAreaService);
         flagService.clearEliminated();
 
         leaderboardService = new LeaderboardService(
@@ -83,6 +86,10 @@ public final class TeamRegistry {
 
     public static FlagService flags() {
         return flagService;
+    }
+
+    public static FlagAreaService flagAreas() {
+        return flagAreaService;
     }
 
     public static WeaponOwnershipService weapons() {

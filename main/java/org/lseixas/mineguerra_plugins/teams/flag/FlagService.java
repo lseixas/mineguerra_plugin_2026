@@ -26,13 +26,24 @@ public class FlagService {
 
     private final TeamsDataStore dataStore;
     private final TeamService teamService;
+    private final FlagAreaService areaService;
     private final org.bukkit.NamespacedKey flagKey;
     private final Set<UUID> eliminatedPlayers = new HashSet<>();
 
-    public FlagService(JavaPlugin plugin, TeamsDataStore dataStore, TeamService teamService) {
+    public FlagService(
+            JavaPlugin plugin,
+            TeamsDataStore dataStore,
+            TeamService teamService,
+            FlagAreaService areaService
+    ) {
         this.dataStore = dataStore;
         this.teamService = teamService;
+        this.areaService = areaService;
         this.flagKey = FlagConstants.teamFlagKey(plugin);
+    }
+
+    public FlagAreaService area() {
+        return areaService;
     }
 
     public Optional<TeamFlag> getFlag(String teamId) {
@@ -78,13 +89,15 @@ public class FlagService {
 
         removeExistingFlagBlock(teamId);
 
-        placeFlagBanner(teamId, target, banner);
-
         Location loc = target.getLocation().add(0.5, 0, 0.5);
         loc.setYaw(staff.getLocation().getYaw());
         TeamFlag flag = new TeamFlag(teamId, loc, true);
         dataStore.getFlags().put(teamId, flag);
         dataStore.save();
+        areaService.refresh();
+
+        areaService.clearArea(target.getLocation());
+        placeFlagBanner(teamId, target, banner);
         return SetResult.SUCCESS;
     }
 
@@ -95,6 +108,7 @@ public class FlagService {
         removeExistingFlagBlock(teamId);
         dataStore.getFlags().remove(teamId);
         dataStore.save();
+        areaService.refresh();
         return true;
     }
 
@@ -119,10 +133,30 @@ public class FlagService {
             return RepairResult.UNSUPPORTED_COLOR;
         }
 
+        areaService.refresh();
+        areaService.clearArea(loc);
         placeFlagBanner(teamId, loc.getBlock(), banner);
         flag.setAlive(true);
         dataStore.save();
         return RepairResult.SUCCESS;
+    }
+
+    /**
+     * Reaplica a limpeza do raio de uma bandeira já registrada, sem mexer no banner.
+     *
+     * @return blocos removidos, ou -1 se a bandeira não existe / mundo não carregado
+     */
+    public int clearArea(String teamId) {
+        TeamFlag flag = dataStore.getFlags().get(teamId);
+        if (flag == null) {
+            return -1;
+        }
+        Location loc = flag.toLocation();
+        if (loc == null) {
+            return -1;
+        }
+        areaService.refresh();
+        return areaService.clearArea(loc);
     }
 
     public void onFlagDestroyed(String teamId, Player breaker) {

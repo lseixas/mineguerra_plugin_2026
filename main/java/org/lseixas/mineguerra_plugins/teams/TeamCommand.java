@@ -24,7 +24,10 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
     private static final List<String> SUBCOMMANDS = List.of(
             "create", "delete", "join", "leave", "list", "info", "flag"
     );
-    private static final List<String> FLAG_SUBCOMMANDS = List.of("set", "remove", "repair", "status", "list");
+    private static final List<String> FLAG_SUBCOMMANDS =
+            List.of("set", "remove", "repair", "clear", "status", "list");
+    private static final List<String> FLAG_SUBCOMMANDS_WITH_TEAM =
+            List.of("set", "remove", "repair", "clear", "status");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -204,7 +207,7 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
 
     private void handleFlag(CommandSender sender, String[] args, TeamService teamService) {
         if (args.length < 2) {
-            sender.sendMessage("§cUso: /team flag <set|remove|repair|status|list> ...");
+            sender.sendMessage("§cUso: /team flag <set|remove|repair|clear|status|list> ...");
             return;
         }
 
@@ -257,6 +260,20 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
                     case UNSUPPORTED_COLOR -> sender.sendMessage("§cCor do time nao suportada para banner.");
                 }
             }
+            case "clear" -> {
+                if (args.length < 3) {
+                    sender.sendMessage("§cUso: /team flag clear <time>");
+                    return;
+                }
+                String teamId = teamService.normalizeTeamId(args[2]);
+                int cleared = flags.clearArea(teamId);
+                if (cleared < 0) {
+                    sender.sendMessage("§cTime sem bandeira registrada (ou mundo descarregado).");
+                } else {
+                    sender.sendMessage("§a§l[MineGuerra] §7Raio da bandeira §f" + teamId
+                            + " §7limpo: §f" + cleared + " §7blocos.");
+                }
+            }
             case "status" -> {
                 if (args.length >= 3) {
                     printFlagStatus(sender, teamService.normalizeTeamId(args[2]), flags, sender.hasPermission("mineguerra.admin"));
@@ -297,7 +314,7 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
                     }
                 }
             }
-            default -> sender.sendMessage("§cUso: /team flag <set|remove|repair|status|list>");
+            default -> sender.sendMessage("§cUso: /team flag <set|remove|repair|clear|status|list>");
         }
     }
 
@@ -331,7 +348,7 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("§e/team leave <jogador>");
         sender.sendMessage("§e/team list");
         sender.sendMessage("§e/team info <id>");
-        sender.sendMessage("§e/team flag <set|remove|repair|status|list>");
+        sender.sendMessage("§e/team flag <set|remove|repair|clear|status|list>");
     }
 
     private static boolean isChatColorName(String value) {
@@ -373,7 +390,7 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
 
         if ("flag".equals(sub) && args.length == 3) {
             String flagSub = args[1].toLowerCase(Locale.ROOT);
-            if ("set".equals(flagSub) || "remove".equals(flagSub) || "repair".equals(flagSub) || "status".equals(flagSub)) {
+            if (FLAG_SUBCOMMANDS_WITH_TEAM.contains(flagSub)) {
                 return filterPrefix(teamIds(), args[2]);
             }
         }
