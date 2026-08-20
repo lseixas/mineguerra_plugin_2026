@@ -17,6 +17,8 @@ Pasta de contexto para desenvolvedores e agentes de IA. Leia na ordem sugerida a
 11. [NO_SPAWN_ZONES.md](NO_SPAWN_ZONES.md) — delimitador de áreas sem spawn de mobs
 12. [NO_BREAK_ZONES.md](NO_BREAK_ZONES.md) — delimitador de áreas sem quebra de bloco
 13. [CLIENT_AUDIT.md](CLIENT_AUDIT.md) — allowlist Fabric e handshake `mineguerra:client_audit`
+14. [WAR_SCHEDULE.md](WAR_SCHEDULE.md) — cronograma do evento (`/startGuerra`, fases, PvP, border)
+15. [SKINS_OFFLINE.md](SKINS_OFFLINE.md) — skins em modo offline (SkinsRestorer, plugin externo)
 
 ## Raiz do repositório
 

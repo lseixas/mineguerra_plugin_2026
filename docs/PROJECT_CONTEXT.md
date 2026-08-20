@@ -18,7 +18,7 @@
 | Comando | Função |
 |---------|--------|
 | `/spawnvillager` (`sv`, `villager`) | Spawna villagers customizados (perm: `mineguerra.spawnvillager`) |
-| `/startGuerra` | **Desativado** (mensagem). Use trader tools — perm: `mineguerra.admin` |
+| `/startGuerra` (`guerra`, `sg`) | Cronograma do evento — perm: `mineguerra.admin` — ver [WAR_SCHEDULE.md](WAR_SCHEDULE.md) |
 | `/grantSoulflayerBow` | Dá Soulflayer Bow — perm: `mineguerra.admin` |
 | `/grantDragonSlayer` | Dá Dragon Slayer — perm: `mineguerra.admin` |
 | `/grantDoomHammer` | Dá Doom Hammer — perm: `mineguerra.admin` |
