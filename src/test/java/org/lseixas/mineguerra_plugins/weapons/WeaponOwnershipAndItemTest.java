@@ -1,6 +1,7 @@
 package org.lseixas.mineguerra_plugins.weapons;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,6 +46,19 @@ class WeaponOwnershipAndItemTest {
         assertTrue(items.matches(bow, WeaponId.SOULFLAYER_BOW));
         assertFalse(items.matches(bow, WeaponId.STORM_RIDER));
         assertEquals(WeaponId.SOULFLAYER_BOW, items.identify(bow).orElseThrow());
+    }
+
+    @Test
+    void soulflayerBowShipsWithMultishot() {
+        ItemStack bow = items.create(WeaponId.SOULFLAYER_BOW);
+        assertEquals(1, bow.getEnchantmentLevel(Enchantment.MULTISHOT));
+    }
+
+    @Test
+    void otherLegendariesHaveNoDefaultEnchantments() {
+        assertTrue(items.create(WeaponId.STORM_RIDER).getEnchantments().isEmpty());
+        assertTrue(items.create(WeaponId.DRAGON_SLAYER).getEnchantments().isEmpty());
+        assertTrue(items.create(WeaponId.DOOM_HAMMER).getEnchantments().isEmpty());
     }
 
     @Test

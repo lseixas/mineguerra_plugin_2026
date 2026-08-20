@@ -1,6 +1,8 @@
 package org.lseixas.mineguerra_plugins.weapons;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -8,6 +10,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -31,12 +34,23 @@ public class WeaponItemService {
         meta.setDisplayName(weaponId.getDisplayName());
         meta.setLore(weaponId.getLoreLines());
         meta.setCustomModelData(weaponId.getCustomModelData());
+        applyDefaultEnchantments(meta, weaponId);
 
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
         pdc.set(weaponIdKey, PersistentDataType.STRING, weaponId.name());
 
         item.setItemMeta(meta);
         return item;
+    }
+
+    private void applyDefaultEnchantments(ItemMeta meta, WeaponId weaponId) {
+        for (Map.Entry<String, Integer> entry : weaponId.getDefaultEnchantments().entrySet()) {
+            Enchantment enchantment = Registry.ENCHANTMENT.get(NamespacedKey.minecraft(entry.getKey()));
+            if (enchantment == null) {
+                continue;
+            }
+            meta.addEnchant(enchantment, entry.getValue(), true);
+        }
     }
 
     public boolean matches(ItemStack item, WeaponId weaponId) {

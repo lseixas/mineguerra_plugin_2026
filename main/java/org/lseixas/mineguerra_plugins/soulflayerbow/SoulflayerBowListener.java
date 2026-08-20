@@ -20,7 +20,9 @@ import org.lseixas.mineguerra_plugins.weapons.WeaponId;
 import org.lseixas.mineguerra_plugins.weapons.WeaponMessages;
 import org.lseixas.mineguerra_plugins.weapons.WeaponRegistry;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -31,11 +33,22 @@ public class SoulflayerBowListener implements Listener {
     private static final String DANTE_ABILITY = "Dante's Punishment";
     private static final long HELLFIRE_COOLDOWN_MS = 75_000;
 
+    private static final String META_DANTE = "is_dante_arrow";
+    private static final String META_ULTIMATE = "is_ultimate_arrow";
+    private static final String META_SHOT_ID = "soulflayer_shot_id";
+    /** Tempo de voo máximo considerado para um disparo (flecha some ou acerta antes). */
+    private static final long SHOT_ID_TTL_TICKS = 600;
+
     private final JavaPlugin plugin;
     private final AbilityCooldown hellfireCooldown = new AbilityCooldown(HELLFIRE_COOLDOWN_MS);
     private final Set<UUID> ultimateReady = new HashSet<>();
+    private final Map<UUID, ShotContext> currentShots = new HashMap<>();
+    private final Set<String> spentHellfireShots = new HashSet<>();
     private final Random random = new Random();
     private final double DANTE_CHANCE = 0.12;
+
+    private record ShotContext(String id, boolean ultimate) {
+    }
 
     private final HellfireRain hellfireRain;
     private final DantesPunishment dantesPunishment;
@@ -90,21 +103,66 @@ public class SoulflayerBowListener implements Listener {
             return;
         }
 
-        arrow.setMetadata("is_dante_arrow", new FixedMetadataValue(plugin, true));
+        ShotContext shot = openShot(player);
+        markArrow(arrow, shot);
+    }
 
-        if (ultimateReady.contains(player.getUniqueId())) {
-            ultimateReady.remove(player.getUniqueId());
+    /**
+     * Contexto do disparo atual do jogador. Com Multishot as flechas extras podem
+     * chegar em eventos separados ou nem passar pelo evento, então o contexto vive
+     * até o tick seguinte e a varredura pega o que faltou.
+     */
+    private ShotContext openShot(Player player) {
+        UUID playerId = player.getUniqueId();
+        ShotContext existing = currentShots.get(playerId);
+        if (existing != null) {
+            return existing;
+        }
+
+        boolean ultimate = ultimateReady.remove(playerId);
+        ShotContext shot = new ShotContext(UUID.randomUUID().toString(), ultimate);
+        currentShots.put(playerId, shot);
+
+        if (ultimate) {
             hellfireCooldown.commit(player);
             VanillaCooldownSync.apply(player, WeaponId.SOULFLAYER_BOW, HELLFIRE_COOLDOWN_MS);
-
-            arrow.setMetadata("is_ultimate_arrow", new FixedMetadataValue(plugin, true));
-            arrow.setVelocity(arrow.getVelocity().multiply(2.5));
-            arrow.setCritical(true);
-            arrow.setFireTicks(100);
-
             WeaponMessages.sendActivated(player, WeaponId.SOULFLAYER_BOW, HELLFIRE_ABILITY);
             PlayerFeedback.playSound(player, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
         }
+
+        plugin.getServer().getScheduler().runTask(plugin, () -> {
+            currentShots.remove(playerId);
+            sweepUnmarkedArrows(player, shot);
+        });
+        return shot;
+    }
+
+    private void sweepUnmarkedArrows(Player player, ShotContext shot) {
+        for (Entity entity : player.getWorld().getNearbyEntities(player.getEyeLocation(), 8, 8, 8)) {
+            if (!(entity instanceof Arrow arrow)) {
+                continue;
+            }
+            if (!(arrow.getShooter() instanceof Player shooter)
+                    || !shooter.getUniqueId().equals(player.getUniqueId())) {
+                continue;
+            }
+            if (arrow.getTicksLived() > 3 || arrow.hasMetadata(META_DANTE)) {
+                continue;
+            }
+            markArrow(arrow, shot);
+        }
+    }
+
+    private void markArrow(Arrow arrow, ShotContext shot) {
+        arrow.setMetadata(META_DANTE, new FixedMetadataValue(plugin, true));
+        if (!shot.ultimate()) {
+            return;
+        }
+        arrow.setMetadata(META_ULTIMATE, new FixedMetadataValue(plugin, true));
+        arrow.setMetadata(META_SHOT_ID, new FixedMetadataValue(plugin, shot.id()));
+        arrow.setVelocity(arrow.getVelocity().multiply(2.5));
+        arrow.setCritical(true);
+        arrow.setFireTicks(100);
     }
 
     @EventHandler
@@ -112,10 +170,28 @@ public class SoulflayerBowListener implements Listener {
         if (!(event.getEntity() instanceof Arrow arrow)) {
             return;
         }
-
-        if (arrow.hasMetadata("is_ultimate_arrow") && arrow.getShooter() instanceof Player shooter) {
-            hellfireRain.spawnHellfireRain(arrow.getLocation(), shooter);
+        if (!arrow.hasMetadata(META_ULTIMATE) || !(arrow.getShooter() instanceof Player shooter)) {
+            return;
         }
+        if (!consumeHellfireShot(arrow)) {
+            return;
+        }
+
+        hellfireRain.spawnHellfireRain(arrow.getLocation(), shooter);
+    }
+
+    /** Uma chuva infernal por disparo, mesmo com as 3 flechas do Multishot acertando. */
+    private boolean consumeHellfireShot(Arrow arrow) {
+        if (!arrow.hasMetadata(META_SHOT_ID)) {
+            return true;
+        }
+        String shotId = arrow.getMetadata(META_SHOT_ID).get(0).asString();
+        if (!spentHellfireShots.add(shotId)) {
+            return false;
+        }
+        plugin.getServer().getScheduler().runTaskLater(
+                plugin, () -> spentHellfireShots.remove(shotId), SHOT_ID_TTL_TICKS);
+        return true;
     }
 
     @EventHandler
@@ -146,7 +222,7 @@ public class SoulflayerBowListener implements Listener {
             return;
         }
 
-        if (!arrow.hasMetadata("is_dante_arrow")) {
+        if (!arrow.hasMetadata(META_DANTE)) {
             return;
         }
 

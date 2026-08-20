@@ -122,6 +122,7 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 | Trapaceiro | Golden Bow (Power 9999, 1 dura) | — | **16 EB** |
 | Trapaceiro | Graveto da Repulsão (Knockback 32, 1 dura) | — | **8 EB** |
 | Trapaceiro | Maçã do Capiroto | — | **12 EB** |
+| Trapaceiro | Peitoral do Pacto (Thorns 9999 / Prot -9999) | — | **16 EB** |
 
 ---
 
@@ -153,14 +154,27 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 | Ability | Antes | Novo | Racional |
 |---------|-------|------|----------|
 | Thunder Teleport | 15s | **25s** | Mobilidade sem spam engage |
-| Storm weather | 120s | **60s** | Menos dark-map |
+| Storm weather | 120s → 60s | **removida** | Clima global estragava a vila (portas, siege, raios) |
 | Hellfire Rain | 90s | **75s** | Compensa Dante mais raro |
-| Dante's Punishment | 20% | **12%** | Armor volta a importar |
+| Dante's Punishment | 20% | **12%** por flecha | Armor volta a importar |
 | Dragon's Breath | 30s | **35s** | Miss/click ainda queima CD |
 | Rage of the Dragon | 90s / 10s / amp 3 | **100s / 8s / amp 3** | Mesma identidade, uptime menor |
 | Power Jump | 90s | **80s** | Compensa Doom mais acessível |
 
 **Docs:** círculo pré-TP usa `strikeLightning` (dano vanilla).
+
+### Multishot no Soulflayer Bow (a observar)
+
+O arco agora sai com **Multishot I**. Dante rola por flecha, então a chance de
+ver o proc num disparo cheio sobe bastante (~32% para 3 flechas a 12% cada).
+Hellfire Rain continua 1× por disparo. Se ficar forte demais, o ajuste é baixar
+Dante para 6–8% em vez de tirar o Multishot.
+
+### Peitoral do Pacto (trapaceiro)
+
+Item de troca: quem veste morre com qualquer dano e leva o agressor junto.
+Custo **16 EB**, `maxUses` 16. Vale acompanhar se vira estratégia de trade-kill
+em massa contra o time com lendária; se virar, subir para 32 EB ou `maxUses` 4.
 
 ---
 
@@ -192,6 +206,9 @@ Ver `src/test/java` — JUnit 5 + MockBukkit:
 - IDs de time válidos / inválidos
 - `AbilityCooldown` (janela temporal)
 - Claim offline → trade indisponível; release após “gone”
-- Match de item lendário (PDC/CMD) via factory
+- Match de item lendário (PDC/CMD) via factory; Multishot no Soulflayer
+- Itens do trapaceiro (Power 9999, Knockback 32, Peitoral do Pacto)
+- Cronograma do evento: parsing do YAML e idempotência das fases
+- Geometria e blocklist do raio da bandeira
 
 Rodar: `./gradlew test` (ou `gradle test` com JDK 21).
