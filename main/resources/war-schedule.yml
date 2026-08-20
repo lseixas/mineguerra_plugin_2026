@@ -1,0 +1,44 @@
+# Cronograma do evento MineGuerra.
+#
+# Horarios sao wall-clock (data e hora reais), no formato yyyy-MM-dd HH:mm.
+# O plugin compara com a hora do servidor a cada segundo, entao o cronograma
+# sobrevive a restart. Fases que ja venceram sao reaplicadas em silencio.
+#
+# Depois de editar: /startGuerra reload
+
+timezone: America/Sao_Paulo
+world: Guerra3
+
+phases:
+
+  # Sexta 18:00 — abertura, PvP desligado
+  inicio:
+    at: "2026-08-21 18:00"
+
+  # Sabado 00:00 — PvP liberado (bandeiras precisam estar postas)
+  pvp-on:
+    at: "2026-08-22 00:00"
+
+  # Sabado 18:00 — Villager Trapaceiro
+  trapaceiro:
+    at: "2026-08-22 18:00"
+    x: 47
+    y: 66
+    z: -39
+
+  # Domingo 12:00 — unica bandeira de pe vence; duas ou mais = coords liberadas
+  julgamento:
+    at: "2026-08-23 12:00"
+
+  # Domingo 18:00 — morte passa a eliminar de vez
+  hardcore:
+    at: "2026-08-23 18:00"
+
+  # Domingo 20:00 — world border encolhe para o centro
+  fechar-centro:
+    at: "2026-08-23 20:00"
+    centerX: 47
+    centerZ: -39
+    fromSize: 3000
+    toSize: 200
+    durationSeconds: 7200

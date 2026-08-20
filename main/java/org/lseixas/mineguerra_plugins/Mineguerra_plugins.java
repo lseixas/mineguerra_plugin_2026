@@ -13,13 +13,16 @@ import org.lseixas.mineguerra_plugins.stormrider.StormRiderListener;
 import org.lseixas.mineguerra_plugins.traders.GrantTraderToolCommand;
 import org.lseixas.mineguerra_plugins.traders.GrantTraderToolKitCommand;
 import org.lseixas.mineguerra_plugins.traders.SpawnVillagerCommand;
+import org.lseixas.mineguerra_plugins.traders.SuicidePactListener;
 import org.lseixas.mineguerra_plugins.traders.TraderToolListener;
 import org.lseixas.mineguerra_plugins.teams.MgCommand;
 import org.lseixas.mineguerra_plugins.teams.TeamCommand;
 import org.lseixas.mineguerra_plugins.teams.TeamJoinListener;
 import org.lseixas.mineguerra_plugins.teams.TeamKillListener;
 import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
+import org.lseixas.mineguerra_plugins.teams.flag.FlagAreaListener;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagBreakListener;
+import org.lseixas.mineguerra_plugins.teams.flag.FlagPhysicsListener;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagRespawnListener;
 import org.lseixas.mineguerra_plugins.traders.WeaponTraderRefreshListener;
 import org.lseixas.mineguerra_plugins.clientaudit.ClientAuditRegistry;
@@ -27,6 +30,7 @@ import org.lseixas.mineguerra_plugins.nobreak.GrantNoBreakToolCommand;
 import org.lseixas.mineguerra_plugins.nobreak.NoBreakRegistry;
 import org.lseixas.mineguerra_plugins.nospawn.GrantNoSpawnToolCommand;
 import org.lseixas.mineguerra_plugins.nospawn.NoSpawnRegistry;
+import org.lseixas.mineguerra_plugins.war.WarRegistry;
 import org.lseixas.mineguerra_plugins.weapons.LegendaryWeaponListener;
 import org.lseixas.mineguerra_plugins.weapons.WeaponRegistry;
 
@@ -40,6 +44,7 @@ public final class Mineguerra_plugins extends JavaPlugin {
         NoSpawnRegistry.init(this);
         NoBreakRegistry.init(this);
         ClientAuditRegistry.init(this);
+        WarRegistry.init(this);
 
         getServer().getPluginManager().registerEvents(new SoulflayerBowListener(this), this);
         getServer().getPluginManager().registerEvents(new DragonSlayerListener(this), this);
@@ -52,9 +57,12 @@ public final class Mineguerra_plugins extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TeamJoinListener(), this);
         getServer().getPluginManager().registerEvents(new FlagBreakListener(), this);
         getServer().getPluginManager().registerEvents(new FlagRespawnListener(this), this);
+        getServer().getPluginManager().registerEvents(new FlagAreaListener(), this);
+        getServer().getPluginManager().registerEvents(new FlagPhysicsListener(), this);
         getServer().getPluginManager().registerEvents(
                 new LegendaryWeaponListener(WeaponRegistry.items()), this);
         getServer().getPluginManager().registerEvents(new WeaponTraderRefreshListener(), this);
+        getServer().getPluginManager().registerEvents(new SuicidePactListener(this), this);
 
         getLogger().info("Mineguerra plugins has been enabled!");
 
@@ -63,7 +71,9 @@ public final class Mineguerra_plugins extends JavaPlugin {
                 new GrantTraderToolCommand(traderToolListener.getTraderToolService()));
         getCommand("grantTraderToolKit").setExecutor(
                 new GrantTraderToolKitCommand(traderToolListener.getTraderToolService()));
-        getCommand("startGuerra").setExecutor(new StartGuerraCommand(this));
+        StartGuerraCommand startGuerraCommand = new StartGuerraCommand(this);
+        getCommand("startGuerra").setExecutor(startGuerraCommand);
+        getCommand("startGuerra").setTabCompleter(startGuerraCommand);
         getCommand("grantSoulflayerBow").setExecutor(new SoulflayerBowCommand());
         getCommand("grantDragonSlayer").setExecutor(new DragonSlayerCommand());
         getCommand("grantDoomHammer").setExecutor(new DoomHammerCommand());
@@ -91,6 +101,7 @@ public final class Mineguerra_plugins extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        WarRegistry.shutdown();
         ClientAuditRegistry.shutdown();
         NoBreakRegistry.shutdown();
         NoSpawnRegistry.shutdown();

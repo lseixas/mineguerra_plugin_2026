@@ -9,9 +9,10 @@ commands:
     permission: mineguerra.spawnvillager
     aliases: [ sv, villager ]
   startGuerra:
-    description: Reservado (nao implementado). Use trader tools para spawn.
-    usage: /startGuerra
+    description: Cronograma do evento (fases, PvP, hardcore, world border)
+    usage: /startGuerra <start|stop|status|phase|reload>
     permission: mineguerra.admin
+    aliases: [ guerra, sg ]
   grantSoulflayerBow:
     description: Te da o item arco do wither
     usage: /grantSoulflayerBow
@@ -40,7 +41,7 @@ commands:
     aliases: [ gttk ]
   team:
     description: Gerencia times do evento (criar, join, leave, flag)
-    usage: /team <create|delete|join|leave|list|info|flag> ...
+    usage: "/team <create|delete|join|leave|list|info|flag> ... (flag: set|remove|repair|clear|status|list)"
     permission: mineguerra.team
     aliases: [ t, time ]
   mg:
