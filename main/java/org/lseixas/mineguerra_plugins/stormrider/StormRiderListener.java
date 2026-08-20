@@ -19,8 +19,6 @@ import java.util.*;
 public class StormRiderListener implements Listener {
 
     private static final String TELEPORT_ABILITY = "Thunder Teleport";
-    /** ~1 minute storm+thunder after a Storm Rider throw. */
-    private static final int WEATHER_DURATION_TICKS = 1200;
 
     private final JavaPlugin plugin;
     private final ThunderTeleport thunderTeleport;
@@ -79,17 +77,6 @@ public class StormRiderListener implements Listener {
         UUID playerId = player.getUniqueId();
         if (!activeModeEnabled.contains(playerId)) {
             return;
-        }
-
-        boolean wasClear = !player.getWorld().hasStorm();
-
-        player.getWorld().setStorm(true);
-        player.getWorld().setWeatherDuration(WEATHER_DURATION_TICKS);
-        player.getWorld().setThundering(true);
-        player.getWorld().setThunderDuration(WEATHER_DURATION_TICKS);
-
-        if (wasClear) {
-            WeaponMessages.sendInfo(player, WeaponId.STORM_RIDER, "A tempestade foi invocada.");
         }
 
         tridentOwners.put(trident.getUniqueId(), playerId);

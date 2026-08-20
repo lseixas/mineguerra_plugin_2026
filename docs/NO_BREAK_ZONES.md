@@ -34,8 +34,15 @@ Cancelado dentro da zona:
 - Quebra por jogador **sem** `mineguerra.nobreak` (staff/OP ainda pode quebrar)
 - Explosão (TNT, creeper, crystal, cama, etc.) — bloco some da lista, não dropa
 - Fogo queimando o bloco
-- Pistão empurrando/puxando o bloco (ou empurrando para dentro da zona)
 - Entidade mudando bloco (enderman, wither, falling block, etc.)
+
+## Pistões (não bloqueados)
+
+Pistões funcionam normalmente dentro e fora da zona. O bloqueio anterior congelava
+qualquer redstone construída na área, então foi removido.
+
+Consequência aceita: um pistão pode empurrar/puxar blocos protegidos. Se precisar
+travar um mecanismo específico, prefira o posicionamento físico da build.
 
 ## Pacote
 

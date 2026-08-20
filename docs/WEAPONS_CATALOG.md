@@ -15,6 +15,7 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 | CustomModelData | `10001` |
 | PDC `mineguerra:weapon_id` | Sim |
 | Display | `§7§lSoulflayer Bow` |
+| Enchantments | **Multishot I** (aplicado por `WeaponItemService`) |
 
 ### Skills
 
@@ -23,11 +24,24 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 | Hellfire Rain | Ativa | Sneak + F → próximo tiro | **75s** — no tiro ultimate |
 | Dante's Punishment | Passiva | hit de flecha marcada | **12%** armor-bypass |
 
+### Multishot
+
+O arco sai com **Multishot I** (3 flechas por disparo). Consequências no código:
+
+- Todas as flechas do disparo recebem `is_dante_arrow` — as extras via varredura
+  no tick seguinte, porque com Multishot elas podem não passar por
+  `EntityShootBowEvent`. Dante rola **por flecha**, então a chance efetiva de
+  proc por disparo sobe (12% cada).
+- Hellfire Rain dispara **uma vez por disparo**, não uma por flecha: as flechas
+  compartilham um `soulflayer_shot_id` e só o primeiro impacto invoca a chuva.
+- Arcos já distribuídos **não** ganham o enchant retroativamente — reemitir via
+  `/grantSoulflayerBow` ou trade do explorador do Nether.
+
 ### Eventos Bukkit
 
 - `PlayerSwapHandItemsEvent` — toggle ultimate
-- `EntityShootBowEvent` — metadata Dante / ultimate
-- `ProjectileHitEvent` — HellfireRain (`setShooter`)
+- `EntityShootBowEvent` — abre o disparo e marca as flechas (Dante / ultimate)
+- `ProjectileHitEvent` — HellfireRain (`setShooter`), 1× por disparo
 - `EntityDamageByEntityEvent` — Dante; Hellfire ignora mesmo time
 
 ### Arquivos
@@ -74,11 +88,21 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 | Skill | Tipo | Ativação | CD |
 |-------|------|----------|-----|
 | Thunder Teleport | Ativa | Sneak + F → arremesso → hit | **25s** |
-| Tempestade | Ativa (modo skill) | arremesso **com** Thunder Teleport armado | Clima **1200 ticks (~60s)** |
+
+### Tempestade removida
+
+A passiva que ligava `setStorm`/`setThundering` no mundo inteiro por ~60s **não
+existe mais**. Ela afetava tudo: villagers fechando portas, spawn de superfície,
+zombie siege na vila e raios naturais em qualquer lugar do mapa. Só o teleporte
+sobrou.
 
 ### Risco vanilla
 
-- Círculo pré-teleporte: `strikeLightning` — **dano vanilla** nos atingidos.
+- Círculo pré-teleporte: 8 `strikeLightning` em raio de 5 blocos — **raios reais**,
+  com dano vanilla e sem filtro de aliado.
+- Raio que cai perto de vila converte **villager em bruxa** e **creeper em charged
+  creeper**. Se isso virar problema no evento, o conserto é cancelar
+  `EntityTransformEvent` com causa `LIGHTNING`.
 
 ### Arquivos
 

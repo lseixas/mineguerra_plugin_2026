@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.lseixas.mineguerra_plugins.traders.TraderType;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Identidade canônica de cada arma customizada do evento.
@@ -23,7 +24,8 @@ public enum WeaponId {
                     "",
                     "§eHellfire Rain §7— Agachar + F, próximo tiro",
                     "§7Cooldown: §c75s",
-                    "§5Dante's Punishment §7— 12% ao acertar flecha"
+                    "§5Dante's Punishment §7— 12% ao acertar flecha",
+                    "§8Multishot I §7— 3 flechas por disparo"
             ),
             TraderType.NETHER
     ),
@@ -57,8 +59,7 @@ public enum WeaponId {
                     "",
                     "§eThunder Teleport §7— Agachar + F, arremesso",
                     "§7Cooldown: §c25s",
-                    "§7Passiva: tempestade ~60s ao arremessar",
-                    "§8(raios do TP são efeito visual)"
+                    "§8(8 raios reais caem ao redor do pouso)"
             ),
             TraderType.OCEANO
     ),
@@ -133,6 +134,18 @@ public enum WeaponId {
 
     public TraderType getExplorerTraderType() {
         return explorerTraderType;
+    }
+
+    /**
+     * Enchantments aplicados na criação do item, por chave vanilla (namespace minecraft).
+     * Chaves em vez de {@link org.bukkit.enchantments.Enchantment} para não tocar o
+     * registry do Bukkit durante a inicialização deste enum.
+     */
+    public Map<String, Integer> getDefaultEnchantments() {
+        return switch (this) {
+            case SOULFLAYER_BOW -> Map.of("multishot", 1);
+            default -> Map.of();
+        };
     }
 
     public String getShortName() {
