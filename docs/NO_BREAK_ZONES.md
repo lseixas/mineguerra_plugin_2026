@@ -1,6 +1,7 @@
 # Áreas No-Break
 
-Ferramenta de staff (pincel / brush) para delimitar **cuboides por bloco** onde blocos não podem ser quebrados.
+Ferramenta de staff (pincel / brush) para delimitar **cuboides por bloco** onde
+blocos não podem ser quebrados nem colocados por jogadores.
 
 ## Comando
 
@@ -32,6 +33,7 @@ Com a ferramenta na mão: partículas **roxas** nas zonas já salvas (próximas)
 Cancelado dentro da zona:
 
 - Quebra por jogador **sem** `mineguerra.nobreak` (staff/OP ainda pode quebrar)
+- Colocação de bloco por jogador **sem** `mineguerra.nobreak` (staff/OP ainda pode construir)
 - Explosão (TNT, creeper, crystal, cama, etc.) — bloco some da lista, não dropa
 - Fogo queimando o bloco
 - Entidade mudando bloco (enderman, wither, falling block, etc.)
@@ -39,7 +41,9 @@ Cancelado dentro da zona:
 ## Pistões (não bloqueados)
 
 Pistões funcionam normalmente dentro e fora da zona. O bloqueio anterior congelava
-qualquer redstone construída na área, então foi removido.
+qualquer redstone construída na área, então foi removido. Colocação por jogador é
+bloqueada via `BlockPlaceEvent` — eventos de pistão (`BlockPistonExtend` /
+`BlockPistonRetract`) **não** são cancelados.
 
 Consequência aceita: um pistão pode empurrar/puxar blocos protegidos. Se precisar
 travar um mecanismo específico, prefira o posicionamento físico da build.
