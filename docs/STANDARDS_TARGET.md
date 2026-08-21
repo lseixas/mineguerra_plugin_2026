@@ -105,6 +105,7 @@ class AbilityCooldown {
 Mensagem de bloqueio: `WeaponMessages.sendCooldown(player, weaponId, abilityName, seconds)`.
 
 Opcional (vanilla UX): após `commit`, `player.setCooldown(weaponMaterial, ticks)`.
+Não usar em arco/crossbow — o CD vanilla bloqueia o disparo normal.
 
 ### Uma instância por skill
 

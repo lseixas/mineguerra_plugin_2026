@@ -4,6 +4,9 @@ import org.bukkit.entity.Player;
 
 /**
  * Espelha o cooldown da habilidade na barra vanilla do item na hotbar.
+ * <p>
+ * Não usar em {@link org.bukkit.Material#BOW} / crossbow: {@code setCooldown}
+ * impede o disparo normal enquanto a barra cinza estiver ativa.
  */
 public final class VanillaCooldownSync {
 

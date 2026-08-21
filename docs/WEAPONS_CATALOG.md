@@ -1,7 +1,7 @@
 # Catálogo de armas
 
 Última atualização: balance weekend — ver [`BALANCE.md`](BALANCE.md).  
-Todas as 4 armas usam `WeaponItemService`, lore em `WeaponId`, `WeaponMessages`, CD vanilla na hotbar nas ativas.
+Todas as 4 armas usam `WeaponItemService`, lore em `WeaponId`, `WeaponMessages`. CD vanilla na hotbar nas ativas (exceto Soulflayer Bow: `setCooldown(BOW)` bloqueia tiro).
 
 Legenda: `MIGRADO` = padrão `weapons/`.
 
@@ -21,8 +21,8 @@ Legenda: `MIGRADO` = padrão `weapons/`.
 
 | Skill | Tipo | Ativação | CD / chance |
 |-------|------|----------|-------------|
-| Hellfire Rain | Ativa | Sneak + F → próximo tiro | **75s** — no tiro ultimate |
-| Dante's Punishment | Passiva | hit de flecha marcada | **12%** armor-bypass |
+| Hellfire Rain | Ativa | Sneak + F → próximo tiro | **45s** — no tiro ultimate (só `AbilityCooldown`; sem barra vanilla) |
+| Dante's Punishment | Passiva | hit de flecha marcada | **12%** armor-bypass + fogo |
 
 ### Multishot
 
@@ -43,6 +43,9 @@ O arco sai com **Multishot I** (3 flechas por disparo). Consequências no códig
 - `EntityShootBowEvent` — abre o disparo e marca as flechas (Dante / ultimate)
 - `ProjectileHitEvent` — HellfireRain (`setShooter`), 1× por disparo
 - `EntityDamageByEntityEvent` — Dante; Hellfire ignora mesmo time
+- `ExplosionPrimeEvent` / `EntityExplodeEvent` — caveiras da Hellfire: sem fogo e sem quebra de bloco (`HellfireSkullProtectListener`). O raio da explosão **não** é zerado, para o dano em jogadores continuar.
+
+**Nota:** não é por causa do criativo. As caveiras são spawnadas pelo plugin; o Paper frequentemente ignora `setYield(0)` na entidade WitherSkull. Não dá para sobrescrever a classe NMS com a Spigot API — o guard é no evento.
 
 ### Arquivos
 
