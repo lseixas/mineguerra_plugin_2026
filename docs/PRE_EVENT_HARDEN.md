@@ -51,7 +51,7 @@ Substituiu o bloco 2 (`/startGuerra` no-op). Ver [`WAR_SCHEDULE.md`](WAR_SCHEDUL
 2. Trade lendária → logout holder → reopen trade **não** vende segunda cópia
 3. Morte com arma → some do drop → trade volta
 4. Flag: quebra inimiga → título; TNT na flag → mesmo fluxo; aliado não quebra; untagged não captura
-5. Eliminação: flag morta → morte → spectator; `/mg revive` funciona; `/team flag repair`
+5. Eliminação: flag morta → morte → spectator **só em aliados** (Shift troca; sem free-cam / outro time); `/mg revive` funciona; `/team flag repair`
 6. Tab/nametag: 2+ players, times diferentes, prefixes visíveis cruzados
 7. Cada arma 1 ciclo: Doom Power Jump, Storm throw+TP (clima **não** muda), Bow Hellfire+Dante, Dragon Breath+Rage
 8. Villagers: tool spawn + survival não mata / creative remove

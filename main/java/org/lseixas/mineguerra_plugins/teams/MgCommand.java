@@ -8,9 +8,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagService;
+import org.lseixas.mineguerra_plugins.metrics.MetricsRegistry;
+import org.lseixas.mineguerra_plugins.metrics.MetricsService;
 import org.lseixas.mineguerra_plugins.weapons.WeaponId;
 import org.lseixas.mineguerra_plugins.weapons.WeaponOwnershipService;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -54,8 +57,63 @@ public class MgCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
+        if ("metrics".equals(sub)) {
+            handleMetrics(sender, args);
+            return true;
+        }
+
         sendUsage(sender);
         return true;
+    }
+
+    private void handleMetrics(CommandSender sender, String[] args) {
+        if (args.length < 2) {
+            sender.sendMessage("§cUso: /mg metrics <status|dump|open>");
+            return;
+        }
+
+        MetricsService metrics = MetricsRegistry.service();
+        if (metrics == null) {
+            sender.sendMessage("§cMetricas nao inicializadas.");
+            return;
+        }
+
+        String action = args[1].toLowerCase(Locale.ROOT);
+        switch (action) {
+            case "status" -> {
+                sender.sendMessage("§6§l[MineGuerra] §7Metricas:");
+                sender.sendMessage("§7Gravando: " + (metrics.isRecording() ? "§asim" : "§cnao"));
+                sender.sendMessage("§7Sessao: §f" + metrics.getSessionId().orElse("-"));
+                sender.sendMessage("§7Eventos: §f" + metrics.getEventCount());
+                sender.sendMessage("§7Inicio: §f" + metrics.getStartedAt().map(Object::toString).orElse("-"));
+                sender.sendMessage("§7Ultimo flush: §f"
+                        + metrics.getLastFlushAt().map(Object::toString).orElse("-"));
+                metrics.getSessionDir().ifPresent(dir ->
+                        sender.sendMessage("§7Pasta: §f" + dir.toAbsolutePath()));
+            }
+            case "dump" -> {
+                if (metrics.getSessionId().isEmpty()) {
+                    sender.sendMessage("§cNenhuma sessao de metricas aberta.");
+                    return;
+                }
+                metrics.flushNow();
+                sender.sendMessage("§a§l[MineGuerra] §7Snapshot gravado.");
+                metrics.getSessionDir().ifPresent(dir ->
+                        sender.sendMessage("§7" + dir.resolve("snapshot.json").toAbsolutePath()));
+            }
+            case "open" -> {
+                Path dir = metrics.getSessionDir().orElse(null);
+                if (dir == null) {
+                    Path root = metrics.getStore().getRoot();
+                    sender.sendMessage("§eNenhuma sessao ativa. Root: §f" + root.toAbsolutePath());
+                    return;
+                }
+                sender.sendMessage("§a§l[MineGuerra] §7Pasta da sessao:");
+                sender.sendMessage("§f" + dir.toAbsolutePath());
+                sender.sendMessage("§7events.jsonl + snapshot.json");
+            }
+            default -> sender.sendMessage("§cUso: /mg metrics <status|dump|open>");
+        }
     }
 
     private void handleLeaderboard(CommandSender sender, String[] args) {
@@ -222,6 +280,9 @@ public class MgCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("§e/mg weapons status");
         sender.sendMessage("§e/mg weapons reset");
         sender.sendMessage("§e/mg revive <jogador|all>");
+        sender.sendMessage("§e/mg metrics status");
+        sender.sendMessage("§e/mg metrics dump");
+        sender.sendMessage("§e/mg metrics open");
     }
 
     @Override
@@ -231,7 +292,7 @@ public class MgCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 1) {
-            return filter(List.of("leaderboard", "kills", "weapons", "revive"), args[0]);
+            return filter(List.of("leaderboard", "kills", "weapons", "revive", "metrics"), args[0]);
         }
 
         if (args.length == 2) {
@@ -243,6 +304,9 @@ public class MgCommand implements CommandExecutor, TabCompleter {
             }
             if ("weapons".equalsIgnoreCase(args[0])) {
                 return filter(List.of("status", "reset"), args[1]);
+            }
+            if ("metrics".equalsIgnoreCase(args[0])) {
+                return filter(List.of("status", "dump", "open"), args[1]);
             }
             if ("revive".equalsIgnoreCase(args[0])) {
                 List<String> options = new ArrayList<>();

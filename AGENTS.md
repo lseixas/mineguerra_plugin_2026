@@ -18,11 +18,12 @@ Plugin Spigot/Paper para o evento **Minecraft Guerra**. Foco atual: armas custom
 | Núcleo compartilhado (padrão novo) | `main/java/.../weapons/` |
 | Villagers / trades | `traders/VillagerSpawner.java`, `TraderToolListener` (bastão blaze rod) |
 | No-spawn (áreas) | `nospawn/` — lightning rod delimita cuboide sem spawn de mobs |
-| No-break (áreas) | `nobreak/` — pincel delimita cuboide onde blocos não quebram |
+| No-break (áreas) | `nobreak/` — pincel delimita cuboide sem quebra/colocação de blocos |
 | Times + leaderboard | `teams/` — ver [`docs/TEAMS_AND_LEADERBOARD.md`](docs/TEAMS_AND_LEADERBOARD.md) |
 | Bandeiras + armas lendárias | `teams/flag/`, `weapons/WeaponOwnershipService` — [`docs/FLAGS_AND_LEGENDARY_WEAPONS.md`](docs/FLAGS_AND_LEGENDARY_WEAPONS.md) |
 | Comandos de guerra | `fluxCommands/` — `/startGuerra` |
 | Cronograma do evento | `war/` — fases, PvP toggle, hardcore, world border — [`docs/WAR_SCHEDULE.md`](docs/WAR_SCHEDULE.md) |
+| Métricas do evento | `metrics/` — JSONL + snapshot só na guerra ativa — [`docs/METRICS.md`](docs/METRICS.md) |
 | Documentação | [`docs/`](docs/) |
 | Resource pack (CMD 10001–10004) | [`resourcepack/MineGuerra_Weapons/`](resourcepack/MineGuerra_Weapons/) — [`docs/RESOURCE_PACK.md`](docs/RESOURCE_PACK.md) |
 | Client audit (Fabric allowlist) | `clientaudit/` — [`docs/CLIENT_AUDIT.md`](docs/CLIENT_AUDIT.md) (`enabled: false` até o mod existir) |
@@ -58,17 +59,18 @@ Cada arma: `*Factory` (item), `*Listener` (eventos + estado), `skills/` (efeitos
 ## Times e kills
 
 - `/team` — `mineguerra.team` — criar times, assign tag (prefixo tab/nametag)
-- `/mg` — `mineguerra.admin` — leaderboard on/off, kills set/reset, `weapons status|reset`
+- `/mg` — `mineguerra.admin` — leaderboard on/off, kills set/reset, `weapons status|reset`, `metrics status|dump|open`
 - `/team flag` — bandeira por time (respawn / eliminação) — ver [`docs/FLAGS_AND_LEGENDARY_WEAPONS.md`](docs/FLAGS_AND_LEGENDARY_WEAPONS.md)
 - Kill válida: killer e vítima em times **diferentes**
 - Persistência: `plugins/mineguerra_plugins/teams-data.yml`
+- Métricas (análise): `plugins/mineguerra_plugins/metrics/<session>/` — ver [`docs/METRICS.md`](docs/METRICS.md)
 
 ## Ferramentas de villager (staff)
 
 - `/grantTraderTool <tipo>` — bastão: **clique no chão** = spawn; **clique no NPC** = aplicar trades (`oceano`, `profundezas`, `nether`, `end`, `trim`, `trapaceiro`, …)
 - `/grantTraderToolKit` — kit dos 4 exploradores de armas (`oceano`, `profundezas`, `nether`, `end`)
 - `/grantNoSpawnTool` — lightning rod: delimita cuboide sem spawn (`mineguerra.nospawn`); `list` / `clear`
-- `/grantNoBreakTool` — pincel: delimita cuboide sem quebra de bloco (`mineguerra.nobreak`); `list` / `clear`
+- `/grantNoBreakTool` — pincel: delimita cuboide sem quebra/colocação de bloco (`mineguerra.nobreak`); `list` / `clear`
 - Perm: `mineguerra.tradertool` | Comando legado: `/spawnvillager <tipo>`
 
 ## Armas migradas

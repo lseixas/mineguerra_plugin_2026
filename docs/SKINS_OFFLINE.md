@@ -18,6 +18,10 @@ por comando, e o plugin guarda o resultado por nome.
 4. Conferir `plugins/SkinsRestorer/config.yml` e `plugins/SkinsRestorer/`
    (o banco padrão é um arquivo local, sem MySQL).
 
+No servidor do evento (`mine_guerra_bukkit_2026`) o **SkinsRestorer 15.12.5** já está
+em `plugins/SkinsRestorer.jar` e no `MODRINTH_PROJECTS` do
+`setup/mine-guerra-bukkit-2026/docker-compose.yaml` (atualiza sozinho no recreate).
+
 ### Comandos para os jogadores
 
 | Comando | Função |

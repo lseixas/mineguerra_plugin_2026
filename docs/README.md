@@ -19,6 +19,7 @@ Pasta de contexto para desenvolvedores e agentes de IA. Leia na ordem sugerida a
 13. [CLIENT_AUDIT.md](CLIENT_AUDIT.md) — allowlist Fabric e handshake `mineguerra:client_audit`
 14. [WAR_SCHEDULE.md](WAR_SCHEDULE.md) — cronograma do evento (`/startGuerra`, fases, PvP, border)
 15. [SKINS_OFFLINE.md](SKINS_OFFLINE.md) — skins em modo offline (SkinsRestorer, plugin externo)
+16. [METRICS.md](METRICS.md) — métricas do evento (JSONL + snapshot por sessão)
 
 ## Raiz do repositório
 
