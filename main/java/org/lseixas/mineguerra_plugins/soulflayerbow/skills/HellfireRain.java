@@ -6,6 +6,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.WitherSkull;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -16,11 +17,21 @@ import java.util.Random;
 
 public class HellfireRain {
 
+    /**
+     * Metadata used by {@link HellfireSkullProtectListener}: Paper/Spigot often
+     * ignore {@code setYield(0)} on wither skulls, so explosions are stripped in the event.
+     */
+    public static final String META_HELLFIRE_SKULL = "mineguerra_hellfire_skull";
+
     private final JavaPlugin plugin;
     private final Random random = new Random();
 
     public HellfireRain(JavaPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    public static boolean isHellfireSkull(org.bukkit.entity.Entity entity) {
+        return entity != null && entity.hasMetadata(META_HELLFIRE_SKULL);
     }
 
     public void spawnHellfireRain(Location center, Player shooter) {
@@ -69,11 +80,7 @@ public class HellfireRain {
         Location spawnLoc = center.clone().add(offsetX, 20, offsetZ);
 
         WitherSkull skull = (WitherSkull) center.getWorld().spawnEntity(spawnLoc, EntityType.WITHER_SKULL);
-
-        // Configurações para não explodir nem causar fogo
-        skull.setIsIncendiary(false); // Remove fogo ao atingir
-        skull.setYield(0F); // Remove explosão
-        skull.setShooter(shooter);
+        hardenSkull(skull, shooter);
 
         // Parado no ar inicialmente
         skull.setDirection(new Vector(0, 0, 0));
@@ -82,7 +89,21 @@ public class HellfireRain {
         return skull;
     }
 
+    private void hardenSkull(WitherSkull skull, Player shooter) {
+        // setYield/setIsIncendiary alone are not reliable on Paper — the protect listener is the real guard.
+        skull.setCharged(false);
+        skull.setIsIncendiary(false);
+        skull.setYield(0F);
+        skull.setShooter(shooter);
+        skull.setMetadata(META_HELLFIRE_SKULL, new FixedMetadataValue(plugin, true));
+    }
+
     private void launchSkull(WitherSkull skull) {
+        // Reaplica: alguns builds resetam yield ao mudar direção/velocidade
+        skull.setCharged(false);
+        skull.setIsIncendiary(false);
+        skull.setYield(0F);
+
         Vector direction = new Vector(0, -1, 0);
         skull.setDirection(direction);
         skull.setVelocity(direction.multiply(1.5));

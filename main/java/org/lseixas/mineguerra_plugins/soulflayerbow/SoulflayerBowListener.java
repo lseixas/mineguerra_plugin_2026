@@ -15,7 +15,6 @@ import org.lseixas.mineguerra_plugins.soulflayerbow.skills.HellfireRain;
 import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 import org.lseixas.mineguerra_plugins.weapons.AbilityCooldown;
 import org.lseixas.mineguerra_plugins.weapons.PlayerFeedback;
-import org.lseixas.mineguerra_plugins.weapons.VanillaCooldownSync;
 import org.lseixas.mineguerra_plugins.weapons.WeaponId;
 import org.lseixas.mineguerra_plugins.weapons.WeaponMessages;
 import org.lseixas.mineguerra_plugins.weapons.WeaponRegistry;
@@ -31,7 +30,7 @@ public class SoulflayerBowListener implements Listener {
 
     private static final String HELLFIRE_ABILITY = "Hellfire Rain";
     private static final String DANTE_ABILITY = "Dante's Punishment";
-    private static final long HELLFIRE_COOLDOWN_MS = 75_000;
+    private static final long HELLFIRE_COOLDOWN_MS = 45_000;
 
     private static final String META_DANTE = "is_dante_arrow";
     private static final String META_ULTIMATE = "is_ultimate_arrow";
@@ -124,8 +123,8 @@ public class SoulflayerBowListener implements Listener {
         currentShots.put(playerId, shot);
 
         if (ultimate) {
+            // Sem VanillaCooldownSync: player.setCooldown(BOW) bloqueia tiro normal no vanilla.
             hellfireCooldown.commit(player);
-            VanillaCooldownSync.apply(player, WeaponId.SOULFLAYER_BOW, HELLFIRE_COOLDOWN_MS);
             WeaponMessages.sendActivated(player, WeaponId.SOULFLAYER_BOW, HELLFIRE_ABILITY);
             PlayerFeedback.playSound(player, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
         }
