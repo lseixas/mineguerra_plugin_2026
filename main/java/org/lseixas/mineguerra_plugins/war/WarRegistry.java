@@ -2,6 +2,8 @@ package org.lseixas.mineguerra_plugins.war;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.lseixas.mineguerra_plugins.teams.LeaderboardService;
+import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 
 import java.io.File;
 
@@ -41,6 +43,14 @@ public final class WarRegistry {
 
         plugin.getServer().getPluginManager().registerEvents(new PvpToggleListener(stateStore), plugin);
         plugin.getServer().getPluginManager().registerEvents(new HardcoreDeathListener(stateStore), plugin);
+        plugin.getServer().getPluginManager().registerEvents(
+                new StarterKitJoinListener(warService, stateStore), plugin);
+
+        LeaderboardService leaderboard = TeamRegistry.leaderboard();
+        if (leaderboard != null && leaderboard.isEnabled()) {
+            leaderboard.refreshAll();
+            leaderboard.ensureClockRunning();
+        }
     }
 
     public static void shutdown() {

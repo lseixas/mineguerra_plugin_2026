@@ -6,9 +6,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 
 /**
@@ -23,6 +27,8 @@ public class WarStateStore {
     private boolean pvpEnabled;
     private boolean hardcore;
     private final Set<WarPhase> appliedPhases = EnumSet.noneOf(WarPhase.class);
+    private final List<UUID> trapaceiroEntityIds = new ArrayList<>();
+    private final Set<UUID> starterKitReceived = new LinkedHashSet<>();
 
     public WarStateStore(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -31,6 +37,8 @@ public class WarStateStore {
 
     public void load() {
         appliedPhases.clear();
+        trapaceiroEntityIds.clear();
+        starterKitReceived.clear();
         if (!file.exists()) {
             running = false;
             pvpEnabled = true;
@@ -47,6 +55,20 @@ public class WarStateStore {
         for (String key : config.getStringList("appliedPhases")) {
             WarPhase.fromKey(key).ifPresent(appliedPhases::add);
         }
+        for (String id : config.getStringList("trapaceiroEntityIds")) {
+            try {
+                trapaceiroEntityIds.add(UUID.fromString(id));
+            } catch (IllegalArgumentException ignored) {
+                // UUID inválido no YAML
+            }
+        }
+        for (String id : config.getStringList("starterKitReceived")) {
+            try {
+                starterKitReceived.add(UUID.fromString(id));
+            } catch (IllegalArgumentException ignored) {
+                // UUID inválido no YAML
+            }
+        }
     }
 
     public void save() {
@@ -59,6 +81,12 @@ public class WarStateStore {
         config.set("pvpEnabled", pvpEnabled);
         config.set("hardcore", hardcore);
         config.set("appliedPhases", appliedPhases.stream().map(WarPhase::getConfigKey).toList());
+        config.set(
+                "trapaceiroEntityIds",
+                trapaceiroEntityIds.stream().map(UUID::toString).toList());
+        config.set(
+                "starterKitReceived",
+                starterKitReceived.stream().map(UUID::toString).toList());
 
         try {
             config.save(file);
@@ -104,7 +132,55 @@ public class WarStateStore {
         return List.copyOf(appliedPhases);
     }
 
+    /** Última fase aplicada na ordem do cronograma. */
+    public Optional<WarPhase> getCurrentPhase() {
+        WarPhase current = null;
+        for (WarPhase phase : WarPhase.values()) {
+            if (appliedPhases.contains(phase)) {
+                current = phase;
+            }
+        }
+        return Optional.ofNullable(current);
+    }
+
     public void clearAppliedPhases() {
         appliedPhases.clear();
+    }
+
+    public void rememberTrapaceiro(UUID uuid) {
+        if (uuid != null && !trapaceiroEntityIds.contains(uuid)) {
+            trapaceiroEntityIds.add(uuid);
+        }
+    }
+
+    public List<UUID> getTrapaceiroEntityIds() {
+        return List.copyOf(trapaceiroEntityIds);
+    }
+
+    public void clearTrapaceiroEntityIds() {
+        trapaceiroEntityIds.clear();
+    }
+
+    /** @return {@code true} se o jogador ainda não tinha recebido o kit de abertura */
+    public boolean markStarterKitReceived(UUID uuid) {
+        return uuid != null && starterKitReceived.add(uuid);
+    }
+
+    public boolean hasReceivedStarterKit(UUID uuid) {
+        return uuid != null && starterKitReceived.contains(uuid);
+    }
+
+    public void clearStarterKitReceived() {
+        starterKitReceived.clear();
+    }
+
+    /** Volta o estado persistido ao ponto zero (antes de qualquer fase). */
+    public void resetToDefaults() {
+        running = false;
+        pvpEnabled = true;
+        hardcore = false;
+        appliedPhases.clear();
+        trapaceiroEntityIds.clear();
+        starterKitReceived.clear();
     }
 }

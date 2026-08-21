@@ -10,7 +10,7 @@ import java.util.Optional;
  */
 public enum WarPhase {
 
-    INICIO("inicio", "Abertura", "§a§lA GUERRA COMECOU", "§7PvP desligado. Montem as bases."),
+    INICIO("inicio", "Abertura", "§a§lA GUERRA COMECOU", "§7PvP off. Kit inicial entregue. Montem as bases."),
     PVP_ON("pvp-on", "PvP liberado", "§c§lPVP LIBERADO", "§7As bandeiras precisam estar postas."),
     TRAPACEIRO("trapaceiro", "Trapaceiro", "§6§lTRAPACEIRO CHEGOU", "§7Ele nao negocia de graca."),
     JULGAMENTO("julgamento", "Julgamento", "§e§lJULGAMENTO", "§7Contagem das bandeiras de pe."),

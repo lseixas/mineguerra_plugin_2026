@@ -1,25 +1,35 @@
 package org.lseixas.mineguerra_plugins.war;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WanderingTrader;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.lseixas.mineguerra_plugins.metrics.MetricsRegistry;
+import org.lseixas.mineguerra_plugins.teams.LeaderboardService;
 import org.lseixas.mineguerra_plugins.teams.TeamDefinition;
 import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 import org.lseixas.mineguerra_plugins.teams.flag.TeamFlag;
-import org.lseixas.mineguerra_plugins.traders.TraderType;
+import org.lseixas.mineguerra_plugins.traders.VillagerSpawner;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Aplica as fases do evento. Cada fase é idempotente: aplicar duas vezes não
- * duplica efeito, e o que já venceu antes de um restart é reaplicado em silêncio.
+ * duplica efeito, e o que já venceu antes de um restart é reaplicado em silêncio
+ * <strong>somente se o cronograma estiver rodando</strong>.
  */
 public class WarService {
+
+    private static final String TRAPACEIRO_NAME = "Trapaceiro";
+    private static final double TRAPACEIRO_CLEANUP_RADIUS = 8.0;
 
     private final JavaPlugin plugin;
     private final WarStateStore state;
@@ -47,9 +57,12 @@ public class WarService {
 
     /**
      * Reaplica em silêncio o estado das fases já vencidas (usado no onEnable).
-     * Não anuncia nada: os jogadores já viram o broadcast quando a fase virou.
+     * Só roda com o cronograma ligado — senão um {@code reset} seria desfeito no restart.
      */
     public void catchUp() {
+        if (!state.isRunning()) {
+            return;
+        }
         boolean changed = false;
         for (WarPhase phase : schedule.getDuePhases(now())) {
             if (state.markApplied(phase)) {
@@ -63,7 +76,7 @@ public class WarService {
         applyPersistentState();
     }
 
-    /** Reaplica efeitos que vivem em estado (PvP, border) depois de um restart. */
+    /** Reaplica efeitos que vivem em estado (border) depois de um restart. */
     private void applyPersistentState() {
         if (state.isApplied(WarPhase.FECHAR_CENTRO)) {
             schedule.getBorder().ifPresent(settings -> {
@@ -86,6 +99,7 @@ public class WarService {
         }
         if (!applied.isEmpty()) {
             state.save();
+            refreshLeaderboard();
         }
         return applied;
     }
@@ -95,19 +109,47 @@ public class WarService {
         state.markApplied(phase);
         applyEffect(phase, true);
         state.save();
+        refreshLeaderboard();
+    }
+
+    /**
+     * Desfaz o cronograma: para o ticker, limpa fases, PvP on, hardcore off,
+     * border padrão, remove Trapaceiros spawnados pela guerra e revive eliminados.
+     */
+    public ResetResult reset() {
+        WarRegistry.scheduler().stop();
+        MetricsRegistry.resetSession();
+
+        int trapaceirosRemoved = removeTrapaceiros();
+        int revived = TeamRegistry.flags().reviveAll();
+
+        World world = resolveWorld();
+        if (world != null) {
+            borderService.reset(world);
+        }
+
+        state.resetToDefaults();
+        state.save();
+        refreshLeaderboard();
+
+        return new ResetResult(trapaceirosRemoved, revived, world != null);
+    }
+
+    public record ResetResult(int trapaceirosRemoved, int playersRevived, boolean borderReset) {
     }
 
     private void applyEffect(WarPhase phase, boolean announce) {
         switch (phase) {
-            case INICIO -> state.setPvpEnabled(false);
+            case INICIO -> {
+                state.setPvpEnabled(false);
+                giveStarterKits();
+            }
             case PVP_ON -> {
                 state.setPvpEnabled(true);
                 if (announce) {
                     warnTeamsWithoutFlag();
                 }
             }
-            // Spawna também no catch-up: se o servidor estava fora no horário
-            // da fase, o NPC nunca teria aparecido. markApplied evita duplicar.
             case TRAPACEIRO -> spawnTrapaceiro(announce);
             case JULGAMENTO -> {
                 if (announce) {
@@ -121,6 +163,9 @@ public class WarService {
         if (announce) {
             announcePhase(phase);
         }
+        if (MetricsRegistry.service() != null) {
+            MetricsRegistry.service().recordPhase(phase.getConfigKey(), announce);
+        }
         plugin.getLogger().info("Fase do evento aplicada: " + phase.getConfigKey()
                 + (announce ? "" : " (catch-up silencioso)"));
     }
@@ -133,6 +178,31 @@ public class WarService {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(phase.getTitle(), phase.getSubtitle(), 10, 60, 20);
         }
+    }
+
+    private void giveStarterKits() {
+        int given = 0;
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (giveStarterKitIfNeeded(player)) {
+                given++;
+            }
+        }
+        plugin.getLogger().info("Kit de abertura entregue a " + given + " jogador(es).");
+    }
+
+    /**
+     * Entrega o kit de abertura uma vez por jogador, se a fase {@code inicio} já rodou.
+     * Usado na aplicação da fase e no join de latecomers.
+     */
+    public boolean giveStarterKitIfNeeded(Player player) {
+        if (!state.isApplied(WarPhase.INICIO)) {
+            return false;
+        }
+        if (!state.markStarterKitReceived(player.getUniqueId())) {
+            return false;
+        }
+        StarterKit.give(player);
+        return true;
     }
 
     private void warnTeamsWithoutFlag() {
@@ -159,13 +229,54 @@ public class WarService {
         }
         WarSchedule.TraderSpawn spawn = spawnOpt.get();
         Location location = new Location(world, spawn.x() + 0.5, spawn.y(), spawn.z() + 0.5);
-        // No catch-up isso roda dentro do onEnable; o primeiro tick é mais seguro
-        // para carregar o chunk e spawnar a entidade.
-        plugin.getServer().getScheduler().runTask(plugin, () -> TraderType.TRAPACEIRO.spawn(location));
+        plugin.getServer().getScheduler().runTask(plugin, () -> {
+            WanderingTrader trader = VillagerSpawner.spawnTrapaceiro(location);
+            state.rememberTrapaceiro(trader.getUniqueId());
+            state.save();
+        });
         if (announce) {
             Bukkit.broadcastMessage("§6§l[MineGuerra] §7Trapaceiro em §f"
                     + (int) spawn.x() + " " + (int) spawn.y() + " " + (int) spawn.z());
         }
+    }
+
+    private int removeTrapaceiros() {
+        int removed = 0;
+        for (UUID uuid : state.getTrapaceiroEntityIds()) {
+            Entity entity = Bukkit.getEntity(uuid);
+            if (entity != null) {
+                entity.remove();
+                removed++;
+            }
+        }
+
+        // Fallback: NPCs de testes anteriores / force phase sem UUID gravado
+        World world = resolveWorld();
+        Optional<WarSchedule.TraderSpawn> spawnOpt = schedule.getTraderSpawn();
+        if (world != null && spawnOpt.isPresent()) {
+            WarSchedule.TraderSpawn spawn = spawnOpt.get();
+            Location center = new Location(world, spawn.x() + 0.5, spawn.y(), spawn.z() + 0.5);
+            for (Entity entity : world.getNearbyEntities(
+                    center, TRAPACEIRO_CLEANUP_RADIUS, TRAPACEIRO_CLEANUP_RADIUS, TRAPACEIRO_CLEANUP_RADIUS)) {
+                if (!(entity instanceof WanderingTrader trader)) {
+                    continue;
+                }
+                if (!isTrapaceiroNpc(trader)) {
+                    continue;
+                }
+                trader.remove();
+                removed++;
+            }
+        }
+        return removed;
+    }
+
+    private static boolean isTrapaceiroNpc(WanderingTrader trader) {
+        String name = trader.getCustomName();
+        if (name == null) {
+            return false;
+        }
+        return ChatColor.stripColor(name).equalsIgnoreCase(TRAPACEIRO_NAME);
     }
 
     private void runJudgement() {
@@ -209,6 +320,13 @@ public class WarService {
             return;
         }
         borderService.startShrink(world, settings.get());
+    }
+
+    private void refreshLeaderboard() {
+        LeaderboardService leaderboard = TeamRegistry.leaderboard();
+        if (leaderboard != null && leaderboard.isEnabled()) {
+            leaderboard.refreshAll();
+        }
     }
 
     private World resolveWorld() {

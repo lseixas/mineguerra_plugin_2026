@@ -70,6 +70,63 @@ class WarStateStoreTest {
     }
 
     @Test
+    void resetToDefaultsClearsEverything() {
+        WarStateStore store = new WarStateStore(plugin);
+        store.load();
+        store.setRunning(true);
+        store.setPvpEnabled(false);
+        store.setHardcore(true);
+        store.markApplied(WarPhase.INICIO);
+        store.rememberTrapaceiro(java.util.UUID.randomUUID());
+        java.util.UUID kitPlayer = java.util.UUID.randomUUID();
+        assertTrue(store.markStarterKitReceived(kitPlayer));
+
+        store.resetToDefaults();
+
+        assertFalse(store.isRunning());
+        assertTrue(store.isPvpEnabled());
+        assertFalse(store.isHardcore());
+        assertTrue(store.getAppliedPhases().isEmpty());
+        assertTrue(store.getTrapaceiroEntityIds().isEmpty());
+        assertFalse(store.hasReceivedStarterKit(kitPlayer));
+    }
+
+    @Test
+    void starterKitReceivedSurvivesReloadAndIsIdempotent() {
+        WarStateStore store = new WarStateStore(plugin);
+        store.load();
+        java.util.UUID playerId = java.util.UUID.randomUUID();
+
+        assertTrue(store.markStarterKitReceived(playerId));
+        assertFalse(store.markStarterKitReceived(playerId));
+        assertTrue(store.hasReceivedStarterKit(playerId));
+        store.save();
+
+        WarStateStore reloaded = new WarStateStore(plugin);
+        reloaded.load();
+        assertTrue(reloaded.hasReceivedStarterKit(playerId));
+        assertFalse(reloaded.markStarterKitReceived(playerId));
+    }
+
+    @Test
+    void currentPhaseIsLatestAppliedInScheduleOrder() {
+        WarStateStore store = new WarStateStore(plugin);
+        store.load();
+
+        assertTrue(store.getCurrentPhase().isEmpty());
+
+        store.markApplied(WarPhase.INICIO);
+        assertEquals(WarPhase.INICIO, store.getCurrentPhase().orElseThrow());
+
+        store.markApplied(WarPhase.PVP_ON);
+        store.markApplied(WarPhase.TRAPACEIRO);
+        assertEquals(WarPhase.TRAPACEIRO, store.getCurrentPhase().orElseThrow());
+
+        store.resetToDefaults();
+        assertTrue(store.getCurrentPhase().isEmpty());
+    }
+
+    @Test
     void phaseKeysRoundTripThroughConfigNames() {
         for (WarPhase phase : WarPhase.values()) {
             assertEquals(phase, WarPhase.fromKey(phase.getConfigKey()).orElseThrow());

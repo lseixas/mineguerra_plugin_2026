@@ -25,7 +25,7 @@ class WarScheduleTest {
               trapaceiro:
                 at: "2026-08-22 18:00"
                 x: 47
-                y: 66
+                y: 67
                 z: -39
               julgamento:
                 at: "2026-08-23 12:00"
@@ -37,7 +37,7 @@ class WarScheduleTest {
                 centerZ: -39
                 fromSize: 3000
                 toSize: 200
-                durationSeconds: 7200
+                durationSeconds: 220
             """;
 
     private static WarSchedule parse(String yaml) {
@@ -102,7 +102,7 @@ class WarScheduleTest {
 
         WarSchedule.TraderSpawn spawn = schedule.getTraderSpawn().orElseThrow();
         assertEquals(47, spawn.x());
-        assertEquals(66, spawn.y());
+        assertEquals(67, spawn.y());
         assertEquals(-39, spawn.z());
 
         WarSchedule.BorderSettings border = schedule.getBorder().orElseThrow();
@@ -110,7 +110,7 @@ class WarScheduleTest {
         assertEquals(-39, border.centerZ());
         assertEquals(3000, border.fromSize());
         assertEquals(200, border.toSize());
-        assertEquals(7200, border.durationSeconds());
+        assertEquals(220, border.durationSeconds());
     }
 
     @Test

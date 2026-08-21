@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.lseixas.mineguerra_plugins.Mineguerra_plugins;
+import org.lseixas.mineguerra_plugins.metrics.MetricsRegistry;
 import org.lseixas.mineguerra_plugins.war.WarPhase;
 import org.lseixas.mineguerra_plugins.war.WarRegistry;
 import org.lseixas.mineguerra_plugins.war.WarSchedule;
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class StartGuerraCommand implements CommandExecutor, TabCompleter {
 
     private static final List<String> SUBCOMMANDS =
-            List.of("start", "stop", "status", "phase", "reload");
+            List.of("start", "stop", "status", "phase", "reload", "reset");
     private static final DateTimeFormatter DISPLAY =
             DateTimeFormatter.ofPattern("EEE dd/MM HH:mm");
 
@@ -49,6 +50,7 @@ public class StartGuerraCommand implements CommandExecutor, TabCompleter {
             case "status" -> handleStatus(sender);
             case "phase" -> handlePhase(sender, args);
             case "reload" -> handleReload(sender);
+            case "reset" -> handleReset(sender);
             default -> sendUsage(sender);
         }
         return true;
@@ -62,6 +64,7 @@ public class StartGuerraCommand implements CommandExecutor, TabCompleter {
         WarRegistry.state().setRunning(true);
         WarRegistry.state().save();
         WarRegistry.scheduler().start();
+        MetricsRegistry.startSession();
         WarRegistry.service().advance();
         sender.sendMessage("§a§l[MineGuerra] §7Cronograma iniciado.");
         handleStatus(sender);
@@ -75,6 +78,7 @@ public class StartGuerraCommand implements CommandExecutor, TabCompleter {
         WarRegistry.state().setRunning(false);
         WarRegistry.state().save();
         WarRegistry.scheduler().stop();
+        MetricsRegistry.stopSession();
         sender.sendMessage("§c§l[MineGuerra] §7Cronograma pausado. Fases nao vao mais disparar.");
     }
 
@@ -134,6 +138,16 @@ public class StartGuerraCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+    private void handleReset(CommandSender sender) {
+        var result = WarRegistry.service().reset();
+        sender.sendMessage("§a§l[MineGuerra] §7Cronograma resetado.");
+        sender.sendMessage("§7- Trapaceiros removidos: §f" + result.trapaceirosRemoved());
+        sender.sendMessage("§7- Jogadores revividos: §f" + result.playersRevived());
+        sender.sendMessage("§7- Border: " + (result.borderReset() ? "§aresetado" : "§cmundo nao encontrado"));
+        sender.sendMessage("§7- PvP §aligado§7, hardcore §coff§7, fases limpas, ticker parado.");
+        sender.sendMessage("§8Use /startGuerra start para comecar de novo.");
+    }
+
     private void sendUsage(CommandSender sender) {
         sender.sendMessage("§6§l[MineGuerra] §7Cronograma do evento:");
         sender.sendMessage("§e/startGuerra start §7— liga o cronograma");
@@ -141,6 +155,7 @@ public class StartGuerraCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("§e/startGuerra status §7— fases, PvP e hardcore");
         sender.sendMessage("§e/startGuerra phase <fase> §7— forca uma fase");
         sender.sendMessage("§e/startGuerra reload §7— recarrega war-schedule.yml");
+        sender.sendMessage("§e/startGuerra reset §7— desfaz tudo (Trapaceiro, PvP, border, hardcore)");
     }
 
     private static String formatDuration(Duration duration) {
