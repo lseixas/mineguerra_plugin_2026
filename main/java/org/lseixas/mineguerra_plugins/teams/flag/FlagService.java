@@ -13,7 +13,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.RayTraceResult;
+import org.lseixas.mineguerra_plugins.metrics.MetricsRegistry;
 import org.lseixas.mineguerra_plugins.teams.TeamDefinition;
+import org.lseixas.mineguerra_plugins.teams.TeamRegistry;
 import org.lseixas.mineguerra_plugins.teams.TeamService;
 import org.lseixas.mineguerra_plugins.teams.TeamsDataStore;
 
@@ -167,6 +169,10 @@ public class FlagService {
         flag.setAlive(false);
         dataStore.save();
 
+        if (MetricsRegistry.service() != null) {
+            MetricsRegistry.service().recordFlagCapture(breaker, teamId);
+        }
+
         String breakerName = breaker != null ? breaker.getName() : "???";
         for (Player member : teamService.getOnlineMembers(teamId)) {
             member.sendTitle(
@@ -181,7 +187,9 @@ public class FlagService {
     public void eliminatePlayer(Player player) {
         eliminatedPlayers.add(player.getUniqueId());
         player.setGameMode(GameMode.SPECTATOR);
-        player.sendMessage("§c§l[MineGuerra] §7Você foi eliminado. Modo espectador.");
+        player.sendMessage("§c§l[MineGuerra] §7Você foi eliminado. Só pode espectar aliados do seu time.");
+        player.sendMessage("§7Shift = próximo aliado.");
+        TeamRegistry.eliminatedSpectators().attachSoon(player);
     }
 
     public boolean isEliminated(Player player) {
@@ -194,6 +202,7 @@ public class FlagService {
         }
         Player player = Bukkit.getPlayer(uuid);
         if (player != null) {
+            TeamRegistry.eliminatedSpectators().onRevived(player);
             player.setGameMode(GameMode.SURVIVAL);
             player.sendMessage("§a§l[MineGuerra] §7Voce foi revivido por um admin.");
         }
@@ -206,6 +215,7 @@ public class FlagService {
         for (UUID uuid : toRevive) {
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
+                TeamRegistry.eliminatedSpectators().onRevived(player);
                 player.setGameMode(GameMode.SURVIVAL);
                 player.sendMessage("§a§l[MineGuerra] §7Voce foi revivido por um admin.");
             }
@@ -220,6 +230,7 @@ public class FlagService {
     public void applyEliminatedState(Player player) {
         if (eliminatedPlayers.contains(player.getUniqueId())) {
             player.setGameMode(GameMode.SPECTATOR);
+            TeamRegistry.eliminatedSpectators().attachSoon(player);
         }
     }
 

@@ -7,6 +7,7 @@
 - Inimigos podem quebrar a bandeira (ou destruí-la com **explosão**); aliados e jogadores **sem time** não capturam.
 - Ao destruir: **sem drop** de item, title para o time, bandeira marcada como morta.
 - Após a bandeira cair, a **próxima morte** do jogador elimina-o (modo espectador, sem respawn de jogo).
+- Eliminado: só especta **aliados vivos** do próprio time (sem free-cam nem visão de outros times). **Shift** troca de aliado. Sem aliados vivos: fica parado na bandeira.
 - Jogadores eliminados são resetados no **restart do servidor** (não persistem). Staff: `/mg revive`.
 - Na fase **hardcore** do evento, qualquer morte elimina — bandeira viva ou não. Ver [`WAR_SCHEDULE.md`](WAR_SCHEDULE.md).
 
@@ -66,4 +67,4 @@ ninguém constrói nem cava lá dentro, exceto staff com `mineguerra.team`.
 
 ### Placar
 
-Com `/mg leaderboard on`, o sidebar mostra seções **Kills** e **Armas** (time + status livre/lockada por tipo).
+Com `/mg leaderboard on`, o sidebar mostra a **fase atual**, horário (`Agora`) e countdown da **próxima fase**, depois seções **Kills** e **Armas** (time + status livre/lockada por tipo).

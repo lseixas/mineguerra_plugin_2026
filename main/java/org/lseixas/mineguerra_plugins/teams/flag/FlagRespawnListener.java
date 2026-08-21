@@ -49,7 +49,10 @@ public class FlagRespawnListener implements Listener {
         FlagService flags = TeamRegistry.flags();
 
         if (flags.isEliminated(player)) {
-            Bukkit.getScheduler().runTask(plugin, () -> player.setGameMode(GameMode.SPECTATOR));
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                player.setGameMode(GameMode.SPECTATOR);
+                TeamRegistry.eliminatedSpectators().attach(player);
+            });
             return;
         }
 
