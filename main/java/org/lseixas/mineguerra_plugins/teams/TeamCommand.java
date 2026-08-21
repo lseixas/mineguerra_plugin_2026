@@ -2,14 +2,13 @@ package org.lseixas.mineguerra_plugins.teams;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
-import org.lseixas.mineguerra_plugins.teams.flag.FlagService;
-import org.lseixas.mineguerra_plugins.teams.flag.TeamFlag;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.lseixas.mineguerra_plugins.teams.flag.FlagService;
+import org.lseixas.mineguerra_plugins.teams.flag.TeamFlag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 public class TeamCommand implements CommandExecutor, TabCompleter {
 
     private static final List<String> SUBCOMMANDS = List.of(
-            "create", "delete", "join", "leave", "list", "info", "flag"
+            "create", "delete", "join", "leave", "clear", "list", "info", "flag"
     );
     private static final List<String> FLAG_SUBCOMMANDS =
             List.of("set", "remove", "repair", "clear", "status", "list");
@@ -50,6 +49,7 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
             case "delete" -> handleDelete(sender, args, teamService);
             case "join" -> handleJoin(sender, args, teamService);
             case "leave" -> handleLeave(sender, args, teamService);
+            case "clear" -> handleClear(sender, args, teamService);
             case "list" -> handleList(sender, teamService, killStats);
             case "info" -> handleInfo(sender, args, teamService);
             case "flag" -> handleFlag(sender, args, teamService);
@@ -118,43 +118,74 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
 
     private void handleJoin(CommandSender sender, String[] args, TeamService teamService) {
         if (args.length < 3) {
-            sender.sendMessage("§cUso: /team join <jogador> <time>");
-            return;
-        }
-
-        Player target = Bukkit.getPlayer(args[1]);
-        if (target == null) {
-            sender.sendMessage("§cJogador nao encontrado ou offline.");
+            sender.sendMessage("§cUso: /team join <nick> <time>");
             return;
         }
 
         String teamId = teamService.normalizeTeamId(args[2]);
-        if (teamService.assignPlayer(target, teamId)) {
-            sender.sendMessage("§a§l[MineGuerra] §f" + target.getName() + " §7entrou no time §f" + teamId);
-            target.sendMessage("§a§l[MineGuerra] §7Voce foi adicionado ao time §f" + teamId);
-        } else {
+        var resultOpt = teamService.assignPlayerByName(args[1], teamId);
+        if (resultOpt.isEmpty()) {
             sender.sendMessage("§cTime nao encontrado.");
+            return;
+        }
+
+        TeamService.AssignResult result = resultOpt.get();
+        if (result.wasOnline()) {
+            sender.sendMessage("§a§l[MineGuerra] §f" + result.playerName() + " §7entrou no time §f" + teamId);
+            Player online = Bukkit.getPlayerExact(result.playerName());
+            if (online != null) {
+                online.sendMessage("§a§l[MineGuerra] §7Voce foi adicionado ao time §f" + teamId);
+            }
+        } else if (result.pendingLogin()) {
+            sender.sendMessage("§a§l[MineGuerra] §f" + result.playerName()
+                    + " §7sera adicionado ao time §f" + teamId + " §7quando entrar.");
+        } else {
+            sender.sendMessage("§a§l[MineGuerra] §f" + result.playerName()
+                    + " §7(offline) adicionado ao time §f" + teamId);
         }
     }
 
     private void handleLeave(CommandSender sender, String[] args, TeamService teamService) {
         if (args.length < 2) {
-            sender.sendMessage("§cUso: /team leave <jogador>");
+            sender.sendMessage("§cUso: /team leave <nick>");
             return;
         }
 
-        Player target = Bukkit.getPlayer(args[1]);
-        if (target == null) {
-            sender.sendMessage("§cJogador nao encontrado ou offline.");
+        TeamService.RemoveResult result = teamService.removePlayerByName(args[1]);
+        switch (result) {
+            case REMOVED_ONLINE -> {
+                sender.sendMessage("§a§l[MineGuerra] §7Tag removida de §f" + args[1]);
+                Player online = Bukkit.getPlayer(args[1]);
+                if (online == null) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.getName().equalsIgnoreCase(args[1])) {
+                            online = p;
+                            break;
+                        }
+                    }
+                }
+                if (online != null) {
+                    online.sendMessage("§7§l[MineGuerra] §7Voce saiu do seu time.");
+                }
+            }
+            case REMOVED_OFFLINE -> sender.sendMessage(
+                    "§a§l[MineGuerra] §7Removido do time (offline/pendente): §f" + args[1]);
+            case NOT_IN_TEAM -> sender.sendMessage("§cEsse jogador nao esta em nenhum time.");
+        }
+    }
+
+    private void handleClear(CommandSender sender, String[] args, TeamService teamService) {
+        if (args.length < 2 || !"confirm".equalsIgnoreCase(args[1])) {
+            sender.sendMessage("§cIsso apaga TODOS os times, membros, kills e bandeiras.");
+            sender.sendMessage("§cUso: /team clear confirm");
             return;
         }
 
-        if (teamService.removePlayer(target)) {
-            sender.sendMessage("§a§l[MineGuerra] §7Tag removida de §f" + target.getName());
-            target.sendMessage("§7§l[MineGuerra] §7Voce saiu do seu time.");
-        } else {
-            sender.sendMessage("§cEsse jogador nao esta em nenhum time.");
+        int removed = teamService.clearAllTeams();
+        if (TeamRegistry.leaderboard().isEnabled()) {
+            TeamRegistry.leaderboard().refreshAll();
         }
+        sender.sendMessage("§a§l[MineGuerra] §7Limpeza concluida: §f" + removed + " §7time(s) removido(s).");
     }
 
     private void handleList(CommandSender sender, TeamService teamService, KillStatsService killStats) {
@@ -197,11 +228,19 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
             String name = Bukkit.getOfflinePlayer(entry.getKey()).getName();
             memberNames.add(name != null ? name : entry.getKey().toString());
         }
+        List<String> pendingNames = new ArrayList<>();
+        for (Map.Entry<String, String> entry : TeamRegistry.data().getPendingByName().entrySet()) {
+            if (teamId.equals(entry.getValue())) {
+                pendingNames.add(entry.getKey() + " §8(pendente)");
+            }
+        }
 
-        if (memberNames.isEmpty()) {
+        if (memberNames.isEmpty() && pendingNames.isEmpty()) {
             sender.sendMessage("§7Membros: §8(nenhum)");
         } else {
-            sender.sendMessage("§7Membros: §f" + String.join("§7, §f", memberNames));
+            List<String> all = new ArrayList<>(memberNames);
+            all.addAll(pendingNames);
+            sender.sendMessage("§7Membros: §f" + String.join("§7, §f", all));
         }
     }
 
@@ -344,8 +383,9 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("§6§l[MineGuerra] §7Comandos de time:");
         sender.sendMessage("§e/team create <id> [nome] [cor]");
         sender.sendMessage("§e/team delete <id>");
-        sender.sendMessage("§e/team join <jogador> <time>");
-        sender.sendMessage("§e/team leave <jogador>");
+        sender.sendMessage("§e/team join <nick> <time> §7(funciona offline)");
+        sender.sendMessage("§e/team leave <nick> §7(funciona offline)");
+        sender.sendMessage("§e/team clear confirm §7(apaga todos os times)");
         sender.sendMessage("§e/team list");
         sender.sendMessage("§e/team info <id>");
         sender.sendMessage("§e/team flag <set|remove|repair|clear|status|list>");
@@ -398,7 +438,8 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
         if (args.length == 2) {
             return switch (sub) {
                 case "delete", "info" -> filterPrefix(teamIds(), args[1]);
-                case "join", "leave" -> filterPrefix(onlineNames(), args[1]);
+                case "join", "leave" -> filterPrefix(suggestPlayerNames(), args[1]);
+                case "clear" -> filterPrefix(List.of("confirm"), args[1]);
                 default -> List.of();
             };
         }
@@ -418,6 +459,22 @@ public class TeamCommand implements CommandExecutor, TabCompleter {
         return TeamRegistry.teams().getAllTeams().stream()
                 .map(TeamDefinition::getId)
                 .collect(Collectors.toList());
+    }
+
+    private List<String> suggestPlayerNames() {
+        List<String> names = new ArrayList<>(onlineNames());
+        for (String pending : TeamRegistry.data().getPendingByName().keySet()) {
+            if (!names.contains(pending)) {
+                names.add(pending);
+            }
+        }
+        for (UUID uuid : TeamRegistry.data().getPlayerTeams().keySet()) {
+            String name = Bukkit.getOfflinePlayer(uuid).getName();
+            if (name != null && !names.contains(name)) {
+                names.add(name);
+            }
+        }
+        return names;
     }
 
     private List<String> onlineNames() {

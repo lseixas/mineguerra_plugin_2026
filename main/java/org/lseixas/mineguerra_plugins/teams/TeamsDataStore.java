@@ -29,6 +29,8 @@ public class TeamsDataStore {
     private boolean leaderboardEnabled;
     private final Map<String, TeamDefinition> teams = new LinkedHashMap<>();
     private final Map<UUID, String> playerTeams = new HashMap<>();
+    /** Nick (lowercase) → time, para jogadores que ainda não entraram. */
+    private final Map<String, String> pendingByName = new HashMap<>();
     private final Map<String, Integer> kills = new HashMap<>();
     private final Map<String, TeamFlag> flags = new HashMap<>();
     private final Map<WeaponId, WeaponClaim> weaponClaims = new EnumMap<>(WeaponId.class);
@@ -41,6 +43,7 @@ public class TeamsDataStore {
     public void load() {
         teams.clear();
         playerTeams.clear();
+        pendingByName.clear();
         kills.clear();
         flags.clear();
         weaponClaims.clear();
@@ -75,6 +78,15 @@ public class TeamsDataStore {
                     }
                 } catch (IllegalArgumentException ignored) {
                     // UUID inválido no arquivo — ignorar
+                }
+            }
+        }
+
+        if (config.isConfigurationSection("pendingByName")) {
+            for (String nick : config.getConfigurationSection("pendingByName").getKeys(false)) {
+                String teamId = config.getString("pendingByName." + nick);
+                if (teamId != null && teams.containsKey(teamId)) {
+                    pendingByName.put(nick.toLowerCase(), teamId);
                 }
             }
         }
@@ -147,6 +159,10 @@ public class TeamsDataStore {
             config.set("playerTeams." + entry.getKey(), entry.getValue());
         }
 
+        for (Map.Entry<String, String> entry : pendingByName.entrySet()) {
+            config.set("pendingByName." + entry.getKey(), entry.getValue());
+        }
+
         for (Map.Entry<String, Integer> entry : kills.entrySet()) {
             config.set("kills." + entry.getKey(), entry.getValue());
         }
@@ -198,6 +214,10 @@ public class TeamsDataStore {
 
     public Map<UUID, String> getPlayerTeams() {
         return playerTeams;
+    }
+
+    public Map<String, String> getPendingByName() {
+        return pendingByName;
     }
 
     public Map<String, Integer> getKills() {

@@ -10,7 +10,7 @@ commands:
     aliases: [ sv, villager ]
   startGuerra:
     description: Cronograma do evento (fases, PvP, hardcore, world border)
-    usage: /startGuerra <start|stop|status|phase|reload>
+    usage: /startGuerra <start|stop|status|phase|reload|reset>
     permission: mineguerra.admin
     aliases: [ guerra, sg ]
   grantSoulflayerBow:
@@ -41,7 +41,7 @@ commands:
     aliases: [ gttk ]
   team:
     description: Gerencia times do evento (criar, join, leave, flag)
-    usage: "/team <create|delete|join|leave|list|info|flag> ... (flag: set|remove|repair|clear|status|list)"
+    usage: "/team <create|delete|join|leave|clear|list|info|flag> ..."
     permission: mineguerra.team
     aliases: [ t, time ]
   mg:
