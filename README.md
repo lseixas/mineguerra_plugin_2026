@@ -173,7 +173,7 @@ Somente **uma** instância de cada arma no servidor.
 | Morte com a arma | Item some (sem drop); se não houver outra cópia, trade reabre |
 | `/grant*` (admin) | Não conta como posse / não trava trade |
 
-O placar (`/mg leaderboard on`) mostra kills e seção de armas.
+O placar (`/mg leaderboard on`) mostra a fase atual, horário, countdown da próxima fase, kills e seção de armas.
 
 ---
 

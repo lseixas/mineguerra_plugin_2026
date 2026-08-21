@@ -1,6 +1,7 @@
 package org.lseixas.mineguerra_plugins.teams;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.lseixas.mineguerra_plugins.teams.flag.EliminatedSpectatorService;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagAreaService;
 import org.lseixas.mineguerra_plugins.teams.flag.FlagService;
 import org.lseixas.mineguerra_plugins.weapons.WeaponItemService;
@@ -19,6 +20,7 @@ public final class TeamRegistry {
     private static LeaderboardService leaderboardService;
     private static FlagService flagService;
     private static FlagAreaService flagAreaService;
+    private static EliminatedSpectatorService eliminatedSpectatorService;
     private static WeaponOwnershipService weaponOwnershipService;
 
     private TeamRegistry() {
@@ -36,8 +38,11 @@ public final class TeamRegistry {
         flagAreaService = new FlagAreaService(dataStore);
         flagService = new FlagService(plugin, dataStore, teamService, flagAreaService);
         flagService.clearEliminated();
+        eliminatedSpectatorService = new EliminatedSpectatorService(plugin, flagService, teamService);
+        eliminatedSpectatorService.start();
 
         leaderboardService = new LeaderboardService(
+                plugin,
                 dataStore,
                 teamService,
                 killStatsService,
@@ -48,6 +53,7 @@ public final class TeamRegistry {
         weaponOwnershipService.rescanAll();
         if (dataStore.isLeaderboardEnabled()) {
             leaderboardService.refreshAll();
+            leaderboardService.ensureClockRunning();
         }
 
         for (var player : org.bukkit.Bukkit.getOnlinePlayers()) {
@@ -56,8 +62,11 @@ public final class TeamRegistry {
     }
 
     public static void shutdown() {
+        if (eliminatedSpectatorService != null) {
+            eliminatedSpectatorService.stop();
+        }
         if (leaderboardService != null) {
-            leaderboardService.hideAll();
+            leaderboardService.shutdown();
         }
         if (dataStore != null) {
             dataStore.save();
@@ -90,6 +99,10 @@ public final class TeamRegistry {
 
     public static FlagAreaService flagAreas() {
         return flagAreaService;
+    }
+
+    public static EliminatedSpectatorService eliminatedSpectators() {
+        return eliminatedSpectatorService;
     }
 
     public static WeaponOwnershipService weapons() {

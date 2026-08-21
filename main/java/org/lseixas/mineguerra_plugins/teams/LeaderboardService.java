@@ -2,14 +2,26 @@ package org.lseixas.mineguerra_plugins.teams;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.lseixas.mineguerra_plugins.war.WarPhase;
+import org.lseixas.mineguerra_plugins.war.WarRegistry;
+import org.lseixas.mineguerra_plugins.war.WarSchedule;
+import org.lseixas.mineguerra_plugins.war.WarService;
+import org.lseixas.mineguerra_plugins.war.WarStateStore;
 import org.lseixas.mineguerra_plugins.weapons.WeaponId;
 import org.lseixas.mineguerra_plugins.weapons.WeaponOwnershipService;
 
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class LeaderboardService {
@@ -17,18 +29,26 @@ public class LeaderboardService {
     private static final String OBJECTIVE_NAME = "mg_kills";
     private static final String OBJECTIVE_DISPLAY = "§6§lMineGuerra";
     private static final int MAX_SIDEBAR_LINES = 15;
+    private static final long CLOCK_PERIOD_TICKS = 20L;
+    private static final DateTimeFormatter CLOCK_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+    private static final ZoneId FALLBACK_ZONE = ZoneId.of("America/Sao_Paulo");
 
+    private final JavaPlugin plugin;
     private final TeamsDataStore dataStore;
     private final TeamService teamService;
     private final KillStatsService killStatsService;
     private final WeaponOwnershipService weaponOwnership;
 
+    private BukkitTask clockTask;
+
     public LeaderboardService(
+            JavaPlugin plugin,
             TeamsDataStore dataStore,
             TeamService teamService,
             KillStatsService killStatsService,
             WeaponOwnershipService weaponOwnership
     ) {
+        this.plugin = plugin;
         this.dataStore = dataStore;
         this.teamService = teamService;
         this.killStatsService = killStatsService;
@@ -45,7 +65,9 @@ public class LeaderboardService {
 
         if (enabled) {
             refreshAll();
+            startClock();
         } else {
+            stopClock();
             hideAll();
         }
     }
@@ -83,6 +105,22 @@ public class LeaderboardService {
         List<TeamDefinition> teams = killStatsService.getTeamsSortedByKills();
         int score = MAX_SIDEBAR_LINES;
         Set<String> usedEntries = new HashSet<>();
+
+        String phaseLine = uniqueEntry(usedEntries, formatPhaseLine(), score);
+        objective.getScore(phaseLine).setScore(score);
+        score--;
+
+        if (score > 0) {
+            String clockLine = uniqueEntry(usedEntries, formatClockLine(), score);
+            objective.getScore(clockLine).setScore(score);
+            score--;
+        }
+
+        if (score > 0) {
+            String nextLine = uniqueEntry(usedEntries, formatNextPhaseLine(), score);
+            objective.getScore(nextLine).setScore(score);
+            score--;
+        }
 
         String killsHeader = uniqueEntry(usedEntries, "§7— Kills —", score);
         objective.getScore(killsHeader).setScore(score);
@@ -126,11 +164,6 @@ public class LeaderboardService {
             objective.getScore(entry).setScore(score);
             score--;
         }
-
-        if (score > 0) {
-            String footer = uniqueEntry(usedEntries, "§7Atualizado ao vivo", score);
-            objective.getScore(footer).setScore(score);
-        }
     }
 
     public void hideAll() {
@@ -145,6 +178,92 @@ public class LeaderboardService {
         if (objective != null) {
             objective.unregister();
         }
+    }
+
+    /** Liga o ticker de 1s se o placar estiver ativo (ex.: após reload com flag persistida). */
+    public void ensureClockRunning() {
+        if (dataStore.isLeaderboardEnabled()) {
+            startClock();
+        }
+    }
+
+    public void shutdown() {
+        stopClock();
+        hideAll();
+    }
+
+    private void startClock() {
+        if (clockTask != null) {
+            return;
+        }
+        clockTask = Bukkit.getScheduler().runTaskTimer(plugin, this::refreshAll, CLOCK_PERIOD_TICKS, CLOCK_PERIOD_TICKS);
+    }
+
+    private void stopClock() {
+        if (clockTask == null) {
+            return;
+        }
+        clockTask.cancel();
+        clockTask = null;
+    }
+
+    private String formatPhaseLine() {
+        WarStateStore state = WarRegistry.state();
+        if (state == null) {
+            return "§7Fase: §8Aguardando";
+        }
+        return state.getCurrentPhase()
+                .map(phase -> "§eFase: §f" + phase.getDisplayName())
+                .orElse("§7Fase: §8Aguardando");
+    }
+
+    private String formatClockLine() {
+        return "§7Agora: §f" + CLOCK_FORMAT.format(now());
+    }
+
+    private String formatNextPhaseLine() {
+        WarService warService = WarRegistry.service();
+        if (warService == null) {
+            return "§7Prox: §8—";
+        }
+
+        ZonedDateTime now = warService.now();
+        WarSchedule schedule = warService.getSchedule();
+        Optional<WarPhase> nextOpt = schedule.getNextPhase(now);
+        if (nextOpt.isEmpty()) {
+            return "§7Prox: §8fim";
+        }
+
+        WarPhase next = nextOpt.get();
+        ZonedDateTime at = schedule.getTime(next).orElse(null);
+        if (at == null) {
+            return "§7Prox: §f" + next.getDisplayName();
+        }
+
+        String remaining = formatCountdown(Duration.between(now, at));
+        return "§7Prox: §f" + next.getDisplayName() + " §8" + remaining;
+    }
+
+    static String formatCountdown(Duration duration) {
+        long totalSeconds = Math.max(0, duration.getSeconds());
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        if (hours > 0) {
+            return hours + "h" + String.format("%02d", minutes) + "m";
+        }
+        if (minutes > 0) {
+            return minutes + "m" + String.format("%02d", seconds) + "s";
+        }
+        return seconds + "s";
+    }
+
+    private ZonedDateTime now() {
+        WarService warService = WarRegistry.service();
+        if (warService != null) {
+            return warService.now();
+        }
+        return ZonedDateTime.now(FALLBACK_ZONE);
     }
 
     private String formatTeamKillLine(TeamDefinition team) {
