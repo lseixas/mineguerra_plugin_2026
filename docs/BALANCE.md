@@ -3,7 +3,7 @@
 **Postura:** meio-termo (farm ativo desbloqueia kit; lendárias e sinks ainda importam; CDs firmes).  
 **Janela alvo:** ~2 dias + algumas horas.  
 **Referências:** [Minecraft Wiki — Trading (JE 1.21)](https://minecraft.wiki/w/Trading), auditoria do código em `VillagerSpawner` + skills (2026-08).  
-**Implementação desta página:** valores **NOVO** = o que o código deve refletir após o ciclo de balance.
+**Implementação desta página:** trades = planilha 2026-08-21 (`VillagerSpawner`); extras da planilha mantidos; CDs de arma = secção 6.
 
 Emerald block = **9** emeralds (emerald-eq).
 
@@ -66,74 +66,75 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 
 ---
 
-## 3. Faucets — antes → novo
+## 3. Faucets (planilha 2026-08-21)
 
-| Trader | Trade | Antes | Novo | Racional |
-|--------|-------|-------|------|----------|
-| Fazendeiro | Wheat → 1e | 5 | **15** | Ainda melhor que vanilla 20; farm importa |
-| Fazendeiro | Potato/Carrot/Cane → 1e | 12 | **24** | |
-| Pescador | Cod/Salmon → 1e | 1→3e | **8→1e** | Acaba impressora de peixe |
-| Pescador | Tropical → 1e | 1→7e | **4→1e** | |
-| Pescador | Puffer → 1e | 1→10e | **3→1e** | |
-| Açougueiro | qualquer carne → 1e | 1–3 | **8** | |
-| Caçador | Flesh/Bone → 1e | 2 | **12** | |
-| Caçador | Spider eye → e | 1→3e | **1→1e** | |
-| Caçador | Gunpowder → 1e | 1 | **4** | |
-| Mineiro | Copper → 1e | 2 | **4** | |
-| Mineiro | Iron → 2e | 2 ing | **manter 2→2e** | |
-| Mineiro | Gold → 3e | 2 | **manter** | |
-| Mineiro | Diamond → e | 1→5e | **1→4e** | leve sink inverso |
-
----
-
-## 4. Sinks / utilidade — antes → novo
-
-| Trader | Oferta | Antes | Novo |
-|--------|--------|-------|------|
-| Engenheiro | TNT ×1 | 1e | **12e** |
-| Engenheiro | Piston/Sticky ×8 | 1e | **4e** |
-| Engenheiro | Observer ×8 | 1e | **4e** |
-| Engenheiro | Repeater/Comparator/Dispenser ×8 | 1e→16 | **3e → 8** |
-| Engenheiro | Sculk Sensor ×4 | 1e→16 | **6e → 4** |
-| Engenheiro | Calibrated Sculk ×4 | 1e→8 | **8e → 4** |
-| Engenheiro | Sticky slime/honey ×16 | 1e→32 | **6e → 16** |
-| Ferreiro | Diamond sword | 7e | **14e** |
-| Ferreiro | Pick/Axe | 12e | **16e** |
-| Ferreiro | Shovel/Hoe | 7e | **11e** |
-| Ferreiro | Armadura diamante | 20/35/30/15 | **manter** |
-| Ferreiro | Netherite ingot | 32 EB (288e) | **manter** |
-| Bibliotecário | livros | 16–32e | **manter** |
-| End | Happy — n/a | — | — |
-| Nether | Happy Ghast egg | 16e | **48e** |
-| End | Dragon Breath | 1e | **8e** |
-| End | End Crystal | 32e | **48e** |
-| End | Obsidian ×4 | 8e→1 | **12e → 4** |
-| End | Ender Pearl | 16e | **10e** |
-| End | Shulker box | — | **32e** |
-| Nether | Wither skulls ×3 | 64 EB | **48 EB** |
-| Nether | Netherite template | 64 EB | **48 EB** |
-| End | Elytra | 64 EB | **manter 64 EB** |
-| Oceano | Storm Rider | tridente + heart | **tridente + conduit** |
-| Oceano | Conduit | — | **1 heart + 8 nautilus** |
-| Estilista | Armor trim ×4 | — | **1 disco específico** |
-| Trapaceiro | Spawner | — | **48 EB** |
-| Trapaceiro | Ovo hostil (zumbi/esqueleto/aranha/creeper) | — | **8 EB** |
-| Trapaceiro | Ovo passivo (vaca/porco/galinha) | — | **32e** |
-| Trapaceiro | Golden Bow (Power 9999, 1 dura) | — | **16 EB** |
-| Trapaceiro | Graveto da Repulsão (Knockback 32, 1 dura) | — | **8 EB** |
-| Trapaceiro | Maçã do Capiroto | — | **12 EB** |
-| Trapaceiro | Peitoral do Pacto (Thorns 9999 / Prot -9999) | — | **16 EB** |
+| Trader | Trade | Antes (weekend) | Novo |
+|--------|-------|-----------------|------|
+| Fazendeiro | Wheat → 1e | 15 | **5** |
+| Fazendeiro | Potato / Carrot / Cane → 1e | 24 | **12** |
+| Açougueiro | Chicken → 1e | 8 | **3** |
+| Açougueiro | Pork / Beef / Mutton → 1e | 8 | **2** |
+| Açougueiro | Rabbit → 1e | 8 | **1** |
+| Mineiro | Copper → 1e | 4 | **2** |
+| Mineiro | Iron → 2e | 2 | **2** (manter) |
+| Mineiro | Gold → 3e | 2 | **2** (manter) |
+| Mineiro | Diamond → e | 1→4e | **1→5e** |
+| Caçador | Rotten flesh / Bone → 1e | 12 | **2** |
+| Caçador | Spider eye → 1e | 1 | **1** (manter) |
+| Caçador | Gunpowder → 1e | 4 | **1** |
+| Pescador | Cod / Salmon → e | 8→1e | **1→3e** |
+| Pescador | Tropical → e | 4→1e | **1→7e** |
+| Pescador | Pufferfish → e | 3→1e | **1→10e** |
 
 ---
 
-## 5. Paths lendários — antes → novo
+## 4. Sinks / utilidade (planilha 2026-08-21)
 
-| Arma | Componentes novos | Emerald-eq path | Gate |
-|------|-------------------|-----------------|------|
-| **Storm Rider** | Tridente **48e**; Heart **12 EB**; conduit (heart + 8 nautilus); craft final **tridente + conduit** | Path via conduit | Unicidade claim |
-| **Doom Hammer** | Mace **48e**; Reinforced Deepslate **4e cad** ×64 = 256e; craft mace+64 | ~**304e** | Unicidade |
-| **Soulflayer** | Bow + Nether Star; skulls **48 EB**; egg ghast **48e** | Progressão wither | Star + claim |
-| **Dragon** | Netherite sword + Dragon Egg; elytra 64 EB | Progressão dragon | Egg + claim |
+Extras fora da planilha **mantidos**: Heart of the Sea + Conduit (oceano), Shulker (end), Sculk Sensor + Observer (engenheiro).
+
+| Trader | Oferta | Preço |
+|--------|--------|-------|
+| Engenheiro | TNT ×1 | **1e** |
+| Engenheiro | Piston / Sticky ×8 | **1e** |
+| Engenheiro | Repeater / Comparator / Dispenser ×16 | **1e** |
+| Engenheiro | Slime / Honey ×32 | **1e** |
+| Engenheiro | Calibrated Sculk ×16 | **1e** |
+| Engenheiro | Sculk Sensor ×4 / Observer ×8 *(extra)* | **1e** |
+| Ferreiro | Armadura diamante | **20 / 35 / 30 / 15e** |
+| Ferreiro | Sword / Pick / Axe / Shovel / Hoe | **7 / 12 / 12 / 7 / 7e** |
+| Ferreiro | Netherite ingot | **32 EB** |
+| Bibliotecário | Eff III / Unbr I / Prot II / Sharp II / Mend / Fortune I | **32 / 16 / 32 / 32 / 32 / 32e** |
+| End | Elytra | **64 EB** |
+| End | Dragon Breath | **1e** |
+| End | End Crystal | **32e** |
+| End | Obsidian ×1 | **8e** |
+| End | Ender Pearl | **16e** |
+| End | Shulker box *(extra)* | **32e** |
+| Nether | Wither skulls ×3 | **64 EB** |
+| Nether | Netherite template | **64 EB** |
+| Nether | Happy Ghast egg | **16e** |
+| Oceano | Tridente / Loyalty / Channeling / Riptide | **32 / 16 / 32 / 32e** |
+| Oceano | Heart of the Sea *(extra)* | **12 EB** |
+| Oceano | Conduit *(extra)* | **1 heart + 8 nautilus** |
+| Estilista | Armor trim ×4 | **1 disco específico** |
+| Trapaceiro | Spawner | **48 EB** (1 compra) |
+| Trapaceiro | Ovo hostil (zumbi/esqueleto/aranha/creeper) | **8 EB** (1 compra) |
+| Trapaceiro | Ovo passivo (vaca/porco/galinha) | **32e** (1 compra) |
+| Trapaceiro | Golden Bow (Power 9999, 1 dura) | **64 EB** (4×; 1 compra) |
+| Trapaceiro | Graveto da Repulsão (Knockback 32, 1 dura) | **32 EB** (4×; 1 compra) |
+| Trapaceiro | Maçã do Capiroto | **12 EB** (1 compra) |
+| Trapaceiro | Peitoral do Pacto | **64 EB** (4×; 1 compra) |
+
+---
+
+## 5. Paths lendários (planilha)
+
+| Arma | Componentes | Gate |
+|------|-------------|------|
+| **Storm Rider** | Tridente **32e**; path conduit *(extra)*; craft **tridente + conduit** | Unicidade claim |
+| **Doom Hammer** | Mace **32e**; Reinforced Deepslate **4e** ×64; craft mace+64 | Unicidade |
+| **Soulflayer** | Bow + Nether Star; skulls **64 EB**; Happy Ghast **16e** | Star + claim |
+| **Dragon** | Netherite sword + Dragon Egg; elytra **64 EB** | Egg + claim |
 
 `maxUses` (descansar economia / limitar dump):
 
@@ -141,8 +142,8 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 |-----------|---------|
 | Cerco engenheiro (TNT/redstone) | **64** |
 | Recipe final lendária | **32** |
-| Trapaceiro combate / ovos hostis | **16** |
-| Trapaceiro spawner | **8** |
+| Trapaceiro combate / ovos / meme | **1** (uma compra por oferta) |
+| Trapaceiro spawner | **1** |
 | Demais trades | **128** |
 
 (Antes: 9999 em tudo.)
@@ -155,7 +156,7 @@ Cascata: faucet → engenheiro (cerco) → ferreiro (full diamond barato) → ex
 |---------|-------|------|----------|
 | Thunder Teleport | 15s | **25s** | Mobilidade sem spam engage |
 | Storm weather | 120s → 60s | **removida** | Clima global estragava a vila (portas, siege, raios) |
-| Hellfire Rain | 90s | **75s** | Compensa Dante mais raro |
+| Hellfire Rain | 90s → 75s | **45s** | Pedido pós-playtest |
 | Dante's Punishment | 20% | **12%** por flecha | Armor volta a importar |
 | Dragon's Breath | 30s | **35s** | Miss/click ainda queima CD |
 | Rage of the Dragon | 90s / 10s / amp 3 | **100s / 8s / amp 3** | Mesma identidade, uptime menor |
@@ -172,9 +173,9 @@ Dante para 6–8% em vez de tirar o Multishot.
 
 ### Peitoral do Pacto (trapaceiro)
 
-Item de troca: quem veste morre com qualquer dano e leva o agressor junto.
-Custo **16 EB**, `maxUses` 16. Vale acompanhar se vira estratégia de trade-kill
-em massa contra o time com lendária; se virar, subir para 32 EB ou `maxUses` 4.
+Chainmail com Curse of Binding. Quem veste morre com qualquer dano e leva o
+agressor junto. Custo **64 EB**, `maxUses` 1. Vale acompanhar se vira estratégia
+de trade-kill em massa; se virar, subir ainda mais o preço.
 
 ---
 
@@ -184,7 +185,7 @@ em massa contra o time com lendária; se virar, subir para 32 EB ou `maxUses` 4.
 - [ ] TNT spam em bases? → subir TNT para 16–20e ou maxUses 32.
 - [ ] Doom ainda inalcançável / trivial? → ajustar deepslate 3–6e.
 - [ ] Dante still feels like true damage every fight? → 8–10%.
-- [ ] Emerald scarcity choking gear? → baixar farmer wheat 15→12.
+- [ ] Emerald flood (faucets da planilha)? → subir wheat 5→12 ou peixe 1→3e de volta.
 
 ---
 
