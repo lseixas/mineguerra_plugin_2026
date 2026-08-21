@@ -31,7 +31,10 @@ class TrapaceiroItemTest {
         ItemStack bow = TrapaceiroItems.goldenBow();
         ItemMeta meta = bow.getItemMeta();
         assertTrue(meta instanceof Damageable);
-        assertEquals(1, ((Damageable) meta).getMaxDamage());
+        Damageable damageable = (Damageable) meta;
+        assertEquals(1, damageable.getMaxDamage());
+        assertEquals(0, damageable.getDamage());
+        assertTrue(TrapaceiroItems.isOneUseItem(bow));
         Enchantment power = TrapaceiroItems.minecraftEnchantment("power");
         assertEquals(9999, bow.getEnchantmentLevel(power));
     }
@@ -41,7 +44,10 @@ class TrapaceiroItemTest {
         ItemStack stick = TrapaceiroItems.knockbackStick();
         ItemMeta meta = stick.getItemMeta();
         assertTrue(meta instanceof Damageable);
-        assertEquals(1, ((Damageable) meta).getMaxDamage());
+        Damageable damageable = (Damageable) meta;
+        assertEquals(1, damageable.getMaxDamage());
+        assertEquals(0, damageable.getDamage());
+        assertTrue(TrapaceiroItems.isOneUseItem(stick));
         Enchantment knockback = TrapaceiroItems.minecraftEnchantment("knockback");
         assertEquals(32, stick.getEnchantmentLevel(knockback));
     }
@@ -50,7 +56,9 @@ class TrapaceiroItemTest {
     void pactChestplateCarriesThornsAndNegativeProtection() {
         ItemStack chestplate = TrapaceiroItems.pactChestplate();
 
-        assertEquals(Material.NETHERITE_CHESTPLATE, chestplate.getType());
+        assertEquals(Material.CHAINMAIL_CHESTPLATE, chestplate.getType());
+        assertEquals(1, chestplate.getEnchantmentLevel(
+                TrapaceiroItems.minecraftEnchantment("binding_curse")));
         assertEquals(9999, chestplate.getEnchantmentLevel(
                 TrapaceiroItems.minecraftEnchantment("thorns")));
         assertEquals(-9999, chestplate.getEnchantmentLevel(
@@ -64,7 +72,7 @@ class TrapaceiroItemTest {
 
     @Test
     void plainArmourIsNotMistakenForThePact() {
-        assertFalse(TrapaceiroItems.isPactChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE)));
+        assertFalse(TrapaceiroItems.isPactChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE)));
         assertFalse(TrapaceiroItems.isPactChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE)));
         assertFalse(TrapaceiroItems.isPactChestplate(null));
     }
